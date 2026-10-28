@@ -493,34 +493,56 @@
 
             <!-- فروع القسم 2: الميدان والجداول -->
             <div id="subBranch-timetable" class="hidden space-y-2">
-                <div onclick="switchTab('vice-principal'); toggleAppSidebar(false); scrollToWidget('coreWidget-waitings');" class="p-3 bg-white hover:bg-amber-50/60 border border-slate-200/70 hover:border-amber-200 rounded-2xl transition cursor-pointer flex items-center justify-between group shadow-2xs">
+                <div onclick="switchTab('timetable'); toggleAppSidebar(false); scrollToWidget('coreWidget-timetable-waitings'); setTimeout(() => findFreeTeachers('tt', true), 250);" class="p-3 bg-white hover:bg-amber-50/60 border border-slate-200/70 hover:border-amber-200 rounded-2xl transition cursor-pointer flex items-center justify-between group shadow-2xs">
                     <div class="flex items-center gap-2.5">
                         <span class="text-lg">🎯</span>
                         <div>
                             <div class="text-xs font-black text-slate-900 group-hover:text-amber-900">محرك الانتظار الذكي (المتاحين الآن)</div>
-                            <div class="text-[10px] text-slate-500">ترشيح المعلمين المتاحين للحصة بالعدالة</div>
+                            <div class="text-[10px] text-slate-500">فحص وترشيح المعلمين المتاحين للحصة بالعدالة</div>
                         </div>
                     </div>
-                    <span class="text-[10px] bg-amber-50 text-amber-700 px-2 py-0.5 rounded font-bold">فوري</span>
+                    <span class="text-[10px] bg-amber-50 text-amber-700 px-2 py-0.5 rounded font-bold">فحص فوري</span>
                 </div>
 
-                <div onclick="switchTab('timetable'); toggleAppSidebar(false);" class="p-3 bg-white hover:bg-amber-50/60 border border-slate-200/70 hover:border-amber-200 rounded-2xl transition cursor-pointer flex items-center justify-between group shadow-2xs">
+                <div onclick="switchTab('timetable'); toggleAppSidebar(false); scrollToWidget('masterGridSection');" class="p-3 bg-white hover:bg-amber-50/60 border border-slate-200/70 hover:border-amber-200 rounded-2xl transition cursor-pointer flex items-center justify-between group shadow-2xs">
                     <div class="flex items-center gap-2.5">
                         <span class="text-lg">📅</span>
                         <div>
                             <div class="text-xs font-black text-slate-900 group-hover:text-amber-900">جدول الحصص الأسبوعي المعتمد</div>
-                            <div class="text-[10px] text-slate-500">جدول كافة معلمي المدرسة (22 معلماً)</div>
+                            <div class="text-[10px] text-slate-500">جدول كافة معلمي المدرسة (22 معلماً معتمداً)</div>
                         </div>
                     </div>
-                    <span class="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold">22</span>
+                    <span class="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold">22 معلماً</span>
+                </div>
+
+                <div onclick="switchTab('timetable'); toggleAppSidebar(false); scrollToWidget('singleTeacherScheduleSection');" class="p-3 bg-white hover:bg-indigo-50/60 border border-slate-200/70 hover:border-indigo-200 rounded-2xl transition cursor-pointer flex items-center justify-between group shadow-2xs">
+                    <div class="flex items-center gap-2.5">
+                        <span class="text-lg">🗓️</span>
+                        <div>
+                            <div class="text-xs font-black text-slate-900 group-hover:text-indigo-900">جدول معلم محدد (عرض تفصيلي)</div>
+                            <div class="text-[10px] text-slate-500">استعراض وتدقيق جدول أي معلم بمفرده</div>
+                        </div>
+                    </div>
+                    <span class="text-slate-400 group-hover:text-indigo-600 text-xs">⇦</span>
+                </div>
+
+                <div onclick="resetAllTeachersSchedule(); toggleAppSidebar(false);" class="p-3 bg-white hover:bg-rose-50/60 border border-slate-200/70 hover:border-rose-200 rounded-2xl transition cursor-pointer flex items-center justify-between group shadow-2xs">
+                    <div class="flex items-center gap-2.5">
+                        <span class="text-lg">🔄</span>
+                        <div>
+                            <div class="text-xs font-black text-slate-900 group-hover:text-rose-900">استعادة الجدول المعتمد الأصلي</div>
+                            <div class="text-[10px] text-slate-500">إلغاء أي تشويش وتثبيت الجدول الأصلي المؤكد</div>
+                        </div>
+                    </div>
+                    <span class="text-[10px] bg-rose-50 text-rose-700 px-2 py-0.5 rounded font-bold">استعادة</span>
                 </div>
 
                 <div onclick="openTeachersDirectoryModal(); toggleAppSidebar(false);" class="p-3 bg-white hover:bg-teal-50/60 border border-slate-200/70 hover:border-teal-200 rounded-2xl transition cursor-pointer flex items-center justify-between group shadow-2xs">
                     <div class="flex items-center gap-2.5">
                         <span class="text-lg">👥</span>
                         <div>
-                            <div class="text-xs font-black text-slate-900 group-hover:text-teal-900">دليل وهوية المعلمين وأرقامهم</div>
-                            <div class="text-[10px] text-slate-500">قاعدة بيانات المعلمين والأنصبة والتخصصات</div>
+                            <div class="text-xs font-black text-slate-900 group-hover:text-teal-900">دليل وهواتف المعلمين الرسميين</div>
+                            <div class="text-[10px] text-slate-500">إدارة بيانات المعلمين وأرقام التواصل والنصاب</div>
                         </div>
                     </div>
                     <span class="text-slate-400 group-hover:text-teal-600 text-xs">⇦</span>
@@ -530,8 +552,8 @@
                     <div class="flex items-center gap-2.5">
                         <span class="text-lg">📢</span>
                         <div>
-                            <div class="text-xs font-black text-slate-900 group-hover:text-emerald-900">الرسائل والتعاميم الجماعية (واتساب)</div>
-                            <div class="text-[10px] text-slate-500">إرسال تعميم لكافة معلمي المدرسة بضغطة زر</div>
+                            <div class="text-xs font-black text-slate-900 group-hover:text-emerald-900">الرسائل الجماعية السريعة (WhatsApp)</div>
+                            <div class="text-[10px] text-slate-500">بث تعميم سريع إلى هواتف المعلمين</div>
                         </div>
                     </div>
                     <span class="text-slate-400 group-hover:text-emerald-600 text-xs">⇦</span>
@@ -1201,7 +1223,7 @@
                 <div class="flex items-center gap-2.5 flex-1 flex-wrap">
                     <div class="flex items-center gap-1.5">
                         <span class="text-xs font-bold text-slate-600">اليوم:</span>
-                        <select id="ttDaySelect" onchange="findFreeTeachers()" class="bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs font-bold text-slate-800 outline-none cursor-pointer">
+                        <select id="vpTtDaySelect" onchange="findFreeTeachers('vp')" class="bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs font-bold text-slate-800 outline-none cursor-pointer">
                             <option value="الأحد">الأحد</option>
                             <option value="الاثنين">الاثنين</option>
                             <option value="الثلاثاء">الثلاثاء</option>
@@ -1212,7 +1234,7 @@
 
                     <div class="flex items-center gap-1.5">
                         <span class="text-xs font-bold text-slate-600">الحصة:</span>
-                        <select id="ttPeriodSelect" onchange="findFreeTeachers()" class="bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs font-bold text-slate-800 outline-none cursor-pointer">
+                        <select id="vpTtPeriodSelect" onchange="findFreeTeachers('vp')" class="bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs font-bold text-slate-800 outline-none cursor-pointer">
                             <option value="1">الحصة الأولى (1)</option>
                             <option value="2">الحصة الثانية (2)</option>
                             <option value="3">الحصة الثالثة (3)</option>
@@ -1224,14 +1246,18 @@
                     </div>
                 </div>
 
-                <button type="button" onclick="findFreeTeachers(true)" class="px-5 py-2.5 bg-slate-900 hover:bg-black active:scale-95 text-white font-bold text-xs rounded-xl shadow-xs transition flex items-center justify-center gap-2 cursor-pointer">
+                <button type="button" onclick="findFreeTeachers('vp', true)" class="px-5 py-2.5 bg-slate-900 hover:bg-black active:scale-95 text-white font-bold text-xs rounded-xl shadow-xs transition flex items-center justify-center gap-2 cursor-pointer">
                     <span>⚡</span>
                     <span>فحص المعلمين المتاحين الآن</span>
                 </button>
             </div>
 
-            <!-- نتائج المعلمين المتاحين للانتظار -->
-            <div id="freeTeachersResults" class="space-y-2">
+            <!-- نتائج المعلمين المتاحين للانتظار في شاشة الوكيل -->
+            <div class="flex items-center justify-between pt-1">
+                <span class="text-xs font-bold text-slate-700">المرشحون المتاحون للانتظار:</span>
+                <span id="vpFreeTeachersCountBadge" class="text-[11px] font-bold text-amber-700 bg-amber-50 px-2.5 py-0.5 rounded-lg border border-amber-200">فحص فوري</span>
+            </div>
+            <div id="vpFreeTeachersResults" class="space-y-2">
                 <!-- يُحقن بواسطة JavaScript -->
             </div>
 
@@ -1350,7 +1376,7 @@
             </div>
 
             <!-- أداة البحث السريع عن المعلمين المتفرغين -->
-            <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 space-y-4">
+            <div id="coreWidget-timetable-waitings" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 space-y-4">
                 <div class="border-b border-slate-100 pb-3 flex items-center justify-between">
                     <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
                         <span>🔍</span>
@@ -1362,7 +1388,7 @@
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div>
                         <label class="block text-xs font-bold text-slate-700 mb-1.5">اليوم</label>
-                        <select id="ttDaySelect" onchange="findFreeTeachers()" class="w-full bg-slate-50 border border-slate-200 rounded-2xl p-3 text-xs font-bold focus:ring-2 focus:ring-amber-500 outline-none">
+                        <select id="ttDaySelect" onchange="findFreeTeachers('tt')" class="w-full bg-slate-50 border border-slate-200 rounded-2xl p-3 text-xs font-bold focus:ring-2 focus:ring-amber-500 outline-none">
                             <option value="الأحد">الأحد</option>
                             <option value="الاثنين">الاثنين</option>
                             <option value="الثلاثاء">الثلاثاء</option>
@@ -1373,7 +1399,7 @@
 
                     <div>
                         <label class="block text-xs font-bold text-slate-700 mb-1.5">الحصة</label>
-                        <select id="ttPeriodSelect" onchange="findFreeTeachers()" class="w-full bg-slate-50 border border-slate-200 rounded-2xl p-3 text-xs font-bold focus:ring-2 focus:ring-amber-500 outline-none">
+                        <select id="ttPeriodSelect" onchange="findFreeTeachers('tt')" class="w-full bg-slate-50 border border-slate-200 rounded-2xl p-3 text-xs font-bold focus:ring-2 focus:ring-amber-500 outline-none">
                             <option value="1">الحصة الأولى</option>
                             <option value="2">الحصة الثانية</option>
                             <option value="3">الحصة الثالثة</option>
@@ -1385,7 +1411,7 @@
                     </div>
 
                     <div class="flex items-end">
-                        <button type="button" onclick="findFreeTeachers(true)" class="w-full py-3 bg-slate-800 hover:bg-slate-900 active:scale-95 text-white font-bold rounded-2xl text-xs transition flex items-center justify-center gap-2 shadow-sm">
+                        <button type="button" onclick="findFreeTeachers('tt', true)" class="w-full py-3 bg-slate-800 hover:bg-slate-900 active:scale-95 text-white font-bold rounded-2xl text-xs transition flex items-center justify-center gap-2 shadow-sm">
                             <span>🔍</span>
                             <span>فحص المعلمين المتاحين</span>
                         </button>
@@ -1468,7 +1494,7 @@
             </div>
 
             <!-- جدول الحصص الأسبوعي لمعلم مفرد -->
-            <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80">
+            <div id="singleTeacherScheduleSection" class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80">
                 <div class="flex flex-col sm:flex-row items-center justify-between gap-3 mb-4 border-b border-slate-100 pb-3">
                     <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
                         <span>🗓️</span>
@@ -2999,6 +3025,15 @@
     let selectedBehaviorName = '';
     let selectedBehaviorDegree = 'الدرجة الأولى';
     let selectedBehaviorDeduction = 0;
+
+    // فحص نسخة البيانات وتطهير ذاكرة المتصفح تلقائياً عند وجود أي تحديث أو خلل
+    const SYSTEM_CANONICAL_VERSION = '2026-10-28_v5_canonical_fix';
+    if (localStorage.getItem('sch_canonical_ver') !== SYSTEM_CANONICAL_VERSION) {
+        localStorage.setItem('sch_canonical_ver', SYSTEM_CANONICAL_VERSION);
+        localStorage.setItem('sch_teachers_final', JSON.stringify(DEFAULT_OFFICIAL_TEACHERS));
+        localStorage.setItem('sch_timetable_matrix_final', JSON.stringify(DEFAULT_TIMETABLE_MATRIX));
+        console.log('✅ تم تصفير الكاش وتثبيت الجدول الأصلي المعتمد للـ 22 معلماً بنجاح.');
+    }
 
     let OFFICIAL_TEACHERS = JSON.parse(localStorage.getItem('sch_teachers_final') || 'null') || JSON.parse(JSON.stringify(DEFAULT_OFFICIAL_TEACHERS));
     // ضمان وجود حقل phone لكل معلم
@@ -6223,17 +6258,34 @@ async function initApp() {
     // ========================================================
     // قسم جدول المعلمين والانتظار (Timetable Logic)
     // ========================================================
-    function initTimetableSection() {
-        const picker = document.getElementById('teacherSchedulePicker');
-        picker.innerHTML = OFFICIAL_TEACHERS.map(t => `<option value="${t.id}">${t.name} - ${t.subject} (${t.load} حصة)</option>`).join('');
-        
-        const modalSelect = document.getElementById('modalWaitingAssignedTeacher');
-        modalSelect.innerHTML = OFFICIAL_TEACHERS.map(t => `<option value="${t.name}">${t.name} - ${t.subject}</option>`).join('');
+    function updateAllTeacherViews() {
+        try {
+            const picker = document.getElementById('teacherSchedulePicker');
+            if (picker && Array.isArray(OFFICIAL_TEACHERS)) {
+                const currentVal = picker.value;
+                picker.innerHTML = OFFICIAL_TEACHERS.map(t => `<option value="${t.id}">${t.id}. ${t.name} - ${t.subject} (${t.load || t.quota || ''} حصة)</option>`).join('');
+                if (currentVal && OFFICIAL_TEACHERS.some(t => String(t.id) === String(currentVal))) {
+                    picker.value = currentVal;
+                }
+            }
+            
+            const modalSelect = document.getElementById('modalWaitingAssignedTeacher');
+            if (modalSelect && Array.isArray(OFFICIAL_TEACHERS)) {
+                modalSelect.innerHTML = OFFICIAL_TEACHERS.map(t => `<option value="${t.name}">${t.name} - ${t.subject}</option>`).join('');
+            }
 
-        findFreeTeachers();
-        renderWaitingAssignments();
-        renderSpecificTeacherSchedule();
-        renderMasterGridTable();
+            if (typeof renderSpecificTeacherSchedule === 'function') renderSpecificTeacherSchedule();
+            if (typeof renderMasterGridTable === 'function') renderMasterGridTable();
+            if (typeof findFreeTeachers === 'function') findFreeTeachers();
+            if (typeof renderWaitingAssignments === 'function') renderWaitingAssignments();
+            if (typeof renderBroadcastTeachersTable === 'function') renderBroadcastTeachersTable();
+        } catch (e) {
+            console.warn('updateAllTeacherViews warning:', e);
+        }
+    }
+
+    function initTimetableSection() {
+        updateAllTeacherViews();
 
         // المزامنة الدائمة والآلية للجدول وبيانات المعلمين المعتمدة من الخادم
         fetch('/api/teachers-list')
@@ -6252,12 +6304,9 @@ async function initApp() {
                 if (serverMatrix && Object.keys(serverMatrix).length > 0) {
                     MASTER_TIMETABLE_MATRIX = sanitizeTimetableMatrix(serverMatrix);
                     localStorage.setItem('sch_timetable_matrix_final', JSON.stringify(MASTER_TIMETABLE_MATRIX));
-                    renderMasterGridTable();
-                    findFreeTeachers();
-                    renderWaitingAssignments();
+                    updateAllTeacherViews();
                 }
             }).catch(() => {});
-
     }
 
     // ========================================================
@@ -6520,32 +6569,7 @@ async function initApp() {
                     MASTER_TIMETABLE_MATRIX = sanitizeTimetableMatrix(data);
                     localStorage.setItem('sch_timetable_matrix_final', JSON.stringify(MASTER_TIMETABLE_MATRIX));
                     syncTimetableToServer();
-                    renderMasterGridTable();
-
-        // المزامنة الدائمة والآلية للجدول وبيانات المعلمين المعتمدة من الخادم
-        fetch('/api/teachers-list')
-            .then(res => res.json())
-            .then(serverTeachers => {
-                if (serverTeachers && Array.isArray(serverTeachers) && serverTeachers.length > 0) {
-                    OFFICIAL_TEACHERS = serverTeachers;
-                    localStorage.setItem('sch_teachers_final', JSON.stringify(OFFICIAL_TEACHERS));
                     updateAllTeacherViews();
-                }
-            }).catch(() => {});
-
-        fetch('/api/timetable')
-            .then(res => res.json())
-            .then(serverMatrix => {
-                if (serverMatrix && Object.keys(serverMatrix).length > 0) {
-                    MASTER_TIMETABLE_MATRIX = sanitizeTimetableMatrix(serverMatrix);
-                    localStorage.setItem('sch_timetable_matrix_final', JSON.stringify(MASTER_TIMETABLE_MATRIX));
-                    renderMasterGridTable();
-                    findFreeTeachers();
-                    renderWaitingAssignments();
-                }
-            }).catch(() => {});
-
-                    findFreeTeachers();
                     showToast('تم استيراد واعتماد الجدول من الملف بنجاح!', 'success');
                 }
             } catch (err) {
@@ -6647,12 +6671,15 @@ async function initApp() {
     // [upgraded to modern renderWaitingAssignments]
 
     function renderSpecificTeacherSchedule() {
-        const teacherId = parseInt(document.getElementById('teacherSchedulePicker').value);
-        const teacher = OFFICIAL_TEACHERS.find(t => t.id === teacherId);
-        const sched = MASTER_TIMETABLE_MATRIX[teacherId];
+        const picker = document.getElementById('teacherSchedulePicker');
+        if (!picker) return;
+        const teacherId = parseInt(picker.value) || (OFFICIAL_TEACHERS && OFFICIAL_TEACHERS[0] ? OFFICIAL_TEACHERS[0].id : 1);
+        const teacher = (OFFICIAL_TEACHERS || []).find(t => t.id === teacherId) || (OFFICIAL_TEACHERS && OFFICIAL_TEACHERS[0]);
+        if (!teacher) return;
+        const sched = (MASTER_TIMETABLE_MATRIX && (MASTER_TIMETABLE_MATRIX[teacher.id] || MASTER_TIMETABLE_MATRIX[String(teacher.id)])) || null;
         const container = document.getElementById('teacherFullScheduleView');
 
-        if (!teacher || !sched) return;
+        if (!container || !sched) return;
 
         const days = ["الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس"];
 
@@ -8296,24 +8323,52 @@ async function initApp() {
         }
     }
 
-    function findFreeTeachers(isManual = false) {
+    function findFreeTeachers(source = null, isManual = false) {
+        if (source === true) {
+            isManual = true;
+            source = null;
+        }
         try {
-            const dayEl = document.getElementById('ttDaySelect');
-            const periodEl = document.getElementById('ttPeriodSelect');
-            const resultsContainer = document.getElementById('freeTeachersResults');
-            const badge = document.getElementById('freeTeachersCountBadge');
+            const ttDayEl = document.getElementById('ttDaySelect');
+            const ttPeriodEl = document.getElementById('ttPeriodSelect');
+            const vpDayEl = document.getElementById('vpTtDaySelect');
+            const vpPeriodEl = document.getElementById('vpTtPeriodSelect');
 
-            if (!dayEl || !periodEl || !resultsContainer) {
-                console.warn('findFreeTeachers: Missing UI elements');
-                return;
+            let day = 'الأحد';
+            let periodNum = 1;
+
+            if (source === 'vp' && vpDayEl && vpPeriodEl) {
+                day = vpDayEl.value || 'الأحد';
+                periodNum = parseInt(String(vpPeriodEl.value).replace(/[^0-9]/g, '')) || 1;
+                if (ttDayEl) ttDayEl.value = day;
+                if (ttPeriodEl) ttPeriodEl.value = String(periodNum);
+            } else if (source === 'tt' && ttDayEl && ttPeriodEl) {
+                day = ttDayEl.value || 'الأحد';
+                periodNum = parseInt(String(ttPeriodEl.value).replace(/[^0-9]/g, '')) || 1;
+                if (vpDayEl) vpDayEl.value = day;
+                if (vpPeriodEl) vpPeriodEl.value = String(periodNum);
+            } else {
+                // استنتاج العنصر النشط تلقائياً
+                const ttSec = document.getElementById('section-timetable');
+                if (ttSec && !ttSec.classList.contains('hidden') && ttDayEl && ttPeriodEl) {
+                    day = ttDayEl.value || 'الأحد';
+                    periodNum = parseInt(String(ttPeriodEl.value).replace(/[^0-9]/g, '')) || 1;
+                    if (vpDayEl) vpDayEl.value = day;
+                    if (vpPeriodEl) vpPeriodEl.value = String(periodNum);
+                } else if (vpDayEl && vpPeriodEl) {
+                    day = vpDayEl.value || 'الأحد';
+                    periodNum = parseInt(String(vpPeriodEl.value).replace(/[^0-9]/g, '')) || 1;
+                    if (ttDayEl) ttDayEl.value = day;
+                    if (ttPeriodEl) ttPeriodEl.value = String(periodNum);
+                } else if (ttDayEl && ttPeriodEl) {
+                    day = ttDayEl.value || 'الأحد';
+                    periodNum = parseInt(String(ttPeriodEl.value).replace(/[^0-9]/g, '')) || 1;
+                }
             }
 
-            const day = dayEl.value || 'الأحد';
-            let pVal = periodEl.value || '1';
-            let periodNum = parseInt(String(pVal).replace(/[^0-9]/g, '')) || 1;
             const periodIdx = Math.max(0, Math.min(6, periodNum - 1));
 
-            // ضمان جاهزية المصفوفة
+            // ضمان جاهزية مصفوفة الحصص
             if (typeof MASTER_TIMETABLE_MATRIX === 'undefined' || !MASTER_TIMETABLE_MATRIX || Object.keys(MASTER_TIMETABLE_MATRIX).length === 0) {
                 if (typeof sanitizeTimetableMatrix === 'function') {
                     MASTER_TIMETABLE_MATRIX = sanitizeTimetableMatrix(DEFAULT_TIMETABLE_MATRIX);
@@ -8440,29 +8495,34 @@ async function initApp() {
             // ترتيب المرشحين تنازلياً حسب مجموع نقاط الأولوية والعدالة
             candidateTeachers.sort((a, b) => b.totalScore - a.totalScore);
 
-            // تحديث شارة العداد
-            if (badge) {
-                let badgeText = `يوم ${day} (الحصة ${periodIdx + 1}): متاح ${candidateTeachers.length} معلماً وفق معايير العدالة`;
-                if (excludedDueToMaxDaily.length > 0) {
-                    badgeText += ` • (تم استبعاد ${excludedDueToMaxDaily.length} معلماً لوصول نصابهم اليومي 5 حصص)`;
-                }
-                badge.textContent = badgeText;
-            }
+            // تحديث شارات العداد
+            const badgeText = `يوم ${day} (الحصة ${periodIdx + 1}): متاح ${candidateTeachers.length} معلماً وفق معايير العدالة${excludedDueToMaxDaily.length > 0 ? ` • (استبعاد ${excludedDueToMaxDaily.length} معلماً لوصول نصابهم 5 حصص)` : ''}`;
+            const ttBadge = document.getElementById('freeTeachersCountBadge');
+            const vpBadge = document.getElementById('vpFreeTeachersCountBadge');
+            if (ttBadge) ttBadge.textContent = badgeText;
+            if (vpBadge) vpBadge.textContent = `متاح: ${candidateTeachers.length} معلماً`;
+
+            const ttContainer = document.getElementById('freeTeachersResults');
+            const vpContainer = document.getElementById('vpFreeTeachersResults');
 
             if (candidateTeachers.length === 0) {
-                resultsContainer.innerHTML = `
+                const emptyHtml = `
                     <div class="col-span-full text-center py-8 bg-slate-50 rounded-2xl border border-slate-200">
                         <div class="text-2xl mb-1">⚠️</div>
                         <div class="text-xs text-rose-600 font-bold">لا يوجد معلمون متفرغون مؤهلون في هذه الحصة، أو أن جميع المتفرغين لديهم 5 حصص تدريسية اليوم.</div>
                     </div>
                 `;
+                if (ttContainer) ttContainer.innerHTML = emptyHtml;
+                if (vpContainer) vpContainer.innerHTML = emptyHtml;
+
                 if (isManual && typeof showToast === 'function') {
                     showToast(`لا يوجد معلمون متاحون في الحصة ${periodIdx + 1} يوم ${day}`, 'warning');
                 }
                 return;
             }
 
-            let htmlCards = candidateTeachers.map((c, index) => {
+            // توليد بطاقات المعلمين المتاحين
+            const htmlCards = candidateTeachers.map((c, index) => {
                 const t = c.teacher;
                 const isTopCandidate = (index === 0);
 
@@ -8482,83 +8542,72 @@ async function initApp() {
                         <div>
                             <div class="flex items-center justify-between">
                                 <h4 class="font-black text-xs sm:text-sm text-slate-900 flex items-center gap-1.5">
-                                    <span class="w-5 h-5 rounded-full bg-slate-100 text-slate-600 inline-flex items-center justify-center text-[10px] font-bold">${index + 1}</span>
+                                    <span class="w-5 h-5 rounded-full ${isTopCandidate ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-700'} text-[10px] font-black flex items-center justify-center">${index + 1}</span>
                                     <span>أ. ${t.name}</span>
                                 </h4>
-                                <span class="text-[10px] font-bold text-indigo-800 bg-indigo-50 px-2.5 py-0.5 rounded-full border border-indigo-200">
-                                    ${c.quotaInfo.name}
+                                <span class="text-[10px] px-2 py-0.5 rounded-full font-black ${
+                                    c.isAdjacent ? 'bg-emerald-100 text-emerald-800 border border-emerald-200' : 'bg-slate-100 text-slate-600'
+                                }">
+                                    ${c.adjacencyLabel}
                                 </span>
                             </div>
-                            <div class="text-[11px] text-slate-500 mt-1">${t.subject} • نصاب تدريسي: <b>${c.actualWeeklyLoad} حصة</b></div>
+                            <div class="text-[11px] text-slate-500 font-semibold mt-0.5">${t.subject}</div>
 
-                            <!-- شارات المعايير الذكية -->
-                            <div class="mt-2.5 space-y-1.5 text-[10px] font-bold">
-                                <!-- معيار الملاصقة -->
-                                <div class="flex items-center gap-1.5 ${c.isAdjacent ? 'text-emerald-700 bg-emerald-50/80' : 'text-amber-700 bg-amber-50'} px-2.5 py-1 rounded-lg border ${c.isAdjacent ? 'border-emerald-200' : 'border-amber-200'}">
-                                    <span>${c.isAdjacent ? '🔗' : '⚠️'}</span>
-                                    <span>${c.adjacencyLabel}</span>
+                            <div class="mt-3 grid grid-cols-2 gap-2 text-[10px] bg-slate-50/80 p-2.5 rounded-xl border border-slate-100">
+                                <div>
+                                    <span class="text-slate-400 block">نصاب اليوم:</span>
+                                    <strong class="text-slate-800">${c.todayClassesCount} حصص</strong>
                                 </div>
+                                <div>
+                                    <span class="text-slate-400 block">النصاب الأسبوعي:</span>
+                                    <strong class="text-indigo-700">${c.actualWeeklyLoad} حصة</strong>
+                                </div>
+                                <div>
+                                    <span class="text-slate-400 block">الهدف الفصلي:</span>
+                                    <strong class="text-amber-700">${c.quotaInfo.target} حصة</strong>
+                                </div>
+                                <div>
+                                    <span class="text-slate-400 block">نفّذ سابقاً:</span>
+                                    <strong class="text-teal-700">${c.totalExecuted} انتظار</strong>
+                                </div>
+                            </div>
 
-                                <!-- معيار رصيد الانتظار والهدف -->
-                                <div class="flex items-center justify-between text-slate-700 bg-slate-50 px-2.5 py-1 rounded-lg border border-slate-200 font-mono">
-                                    <span>🎯 الهدف الفصلي: <b>${c.quotaInfo.target}</b></span>
-                                    <span>✅ نُفذ: <b>${c.totalExecuted}</b> (باقٍ ${c.remainingToTarget})</span>
-                                </div>
-
-                                <!-- سبب الترشيح التوضيحي الصريح للوكيل -->
-                                <div class="text-[10px] text-slate-600 bg-teal-50/50 p-2 rounded-lg border border-teal-100">
-                                    <span class="font-bold text-teal-900">💡 مبرر الترشيح:</span>
-                                    <span>${c.selectionReason}</span>
-                                </div>
+                            <div class="mt-2 text-[10px] text-slate-600 bg-amber-50/50 p-2 rounded-lg border border-amber-100/60 leading-relaxed">
+                                <strong class="text-amber-900">💡 سبب الترشيح:</strong> ${c.selectionReason}
                             </div>
                         </div>
 
                         <div class="pt-2 border-t border-slate-100 flex items-center justify-between gap-2">
-                            <span class="text-[10px] font-bold text-slate-400">نقاط الاستحقاق: ${c.totalScore}</span>
-                            <button onclick="quickAssignWaiting('${t.name}', '${day}', ${periodIdx + 1})" class="px-4 py-2 ${isTopCandidate ? 'bg-emerald-600 hover:bg-emerald-700 text-white' : 'bg-slate-800 hover:bg-slate-900 text-white'} rounded-xl text-xs font-black shadow transition flex items-center gap-1">
-                                <span>✍️</span>
+                            <span class="text-[10px] text-slate-400 font-bold">نقاط الأولوية: <span class="text-indigo-600 font-black">${c.totalScore}</span></span>
+                            <button type="button" onclick="quickAssignWaiting('${t.name}', '${day}', ${periodIdx + 1})" class="px-3.5 py-1.5 bg-slate-900 hover:bg-black active:scale-95 text-white font-bold text-xs rounded-xl shadow-xs transition flex items-center gap-1.5 cursor-pointer">
+                                <span>+</span>
                                 <span>إسناد الانتظار</span>
                             </button>
                         </div>
                     </div>
                 `;
-            }).join('');
+            });
 
-            if (excludedDueToMaxDaily.length > 0) {
-                htmlCards += `
-                    <div class="col-span-full mt-2 p-3 bg-rose-50/70 border border-rose-200 rounded-2xl text-[11px] text-rose-800">
-                        <div class="font-bold flex items-center gap-1.5 mb-1 text-rose-900">
-                            <span>🛡️</span>
-                            <span>معلمون مستبعدون من الانتظار اليوم (نصابهم 5 حصص أو أكثر تقديراً لجهدهم):</span>
-                        </div>
-                        <div class="flex flex-wrap gap-2 mt-1.5">
-                            ${excludedDueToMaxDaily.map(ex => `
-                                <span class="bg-white px-2.5 py-1 rounded-lg border border-rose-200 font-bold text-rose-700 shadow-sm">
-                                    أ. ${ex.name} (${ex.todayClassesCount} حصص اليوم)
-                                </span>
-                            `).join('')}
-                        </div>
-                    </div>
-                `;
-            }
-
-            resultsContainer.innerHTML = htmlCards;
+            if (ttContainer) ttContainer.innerHTML = htmlCards.join('');
+            if (vpContainer) vpContainer.innerHTML = htmlCards.join('');
 
             if (isManual && typeof showToast === 'function') {
-                showToast(`تم فحص المعلمين المتاحين: وُجد ${candidateTeachers.length} معلماً مؤهلاً`, 'success');
+                showToast(`تم فحص المعلمين المتاحين ليوم ${day} (الحصة ${periodNum}): متاح ${candidateTeachers.length} معلماً ✅`, 'success');
             }
         } catch (err) {
             console.error('Error in findFreeTeachers:', err);
-            const container = document.getElementById('freeTeachersResults');
-            if (container) {
-                container.innerHTML = `
-                    <div class="col-span-full p-4 bg-rose-50 text-rose-800 rounded-2xl border border-rose-200 text-xs font-bold">
-                        ⚠️ حدث خطأ أثناء فحص المعلمين المتاحين: ${err.message}
-                    </div>
-                `;
-            }
+            const errHtml = `
+                <div class="col-span-full p-4 bg-rose-50 text-rose-700 rounded-xl border border-rose-200 text-xs font-bold">
+                    ⚠️ حدث خطأ أثناء فحص المعلمين المتاحين: ${err.message}
+                </div>
+            `;
+            const ttC = document.getElementById('freeTeachersResults');
+            const vpC = document.getElementById('vpFreeTeachersResults');
+            if (ttC) ttC.innerHTML = errHtml;
+            if (vpC) vpC.innerHTML = errHtml;
         }
     }
+
     function toggleWaitingStatus(waitingId, newStatus) {
         const item = waitingAssignments.find(w => w.id === waitingId);
         if (item) {
@@ -8574,8 +8623,18 @@ async function initApp() {
     // تحديث جدول تكليفات الانتظار ليدعم الحالات وتفاصيل الهدف
     function renderWaitingAssignments() {
         const container = document.getElementById('waitingAssignmentsTableContainer');
+        const vpList = document.getElementById('waitingAssignmentsList');
         const countBadge = document.getElementById('waitingAssignmentsCount');
-        if (!container) return;
+
+        const allWaitings = (typeof waitingAssignments !== 'undefined' && Array.isArray(waitingAssignments)) ? waitingAssignments : [];
+        if (countBadge) countBadge.textContent = `${allWaitings.length} تكليف مسجل`;
+
+        if (allWaitings.length === 0) {
+            const emptyHtml = `<div class="text-center py-6 text-xs text-slate-400">لا توجد تكليفات انتظار مسجلة حالياً</div>`;
+            if (container) container.innerHTML = emptyHtml;
+            if (vpList) vpList.innerHTML = emptyHtml;
+            return;
+        }
 
         countBadge.textContent = `${waitingAssignments.length} تكليف مسجل`;
 
@@ -9043,14 +9102,16 @@ async function initApp() {
     }
 
     function resetAllTeachersSchedule() {
-        if (confirm('هل أنت متأكد من استعادة الجدول العام بالكامل لجميع الـ 22 معلماً من الأصل؟')) {
+        if (confirm('هل أنت متأكد من استعادة واعتماد الجدول العام الأصلي لجميع الـ 22 معلماً؟ سيتم إلغاء أي تعديلات غير محفوظة وتثبيت الجدول المعتمد.')) {
             MASTER_TIMETABLE_MATRIX = JSON.parse(JSON.stringify(DEFAULT_TIMETABLE_MATRIX));
+            OFFICIAL_TEACHERS = JSON.parse(JSON.stringify(DEFAULT_OFFICIAL_TEACHERS));
             localStorage.setItem('sch_timetable_matrix_final', JSON.stringify(MASTER_TIMETABLE_MATRIX));
+            localStorage.setItem('sch_teachers_final', JSON.stringify(OFFICIAL_TEACHERS));
+            localStorage.setItem('sch_canonical_ver', SYSTEM_CANONICAL_VERSION);
             if (typeof syncTimetableToServer === 'function') syncTimetableToServer();
-            if (typeof renderMasterGridTable === 'function') renderMasterGridTable();
-            if (typeof findFreeTeachers === 'function') findFreeTeachers();
-            renderEditorSchedule();
-            showToast('تمت استعادة الجدول العام بالكامل من الأصل بنجاح', 'success');
+            if (typeof updateAllTeacherViews === 'function') updateAllTeacherViews();
+            if (typeof renderEditorSchedule === 'function') renderEditorSchedule();
+            showToast('تمت استعادة واعتماد الجدول الأصلي المعتمد لجميع الـ 22 معلماً بنجاح ✅', 'success');
         }
     }
 
