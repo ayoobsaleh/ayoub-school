@@ -48,12 +48,16 @@ class ConnectionManager:
 
 manager = ConnectionManager()
 
-import backup_service
+try:
+    import backup_service
+except ImportError:
+    backup_service = None
 
 @app.on_event("startup")
 def on_startup():
     db.init_db()
-    backup_service.start_backup_scheduler()
+    if backup_service:
+        backup_service.start_backup_scheduler()
 
 # النماذج
 class ReferralCreate(BaseModel):
@@ -492,14 +496,20 @@ async def save_teachers_to_disk(teachers: list):
 # مسارات النسخ الاحتياطي التلقائي واستعادة البيانات
 @app.get("/api/backups")
 def get_backups():
-    return backup_service.list_backups()
+    if backup_service:
+        return backup_service.list_backups()
+    return []
 
 @app.post("/api/backups")
 def create_new_backup():
-    return backup_service.create_backup(reason="manual")
+    if backup_service:
+        return backup_service.create_backup(reason="manual")
+    return {"status": "error", "message": "خدمة النسخ غير مفعلة"}
 
 @app.get("/api/backups/{filename}/download")
 def download_backup_file(filename: str):
+    if not backup_service:
+        raise HTTPException(status_code=404, detail="الخدمة غير متوفرة")
     safe_name = os.path.basename(filename)
     path = os.path.join(backup_service.BACKUP_DIR, safe_name)
     if not os.path.exists(path):
@@ -508,6 +518,8 @@ def download_backup_file(filename: str):
 
 @app.post("/api/backups/{filename}/restore")
 def restore_backup_file(filename: str):
+    if not backup_service:
+        raise HTTPException(status_code=500, detail="الخدمة غير متوفرة")
     try:
         return backup_service.restore_backup(filename)
     except Exception as e:
@@ -515,6 +527,8 @@ def restore_backup_file(filename: str):
 
 @app.post("/api/backups/upload")
 async def upload_and_restore_backup(file: UploadFile = File(...)):
+    if not backup_service:
+        raise HTTPException(status_code=500, detail="الخدمة غير متوفرة")
     if not file.filename.endswith(".zip"):
         raise HTTPException(status_code=400, detail="يرجى رفع ملف بصيغة zip")
     os.makedirs(backup_service.BACKUP_DIR, exist_ok=True)
