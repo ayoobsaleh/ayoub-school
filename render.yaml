@@ -3,6 +3,18 @@ services:
     name: ayoub-school-system
     runtime: python
     buildCommand: pip install -r requirements.txt
-    startCommand: uvicorn app:app --host 0.0.0.0 --port $PORT
+    startCommand: uvicorn app:app --host 0.0.0.0 --port $PORT --proxy-headers --forwarded-allow-ips='*'
+    healthCheckPath: /healthz
     plan: free
     autoDeploy: true
+    envVars:
+      # قاعدة البيانات الدائمة (PostgreSQL). الصق رابط الاتصال من Neon أو Supabase أو Render Postgres.
+      # بدونه يعمل النظام على SQLite، وقرص الخطة المجانية يُمسح عند كل إعادة تشغيل.
+      - key: DATABASE_URL
+        sync: false
+      # مفتاح توقيع جلسات الدخول؛ يولده Render مرة واحدة ويبقى ثابتاً
+      - key: SECRET_KEY
+        generateValue: true
+      # الجدول المعتمد مقفل ضد التعديل من الواجهة. لفتحه مؤقتاً بقرار المدير: 0
+      - key: TIMETABLE_LOCK
+        value: "1"

@@ -7,84 +7,24 @@
     <!-- خط تجوال من جوجل فونتس -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/app.css">
+    <meta name="theme-color" content="#0F2E2B">
     <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
         <!-- ======================================================== -->
     <!-- شاشة تسجيل الدخول بالرمز السريع بنمط Apple (Apple HIG Login Overlay) -->
     <!-- ======================================================== -->
     <div id="pinAuthOverlay" style="position: fixed; inset: 0; z-index: 999999; pointer-events: auto !important; display: flex;" class="bg-slate-950/85 backdrop-blur-2xl items-center justify-center p-3 sm:p-5 overflow-y-auto">
         <div style="pointer-events: auto !important; position: relative; z-index: 1000000;" class="bg-white/95 rounded-[32px] max-w-lg w-full p-5 sm:p-7 shadow-[0_25px_70px_rgba(0,0,0,0.4)] border border-white/60 my-auto text-center flex flex-col items-center">
             
-            <!-- زر تخطي فوري في أعلى البطاقة -->
-            <div class="w-full flex items-center justify-between mb-3 pb-2 border-b border-slate-100">
-                <span class="text-[11px] font-bold text-slate-400">بوابة الدخول الذكية</span>
-                <button type="button" onclick="quickDirectLogin('vp')" style="cursor: pointer !important; pointer-events: auto !important;" class="text-xs font-bold text-indigo-700 hover:text-indigo-900 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 px-3 py-1 rounded-full transition cursor-pointer flex items-center gap-1 shadow-sm active:scale-95" title="تخطي ودخول فوري كوكيل شؤون الطلاب">
-                    <span>⚡ تخطي الرمز والدخول فوري كوكيل</span>
-                </button>
-            </div>
-
             <!-- الشعار وهوية المدرسة بنمط آبل -->
             <div class="w-14 h-14 rounded-[20px] bg-gradient-to-br from-slate-900 to-slate-800 text-white flex items-center justify-center text-2xl shadow-md mb-2 border border-slate-700/50">
-                🏫
+                <svg role="img" aria-label="شعار ثانوية أبي أيوب الأنصاري" width="34" height="34" viewBox="0 0 48 48" fill="none" stroke="#D9B45E" stroke-width="2.8" stroke-linecap="round"><path d="M9 42V21a15 15 0 0 1 30 0v21"/><path d="M16 34c2.8-1.5 5.4-1.5 8 0 2.6-1.5 5.2-1.5 8 0"/></svg>
             </div>
             <h2 class="text-lg sm:text-xl font-black text-slate-900 mb-0.5 tracking-tight">ثانوية أبي أيوب الأنصاري</h2>
             <p class="text-[11px] text-slate-500 mb-4 font-semibold">بوابة الدخول الموحدة ونظام شؤون الطلاب</p>
 
-            <!-- خيار الدخول السريع الفوري بنقرة واحدة (الخيار الأسهل والموصى به) -->
-            <div class="w-full bg-[#f5f5f7] rounded-2xl p-3.5 border border-black/[0.06] mb-4 text-right">
-                <div class="flex items-center justify-between mb-2.5">
-                    <span class="text-xs font-black text-slate-900 flex items-center gap-1.5">
-                        <span>⚡</span>
-                        <span>دخول فوري مباشر بنقرة واحدة (اختر صفتك):</span>
-                    </span>
-                    <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full">موصى به</span>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2.5">
-                    <!-- وكيل شؤون الطلاب -->
-                    <button type="button" onclick="quickDirectLogin('vp')" style="cursor: pointer !important; pointer-events: auto !important;" class="p-2.5 bg-white hover:bg-indigo-50/90 border-2 border-indigo-200 hover:border-indigo-500 rounded-xl text-right transition active:scale-95 shadow-sm group cursor-pointer">
-                        <div class="text-base mb-0.5">🛡️</div>
-                        <div class="font-black text-xs text-indigo-950">أ. مشعل الخريف</div>
-                        <div class="text-[10px] text-indigo-600 font-bold mt-0.5">وكيل شؤون الطلاب</div>
-                        <div class="text-[9px] text-slate-400 font-mono mt-0.5">الرمز: 1111</div>
-                    </button>
-
-                    <!-- مدير المدرسة -->
-                    <button type="button" onclick="quickDirectLogin('principal')" style="cursor: pointer !important; pointer-events: auto !important;" class="p-2.5 bg-white hover:bg-emerald-50/90 border-2 border-emerald-200 hover:border-emerald-500 rounded-xl text-right transition active:scale-95 shadow-sm group cursor-pointer">
-                        <div class="text-base mb-0.5">🏫</div>
-                        <div class="font-black text-xs text-emerald-950">أ. حاتم النغيمشي</div>
-                        <div class="text-[10px] text-emerald-600 font-bold mt-0.5">مدير المدرسة</div>
-                        <div class="text-[9px] text-slate-400 font-mono mt-0.5">الرمز: 0000</div>
-                    </button>
-
-                    <!-- الموجه الطلابي -->
-                    <button type="button" onclick="quickDirectLogin('counselor')" style="cursor: pointer !important; pointer-events: auto !important;" class="p-2.5 bg-white hover:bg-teal-50/90 border-2 border-teal-200 hover:border-teal-500 rounded-xl text-right transition active:scale-95 shadow-sm group cursor-pointer">
-                        <div class="text-base mb-0.5">🌱</div>
-                        <div class="font-black text-xs text-teal-950">أ. فهد السلامة</div>
-                        <div class="text-[10px] text-teal-600 font-bold mt-0.5">الموجه الطلابي</div>
-                        <div class="text-[9px] text-slate-400 font-mono mt-0.5">الرمز: 2222</div>
-                    </button>
-                </div>
-
-                <!-- قائمة كادر المعلمين الـ 22 للدخول المباشر بنقرة واحدة -->
-                <div class="pt-2 border-t border-slate-200/80">
-                    <label class="block text-[11px] font-bold text-slate-700 mb-1 flex items-center gap-1">
-                        <span>👨‍🏫</span>
-                        <span>أو ادخل مباشرة باسم أي معلم من كادر المدرسة (22 معلماً):</span>
-                    </label>
-                    <select id="quickTeacherSelect" onchange="if(this.value) quickDirectLogin(this.value)" style="cursor: pointer !important; pointer-events: auto !important;" class="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-xs font-bold text-slate-800 outline-none focus:ring-2 focus:ring-slate-900 cursor-pointer shadow-sm">
-                        <option value="">-- اضغط هنا لاختيار المعلم والدخول فوراً --</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- خط فاصل -->
-            <div class="w-full flex items-center gap-3 mb-3">
-                <div class="h-px bg-slate-200 flex-1"></div>
-                <span class="text-[11px] font-bold text-slate-400">أو إدخال الرمز السري يدوياً (PIN)</span>
-                <div class="h-px bg-slate-200 flex-1"></div>
-            </div>
+            <div class="w-full text-center text-[12px] font-bold text-slate-600 mb-3">أدخل رمزك السري المكون من 4 أرقام</div>
 
             <!-- صندوق إدخال الرمز السري -->
             <div class="w-full bg-slate-50/70 border border-slate-200 rounded-2xl p-3.5 mb-2">
@@ -106,7 +46,6 @@
                 <!-- رسالة الخطأ إن وجدت مع زر مساعدة فوري -->
                 <div id="pinErrorMsg" class="hidden text-xs font-bold text-rose-600 bg-rose-50 border border-rose-200 p-2.5 rounded-xl my-2">
                     <div>⚠️ الرمز غير صحيح.</div>
-                    <button type="button" onclick="quickDirectLogin('vp')" style="cursor: pointer !important;" class="mt-1.5 px-3 py-1 bg-indigo-600 text-white rounded-lg text-xs font-black shadow hover:bg-indigo-700">اضغط هنا للدخول فوراً كوكيل المدرسة (أ. مشعل)</button>
                 </div>
 
                 <!-- لوحة الأرقام اللمسية بنمط آبل -->
@@ -144,28 +83,7 @@
     </div>
 
 
-<script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Tajawal', 'sans-serif'],
-                    },
-                    colors: {
-                        brand: {
-                            50: '#ecfdf5',
-                            100: '#d1fae5',
-                            500: '#10b981',
-                            600: '#059669',
-                            700: '#047857',
-                            800: '#065f46',
-                            900: '#064e3b',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+<!-- إعدادات الهوية في tailwind.config.js ويُبنى منها static/app.css -->
     
     <style>
         :root {
@@ -277,8 +195,209 @@
             body { background: white !important; font-size: 10pt; }
         }
         .print-only { display: none; }
+
+        /* ============================================================
+           طبقة تحسينات العرض على الجوال وسهولة الوصول (لا تغيّر البنية)
+           ============================================================ */
+        html, body { overflow-x: clip; }
+
+        /* الإشعارات لا تتجاوز عرض الشاشة */
+        #toastContainer { left: 12px !important; right: 12px; width: auto !important; margin-inline: auto; }
+
+        /* القائمة الجانبية المغلقة: خارج الشاشة وخارج ترتيب التنقل بلوحة المفاتيح */
+        #appSidebar.translate-x-full { visibility: hidden; transition: transform .3s ease, visibility 0s linear .3s; }
+        #appSidebar.translate-x-0 { visibility: visible; transition: transform .3s ease, visibility 0s; }
+
+        /* حلقة تركيز واضحة لمستخدمي لوحة المفاتيح (كانت مُلغاة في 829 عنصراً) */
+        :focus-visible { outline: 3px solid #6366f1 !important; outline-offset: 2px !important; border-radius: 10px; }
+
+        /* أحجام خط مقروءة: 9–10px تصبح 11px، و11px تصبح 12px */
+        .text-\[9px\], .text-\[10px\] { font-size: 11px !important; line-height: 1.45 !important; }
+        .text-\[11px\] { font-size: 12px !important; line-height: 1.5 !important; }
+
+        /* تباين أعلى للنص الرمادي الفاتح على الخلفيات الفاتحة (2.6:1 ← 4.8:1) */
+        .text-slate-400 { color: #64748b !important; }
+        :where(.bg-slate-800, .bg-slate-900, .bg-slate-950, .bg-black, [class*="from-slate-8"], [class*="from-slate-9"], [class*="from-indigo-9"], [class*="from-gray-9"]) .text-slate-400 { color: #a3b0c2 !important; }
+
+        /* مناطق اللمس لا تقل عن 36px على الجوال */
+        @media (pointer: coarse) {
+            button, [role="button"], a.inline-flex, select { min-height: 36px; }
+        }
+
+        @media (max-width: 767px) {
+            /* الشريط العلوي: يلتف بدل أن يدفع الصفحة خارج الشاشة */
+            header > div > div:first-child { height: auto !important; min-height: 64px; flex-wrap: wrap; gap: 8px; padding-block: 8px; }
+            header > div > div:first-child > div { min-width: 0; }
+            header button[onclick="toggleAppSidebar()"] > span:last-child { display: none; }
+            header p:has(#headerPrincipalName) { display: none; }
+            #headerSchoolName { font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 48vw; }
+            #currentUserTitle { display: none; }
+            #mainNavTabs { scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+            #mainNavTabs::-webkit-scrollbar { display: none; }
+            #mainNavTabs > button { flex-shrink: 0; }
+            /* البطاقات والجداول العريضة */
+            main, section, [id^="section-"] { min-width: 0; max-width: 100%; }
+            table { display: block; overflow-x: auto; max-width: 100%; }
+            pre, code { white-space: pre-wrap; word-break: break-word; }
+        }
+
+        .overflow-x-auto > button, .overflow-x-auto > a { white-space: nowrap; }
+
+        #roleWelcomeBanner.banner-off-home { display: none !important; }
+        @media (max-width: 767px) {
+            /* اللافتة على الجوال: أصغر حتى يظهر العمل الفعلي في الشاشة الأولى */
+            #roleWelcomeBanner { padding: 14px !important; margin-bottom: 14px !important; }
+            #roleWelcomeBanner h2 { font-size: 20px !important; }
+            #roleWelcomeBanner p { display: none; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+        }
     </style>
 
+
+    <style id="design-identity">
+        :root {
+            --ink: #0F2E2B; --ink-2: #173F3B; --ink-line: #2B5550; --ink-text: #E8EFEC; --ink-muted: #A9BDB7;
+            --primary: #0B6E5F; --primary-soft: #E3F1EE; --gold: #C99A3B; --gold-text: #7A5A14; --gold-light: #D9B45E;
+            --ground: #F4F2ED; --surface: #FFFFFF; --line: #E3DED3; --text: #172322; --muted: #56635F;
+            --apple-bg: #F4F2ED; --apple-text-primary: #172322;
+            --nav-w: 288px;
+        }
+        html, body { background: var(--ground) !important; color: var(--text); font-family: "IBM Plex Sans Arabic", system-ui, sans-serif !important; }
+        body { font-feature-settings: "tnum" 1; }
+        .text-slate-400 { color: #5F6B67 !important; }
+
+        /* الهيكل القديم يختفي: الشريط العلوي، التبويبات، القائمة المنزلقة، لافتات الترحيب */
+        body.shell-on > header { display: none !important; }
+        body.shell-on #appSidebar, body.shell-on #appSidebarBackdrop { display: none !important; }
+        body.shell-on #roleWelcomeBanner { display: none !important; }
+        body.shell-on #section-vice-principal > div:first-child { display: none !important; }
+
+        /* لافتات الأقسام الملوّنة ← لون الحبر الموحّد */
+        body.shell-on [id^="section-"] > div:first-child[class*="bg-gradient"] {
+            background: var(--ink) !important; background-image: none !important; box-shadow: none !important; border-radius: 22px !important;
+        }
+
+        /* المحتوى بجانب القائمة الثابتة */
+        @media (min-width: 1024px) {
+            body.shell-on { padding-right: var(--nav-w); }
+            body.shell-on > main { max-width: 1240px !important; }
+        }
+        body.shell-on > main { padding-top: 12px !important; }
+        @media (max-width: 1023px) { body.shell-on > main { padding-bottom: 104px !important; } }
+
+        /* القائمة الجانبية */
+        #appNav { position: fixed; top: 0; right: 0; bottom: 0; width: var(--nav-w); background: var(--ink); color: var(--ink-text);
+                  z-index: 60; display: flex; flex-direction: column; padding: 20px 14px 14px; box-sizing: border-box; overflow-y: auto; }
+        #appNav .nav-brand { display: flex; align-items: center; gap: 12px; padding: 4px 8px 20px; }
+        #appNav .nav-logo { width: 44px; height: 44px; border-radius: 14px; background: var(--ink-2); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        #appNav .nav-title { font-size: 15px; font-weight: 700; line-height: 1.3; }
+        #appNav .nav-sub { font-size: 12px; color: var(--ink-muted); }
+        #appNav .nav-item, #appNav .nav-group { width: 100%; min-height: 44px; border: 0; border-radius: 12px; background: transparent; color: var(--ink-text);
+                  display: flex; align-items: center; gap: 12px; padding: 0 12px; font: 500 14px "IBM Plex Sans Arabic", sans-serif; text-align: right; cursor: pointer; }
+        #appNav .nav-item:hover, #appNav .nav-group:hover { background: var(--ink-2); }
+        #appNav .nav-group[aria-expanded="true"] { background: var(--ink-2); font-weight: 600; color: #fff; }
+        #appNav .nav-item.active { background: var(--primary); color: #fff; font-weight: 600; }
+        #appNav .nav-chev { margin-right: auto; color: var(--ink-muted); transition: transform .2s ease; }
+        #appNav .nav-group[aria-expanded="true"] .nav-chev { transform: rotate(-90deg); }
+        #appNav .nav-children { margin: 2px 22px 6px 0; padding-right: 10px; border-right: 1px solid var(--ink-line); display: none; flex-direction: column; gap: 2px; }
+        #appNav .nav-group[aria-expanded="true"] + .nav-children { display: flex; }
+        #appNav .nav-child { min-height: 40px; border: 0; border-radius: 10px; background: transparent; color: #CFDCD8; text-align: right;
+                  display: flex; align-items: center; padding: 0 12px; font: 400 14px "IBM Plex Sans Arabic", sans-serif; cursor: pointer; }
+        #appNav .nav-child:hover { background: var(--ink-2); color: #fff; }
+        #appNav .nav-child.active { background: var(--primary); color: #fff; font-weight: 600; }
+        #appNav .nav-badge { margin-right: auto; background: var(--gold); color: var(--ink); font-size: 12px; font-weight: 700; border-radius: 999px; padding: 0 8px; line-height: 20px; }
+        #appNav .nav-children .nav-badge { background: transparent; color: var(--gold-light); padding: 0; }
+        #appNav .nav-group .nav-badge + .nav-chev { margin-right: 6px; }
+        #appNav .nav-foot { margin-top: auto; border-top: 1px solid var(--ink-line); padding: 14px 6px 4px; display: flex; align-items: center; gap: 10px; }
+        #appNav .nav-avatar { width: 40px; height: 40px; border-radius: 999px; background: var(--primary-soft); color: var(--primary); display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; }
+        #appNav .nav-icon-btn { width: 40px; height: 40px; border-radius: 10px; border: 0; background: transparent; color: var(--ink-muted); display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        #appNav .nav-icon-btn:hover { background: var(--ink-2); color: #fff; }
+        #appNav .nav-close { display: none; }
+        #appNavBackdrop { display: none; }
+
+        /* الشريط العلوي للمحتوى */
+        #appTopbar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 18px; }
+        #appTopbar .tb-menu { display: none; width: 44px; height: 44px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); color: var(--text); align-items: center; justify-content: center; cursor: pointer; }
+        #appTopbar .tb-crumb { font-size: 13px; color: var(--muted); }
+        #appTopbar .tb-title { margin: 2px 0 0; font-size: 26px; font-weight: 700; color: var(--text); line-height: 1.3; }
+        #appTopbar .tb-main { flex: 1 1 260px; min-width: 0; }
+        #appTopbar .tb-date { font-size: 13px; color: var(--muted); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; white-space: nowrap; }
+        #persistWarning { display: none; margin-bottom: 16px; background: #FDF1E3; color: #9A4A06; border: 1px solid #F3D9B5; border-radius: 16px; padding: 12px 16px; font-size: 13px; font-weight: 600; }
+
+        /* شريط الجوال السفلي */
+        #appTabbar { display: none; }
+        @media (max-width: 1023px) {
+            #appNav { transform: translateX(100%); visibility: hidden; transition: transform .25s ease, visibility 0s linear .25s; width: min(320px, 88vw); box-shadow: -20px 0 40px rgba(0,0,0,.25); }
+            #appNav.open { transform: none; visibility: visible; transition: transform .25s ease, visibility 0s; }
+            #appNav .nav-close { display: flex; margin-right: auto; }
+            #appNavBackdrop.open { display: block; position: fixed; inset: 0; background: rgba(15,46,43,.45); z-index: 59; }
+            #appTopbar .tb-menu { display: inline-flex; }
+            #appTopbar .tb-title { font-size: 22px; }
+            #appTopbar .tb-date { display: none; }
+            #appTabbar { display: grid; position: fixed; bottom: 0; right: 0; left: 0; z-index: 55; height: 76px; background: var(--surface);
+                         border-top: 1px solid var(--line); padding: 6px 4px calc(8px + env(safe-area-inset-bottom)); box-sizing: border-box; }
+            #appTabbar button { border: 0; background: transparent; color: var(--muted); display: flex; flex-direction: column; align-items: center; justify-content: center;
+                         gap: 3px; font: 500 12px "IBM Plex Sans Arabic", sans-serif; cursor: pointer; min-height: 56px; }
+            #appTabbar button.active { color: var(--primary); font-weight: 700; }
+        }
+        @media print { #appNav, #appTopbar, #appTabbar, #appNavBackdrop, #persistWarning { display: none !important; } body.shell-on { padding: 0 !important; } }
+
+        /* واجهة المعلم: الأحمر للتنبيه فقط، والأساسي للهوية */
+        #section-teacher .text-rose-600, #section-teacher .text-rose-700, #section-teacher .text-rose-800 { color: var(--primary) !important; }
+        #section-teacher .bg-rose-50, #section-teacher .bg-rose-100 { background-color: var(--primary-soft) !important; }
+        #section-teacher [class*="from-rose-"][class*="bg-gradient"]:not(:first-child), #section-teacher button[type="submit"] { background: var(--primary) !important; background-image: none !important; box-shadow: none !important; }
+        body.tt-locked .tt-edit-only { display: none !important; }
+
+        /* الرموز التعبيرية داخل العناوين والأزرار تُخفى لصالح طابع بصري موحّد */
+        .emoji-glyph { display: none !important; }
+
+        /* مرشحو الانتظار: الثلاثة الأنسب أولاً */
+        .cand-collapsed > *:nth-child(n+4) { display: none !important; }
+        .cand-toggle { margin-top: 12px; height: 40px; padding: 0 16px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); color: var(--primary);
+                       font: 600 14px "IBM Plex Sans Arabic", sans-serif; cursor: pointer; }
+
+        /* خانات خارج الدوام في الجدول العام */
+        td.cell-off { background: repeating-linear-gradient(135deg, #F0EEE8, #F0EEE8 6px, #E8E4DB 6px, #E8E4DB 12px) !important; }
+        td.cell-off input { background: transparent !important; border-color: transparent !important; color: #8A938F !important; }
+        td.cell-violation input { background: #FDECEA !important; border-color: #B42318 !important; color: #B42318 !important; }
+
+        /* نوافذ الشعبة وسلامة الجدول */
+        .dz-modal { position: fixed; inset: 0; z-index: 80; background: rgba(15,46,43,.5); display: flex; align-items: flex-start; justify-content: center; padding: 24px 12px; overflow-y: auto; }
+        .dz-modal.hidden { display: none; }
+        .dz-card { background: var(--surface); border-radius: 24px; width: 100%; max-width: 1100px; padding: 22px; box-sizing: border-box; box-shadow: 0 30px 60px rgba(0,0,0,.25); }
+        .dz-head { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+        .dz-head h2 { margin: 0; font-size: 20px; font-weight: 700; flex: 1; }
+        .dz-x { width: 44px; height: 44px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; font-size: 18px; color: var(--text); }
+        .dz-select { height: 44px; border-radius: 12px; border: 1px solid #D5CFC2; padding: 0 12px; font: 500 14px "IBM Plex Sans Arabic", sans-serif; background: #fff; color: var(--text); }
+        .dz-table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 16px; }
+        .dz-table { width: 100%; border-collapse: collapse; min-width: 760px; font-size: 13px; }
+        .dz-table th { background: #FAF9F6; color: var(--muted); font-weight: 600; padding: 10px; border-bottom: 1px solid var(--line); text-align: center; }
+        .dz-table th:first-child, .dz-table td:first-child { text-align: right; padding-right: 14px; white-space: nowrap; font-weight: 700; color: var(--text); }
+        .dz-table td { border-top: 1px solid #EEEAE1; padding: 8px; text-align: center; vertical-align: top; }
+        .dz-cell { border-radius: 10px; padding: 6px; line-height: 1.5; }
+        .dz-cell b { display: block; font-size: 13px; }
+        .dz-cell span { font-size: 12px; color: var(--muted); }
+        .dz-empty { background: #FDF1E3; color: #9A4A06; font-weight: 600; }
+        .dz-multi { background: #FDECEA; }
+        .dz-off { color: #8A938F; }
+        .dz-legend { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 12px; font-size: 12px; color: var(--muted); }
+        .dz-legend i { display: inline-block; width: 12px; height: 12px; border-radius: 4px; vertical-align: -2px; margin-left: 6px; }
+        .dz-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 18px; }
+        .dz-stat { background: #FAF9F6; border: 1px solid var(--line); border-radius: 16px; padding: 14px; }
+        .dz-stat div:first-child { font-size: 13px; color: var(--muted); }
+        .dz-stat div:last-child { font-size: 26px; font-weight: 700; }
+        .dz-bars { display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px; }
+        .dz-bar { display: grid; grid-template-columns: 170px 1fr 92px; align-items: center; gap: 10px; font-size: 13px; }
+        .dz-bar .track { height: 12px; border-radius: 999px; background: #F0EEE8; overflow: hidden; }
+        .dz-bar .fill { height: 100%; background: var(--primary); border-radius: 999px; }
+        .dz-list { margin: 0; padding: 0 18px 0 0; font-size: 13px; line-height: 1.9; }
+        .dz-sec { font-size: 15px; font-weight: 700; margin: 18px 0 8px; }
+        .dz-pill { display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+        @media (max-width: 640px) { .dz-bar { grid-template-columns: 1fr; } .dz-card { padding: 16px; } }
+    </style>
 </head>
 <body class="min-h-screen text-slate-800 flex flex-col">
 
@@ -874,7 +993,7 @@
                     <div class="flex items-center justify-between border-b border-slate-100 pb-3">
                         <h3 class="font-black text-base text-slate-900 flex items-center gap-2">
                             <span>📅</span>
-                            <span>الجدول الدراسي الأسبوعي المعتمد (35 حصة)</span>
+                            <span>الجدول الدراسي الأسبوعي المعتمد</span>
                         </h3>
                         <span class="text-xs text-slate-500 font-bold">الحصص المعتمدة من إدارة المدرسة</span>
                     </div>
@@ -2143,7 +2262,7 @@
                 <div class="grid grid-cols-2 gap-3">
                     <div>
                         <label class="block text-xs font-bold text-slate-700 mb-1">المعلم الغائب / المستأذن *</label>
-                        <input type="text" id="modalWaitingAbsentTeacher" required placeholder="اسم المعلم الغائب" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs outline-none">
+                        <input type="text" id="modalWaitingAbsentTeacher" list="officialTeacherNames" autocomplete="off" required placeholder="اسم المعلم الغائب" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs outline-none">
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-700 mb-1">الصف والفصل *</label>
@@ -2814,6 +2933,52 @@
     <!-- كود المحرك البرمجي المتكامل لثانوية أبي أيوب الأنصاري -->
     <!-- ======================================================== -->
     <script>
+    // ========================================================
+    // جلسة الدخول الموقّعة من الخادم (Bearer Token)
+    // ========================================================
+    const AUTH_TOKEN_KEY = 'sch_auth_token';
+    function getAuthToken() {
+        try { return sessionStorage.getItem(AUTH_TOKEN_KEY) || localStorage.getItem(AUTH_TOKEN_KEY) || ''; } catch (e) { return ''; }
+    }
+    function setAuthToken(token, remember) {
+        try {
+            sessionStorage.setItem(AUTH_TOKEN_KEY, token);
+            if (remember) localStorage.setItem(AUTH_TOKEN_KEY, token); else localStorage.removeItem(AUTH_TOKEN_KEY);
+        } catch (e) {}
+    }
+    function clearAuthToken() {
+        try {
+            sessionStorage.removeItem(AUTH_TOKEN_KEY); localStorage.removeItem(AUTH_TOKEN_KEY);
+            sessionStorage.removeItem('sch_current_user'); localStorage.removeItem('sch_remembered_user');
+        } catch (e) {}
+    }
+    (function installAuthFetch() {
+        const nativeFetch = window.fetch.bind(window);
+        let sessionExpiredShown = false;
+        window.fetch = function (input, init) {
+            const url = typeof input === 'string' ? input : (input && input.url) || '';
+            const isApi = url.startsWith('/api/') || url.startsWith(location.origin + '/api/');
+            const isLogin = url.indexOf('/api/auth/login') !== -1;
+            if (isApi && !isLogin) {
+                init = Object.assign({}, init || {});
+                const headers = new Headers(init.headers || {});
+                const tok = getAuthToken();
+                // بلا جلسة: لا داعي لإرسال الطلب أصلاً (يوفر طلبات مرفوضة قبل الدخول)
+                if (!tok) return Promise.resolve(new Response(JSON.stringify({ detail: 'يرجى تسجيل الدخول' }), { status: 401, headers: { 'Content-Type': 'application/json' } }));
+                headers.set('Authorization', 'Bearer ' + tok);
+                init.headers = headers;
+            }
+            return nativeFetch(input, init).then(res => {
+                if (isApi && !isLogin && res.status === 401 && !sessionExpiredShown) {
+                    sessionExpiredShown = true;
+                    clearAuthToken();
+                    if (typeof showPinAuthOverlay === 'function') showPinAuthOverlay();
+                }
+                return res;
+            });
+        };
+    })();
+
     // إعدادات وبيانات المدرسة
     let schoolSettings = JSON.parse(localStorage.getItem('sch_settings_final') || 'null') || {
         schoolName: "ثانوية أبي أيوب الأنصاري",
@@ -2826,186 +2991,186 @@
     const DAYS_OF_WEEK = ["الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس"];
 
     const DEFAULT_OFFICIAL_TEACHERS = [
-  {
-    "id": 1,
-    "name": "أيوب السالم",
-    "subject": "اللغة العربية",
-    "load": 16,
-    "pin": "1001",
-    "phone": ""
-  },
-  {
-    "id": 2,
-    "name": "الشبرمي",
-    "subject": "الكيمياء",
-    "load": 6,
-    "pin": "1002",
-    "phone": ""
-  },
-  {
-    "id": 3,
-    "name": "تركي الرزق",
-    "subject": "الدراسات الإسلامية / القانون",
-    "load": 7,
-    "pin": "1003",
-    "phone": ""
-  },
-  {
-    "id": 4,
-    "name": "خالد الزهيري",
-    "subject": "التاريخ / النشاط",
-    "load": 8,
-    "pin": "1004",
-    "phone": ""
-  },
-  {
-    "id": 5,
-    "name": "رائد الفوزان",
-    "subject": "اللغة الإنجليزية (E)",
-    "load": 15,
-    "pin": "1005",
-    "phone": ""
-  },
-  {
-    "id": 6,
-    "name": "رائد المطرفي",
-    "subject": "إدارة الأعمال / تخطيط القرار",
-    "load": 15,
-    "pin": "1006",
-    "phone": ""
-  },
-  {
-    "id": 7,
-    "name": "رباح الرشيدي",
-    "subject": "الأحياء وعلم البيئة",
-    "load": 23,
-    "pin": "1007",
-    "phone": ""
-  },
-  {
-    "id": 8,
-    "name": "سالم الشويمان",
-    "subject": "الفيزياء",
-    "load": 18,
-    "pin": "1008",
-    "phone": ""
-  },
-  {
-    "id": 9,
-    "name": "سليمان الخطاف",
-    "subject": "اللغة العربية / البحث ومصادر التعلم",
-    "load": 16,
-    "pin": "1009",
-    "phone": ""
-  },
-  {
-    "id": 10,
-    "name": "سليمان السواجي",
-    "subject": "الرياضيات / الإحصاء",
-    "load": 17,
-    "pin": "1010",
-    "phone": ""
-  },
-  {
-    "id": 11,
-    "name": "صالح السعيد",
-    "subject": "الرياضيات",
-    "load": 18,
-    "pin": "1011",
-    "phone": ""
-  },
-  {
-    "id": 12,
-    "name": "عبدالرحيم الحجاب",
-    "subject": "الكيمياء",
-    "load": 20,
-    "pin": "1012",
-    "phone": ""
-  },
-  {
-    "id": 13,
-    "name": "عبدالله العنزي",
-    "subject": "الفنون / الجغرافيا / النشاط",
-    "load": 8,
-    "pin": "1013",
-    "phone": ""
-  },
-  {
-    "id": 14,
-    "name": "علي السلامة",
-    "subject": "اللغة الإنجليزية (E)",
-    "load": 15,
-    "pin": "1014",
-    "phone": ""
-  },
-  {
-    "id": 15,
-    "name": "علي الغلفص",
-    "subject": "القرآن الكريم / الدراسات الإسلامية",
-    "load": 6,
-    "pin": "1015",
-    "phone": ""
-  },
-  {
-    "id": 16,
-    "name": "فهد العنزي",
-    "subject": "المهارات الرقمية",
-    "load": 16,
-    "pin": "1016",
-    "phone": ""
-  },
-  {
-    "id": 17,
-    "name": "محمد التويجري",
-    "subject": "الفقه / التوحيد",
-    "load": 8,
-    "pin": "1017",
-    "phone": ""
-  },
-  {
-    "id": 18,
-    "name": "محمد الطامي",
-    "subject": "التفكير الناقد",
-    "load": 9,
-    "pin": "1018",
-    "phone": ""
-  },
-  {
-    "id": 19,
-    "name": "محمد الهبدان",
-    "subject": "اللغة الإنجليزية (E)",
-    "load": 12,
-    "pin": "1019",
-    "phone": ""
-  },
-  {
-    "id": 20,
-    "name": "نايف البصري",
-    "subject": "التربية البدنية",
-    "load": 15,
-    "pin": "1020",
-    "phone": ""
-  },
-  {
-    "id": 21,
-    "name": "نايف الحسينان",
-    "subject": "العلوم الإدارية والمالية",
-    "load": 17,
-    "pin": "1021",
-    "phone": ""
-  },
-  {
-    "id": 22,
-    "name": "يوسف السلمي",
-    "subject": "النشاط الطلابي / الإدارة",
-    "load": 2,
-    "pin": "1022",
-    "phone": ""
-  }
+        {
+                "id": 1,
+                "name": "أيوب السالم",
+                "subject": "اللغة العربية",
+                "load": 16,
+                "pin": "1001",
+                "phone": ""
+        },
+        {
+                "id": 2,
+                "name": "الشبرمي",
+                "subject": "الكيمياء",
+                "load": 6,
+                "pin": "1002",
+                "phone": ""
+        },
+        {
+                "id": 3,
+                "name": "تركي الرزق",
+                "subject": "الدراسات الإسلامية / القانون",
+                "load": 7,
+                "pin": "1003",
+                "phone": ""
+        },
+        {
+                "id": 4,
+                "name": "خالد الزهيري",
+                "subject": "التاريخ / النشاط",
+                "load": 8,
+                "pin": "1004",
+                "phone": ""
+        },
+        {
+                "id": 5,
+                "name": "رائد الفوزان",
+                "subject": "اللغة الإنجليزية (E)",
+                "load": 15,
+                "pin": "1005",
+                "phone": ""
+        },
+        {
+                "id": 6,
+                "name": "رائد المطرفي",
+                "subject": "إدارة الأعمال / تخطيط القرار",
+                "load": 15,
+                "pin": "1006",
+                "phone": ""
+        },
+        {
+                "id": 7,
+                "name": "رباح الرشيدي",
+                "subject": "الأحياء وعلم البيئة",
+                "load": 23,
+                "pin": "1007",
+                "phone": ""
+        },
+        {
+                "id": 8,
+                "name": "سالم الشويمان",
+                "subject": "الفيزياء",
+                "load": 18,
+                "pin": "1008",
+                "phone": ""
+        },
+        {
+                "id": 9,
+                "name": "سليمان الخطاف",
+                "subject": "اللغة العربية / البحث ومصادر التعلم",
+                "load": 16,
+                "pin": "1009",
+                "phone": ""
+        },
+        {
+                "id": 10,
+                "name": "سليمان السواجي",
+                "subject": "الرياضيات / الإحصاء",
+                "load": 17,
+                "pin": "1010",
+                "phone": ""
+        },
+        {
+                "id": 11,
+                "name": "صالح السعيد",
+                "subject": "الرياضيات",
+                "load": 18,
+                "pin": "1011",
+                "phone": ""
+        },
+        {
+                "id": 12,
+                "name": "عبدالرحيم الحجاب",
+                "subject": "الكيمياء",
+                "load": 19,
+                "pin": "1012",
+                "phone": ""
+        },
+        {
+                "id": 13,
+                "name": "عبدالله العنزي",
+                "subject": "الفنون / الجغرافيا / النشاط",
+                "load": 8,
+                "pin": "1013",
+                "phone": ""
+        },
+        {
+                "id": 14,
+                "name": "علي السلامة",
+                "subject": "اللغة الإنجليزية (E)",
+                "load": 15,
+                "pin": "1014",
+                "phone": ""
+        },
+        {
+                "id": 15,
+                "name": "علي الغلفص",
+                "subject": "القرآن الكريم / الدراسات الإسلامية",
+                "load": 6,
+                "pin": "1015",
+                "phone": ""
+        },
+        {
+                "id": 16,
+                "name": "فهد العنزي",
+                "subject": "المهارات الرقمية",
+                "load": 17,
+                "pin": "1016",
+                "phone": ""
+        },
+        {
+                "id": 17,
+                "name": "محمد التويجري",
+                "subject": "الفقه / التوحيد",
+                "load": 8,
+                "pin": "1017",
+                "phone": ""
+        },
+        {
+                "id": 18,
+                "name": "محمد الطامي",
+                "subject": "التفكير الناقد",
+                "load": 9,
+                "pin": "1018",
+                "phone": ""
+        },
+        {
+                "id": 19,
+                "name": "محمد الهبدان",
+                "subject": "اللغة الإنجليزية (E)",
+                "load": 12,
+                "pin": "1019",
+                "phone": ""
+        },
+        {
+                "id": 20,
+                "name": "نايف البصري",
+                "subject": "التربية البدنية",
+                "load": 15,
+                "pin": "1020",
+                "phone": ""
+        },
+        {
+                "id": 21,
+                "name": "نايف الحسينان",
+                "subject": "العلوم الإدارية والمالية",
+                "load": 17,
+                "pin": "1021",
+                "phone": ""
+        },
+        {
+                "id": 22,
+                "name": "يوسف السلمي",
+                "subject": "النشاط الطلابي / الإدارة",
+                "load": 2,
+                "pin": "1022",
+                "phone": ""
+        }
 ];
 
     // ترقية وتحديث بيانات المعلمين والجدول للإصدار الدقيق المعتمد
-    const DATA_VERSION = "2026_10_29_flawless_v10";
+    const DATA_VERSION = "2026_10_29_paper_v8";
     if (localStorage.getItem('sch_data_version') !== DATA_VERSION) {
         localStorage.removeItem('sch_teachers_final');
         localStorage.removeItem('sch_timetable_matrix_final');
@@ -3025,14 +3190,83 @@
     let selectedBehaviorName = '';
     let selectedBehaviorDegree = 'الدرجة الأولى';
     let selectedBehaviorDeduction = 0;
+    let currentStatusFilter = 'all';
+    // متغيرات نافذة التعميم كانت غير معرّفة فتنهار عند فتحها
+    let broadcastSelectedTeacherIds = new Set();
+    let broadcastSentTeacherIds = new Set();
+    let broadcastStepperIndex = 0;
+    // نماذج رسائل التعميم (كانت مستدعاة دون تعريف). {اسم_المعلم} يُستبدل تلقائياً لكل معلم.
+    const BROADCAST_TEMPLATES = {
+        supervision: "السلام عليكم ورحمة الله وبركاته\nالأستاذ الفاضل {اسم_المعلم}، حفظكم الله\nنذكّركم بموعد الإشراف والمناوبة اليوم، والتواجد في مواقع الإشراف أثناء الفسحة ووقت الانصراف.\nشاكرين تعاونكم.\nإدارة ثانوية أبي أيوب الأنصاري",
+        meeting: "السلام عليكم ورحمة الله وبركاته\nالأستاذ الفاضل {اسم_المعلم}، حفظكم الله\nنتشرف بدعوتكم لحضور اجتماع مجلس المعلمين يوم ........ الموافق ........ الساعة ........ في ........\nنأمل الحضور في الموعد.\nإدارة ثانوية أبي أيوب الأنصاري",
+        grades: "السلام عليكم ورحمة الله وبركاته\nالأستاذ الفاضل {اسم_المعلم}، حفظكم الله\nنأمل استكمال رصد درجات أعمال السنة والتقييمات في نظام نور قبل تاريخ ........\nشاكرين جهودكم.\nإدارة ثانوية أبي أيوب الأنصاري",
+        morning: "السلام عليكم ورحمة الله وبركاته\nالأستاذ الفاضل {اسم_المعلم}، حفظكم الله\nنؤكد على أهمية الحضور المبكر والمشاركة في الطابور الصباحي ومتابعة اصطفاف الطلاب.\nشاكرين حرصكم.\nإدارة ثانوية أبي أيوب الأنصاري",
+        thanks: "السلام عليكم ورحمة الله وبركاته\nالأستاذ الفاضل {اسم_المعلم}، حفظكم الله\nتتقدم إدارة المدرسة بخالص الشكر والتقدير لكم على انضباطكم وعطائكم المتميز، سائلين الله لكم التوفيق.\nإدارة ثانوية أبي أيوب الأنصاري",
+        custom: "السلام عليكم ورحمة الله وبركاته\nالأستاذ الفاضل {اسم_المعلم}، حفظكم الله\n\n\nإدارة ثانوية أبي أيوب الأنصاري"
+    };
+
+    // ========================================================
+    // الإشعارات المنبثقة (Toast) — كانت مستدعاة 69 مرة دون تعريف، فيتوقف تنفيذ أي إجراء عند أول إشعار
+    // ========================================================
+    const STATUS_LABELS_AR = {
+        pending: 'بانتظار القرار', in_progress: 'قيد الإجراء', resolved: 'تم الحل',
+        new: 'جديد', in_followup: 'قيد المتابعة', completed: 'مكتمل',
+        excused: 'بعذر', unexcused: 'بدون عذر',
+        assigned: 'مسند', executed: 'منفذ', cancelled: 'ملغي'
+    };
+    function statusLabelAr(s) { return STATUS_LABELS_AR[s] || s || 'مسجل'; }
+
+    function showToast(message, type = 'info') {
+        const styles = {
+            success: { icon: '✅', cls: 'border-emerald-200 text-emerald-900' },
+            error:   { icon: '⛔', cls: 'border-rose-200 text-rose-900' },
+            warning: { icon: '⚠️', cls: 'border-amber-200 text-amber-900' },
+            urgent:  { icon: '🔔', cls: 'border-rose-300 text-rose-900 ring-2 ring-rose-200' },
+            info:    { icon: 'ℹ️', cls: 'border-slate-200 text-slate-900' }
+        };
+        const st = styles[type] || styles.info;
+        let container = document.getElementById('toastContainer');
+        if (!container) {
+            container = document.createElement('div');
+            container.id = 'toastContainer';
+            container.className = 'fixed top-5 left-5 z-50 flex flex-col gap-3 max-w-md w-full pointer-events-none no-print';
+            document.body.appendChild(container);
+        }
+        const toast = document.createElement('div');
+        toast.setAttribute('role', type === 'error' || type === 'urgent' ? 'alert' : 'status');
+        toast.className = `pointer-events-auto flex items-start gap-2.5 bg-white/95 backdrop-blur-xl border rounded-2xl px-4 py-3 shadow-lg text-xs font-bold ${st.cls}`;
+        toast.style.cssText = 'opacity:0;transform:translateY(-8px);transition:opacity .2s ease,transform .2s ease;';
+        const icon = document.createElement('span');
+        icon.textContent = st.icon;
+        const text = document.createElement('span');
+        text.className = 'flex-1 leading-relaxed';
+        text.textContent = String(message == null ? '' : message);   // نص فقط: لا يمكن حقن HTML عبر الإشعار
+        const close = document.createElement('button');
+        close.type = 'button';
+        close.textContent = '✕';
+        close.className = 'text-slate-400 hover:text-slate-700 text-[11px]';
+        close.onclick = () => dismiss();
+        toast.append(icon, text, close);
+        container.appendChild(toast);
+        while (container.children.length > 4) container.firstElementChild.remove();
+        requestAnimationFrame(() => { toast.style.opacity = '1'; toast.style.transform = 'translateY(0)'; });
+        const ttl = type === 'error' || type === 'urgent' ? 7000 : 4000;
+        let timer = setTimeout(dismiss, ttl);
+        toast.onmouseenter = () => clearTimeout(timer);
+        toast.onmouseleave = () => { timer = setTimeout(dismiss, 1500); };
+        function dismiss() {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateY(-8px)';
+            setTimeout(() => toast.remove(), 220);
+        }
+    }
 
     // فحص نسخة البيانات وتطهير ذاكرة المتصفح تلقائياً عند وجود أي تحديث أو خلل
-    const SYSTEM_CANONICAL_VERSION = '2026-10-29_v10_flawless_schedule';
+    const SYSTEM_CANONICAL_VERSION = '2026-10-29_v8_paper_scan_verified';
     if (localStorage.getItem('sch_canonical_ver') !== SYSTEM_CANONICAL_VERSION) {
         localStorage.setItem('sch_canonical_ver', SYSTEM_CANONICAL_VERSION);
         localStorage.setItem('sch_teachers_final', JSON.stringify(DEFAULT_OFFICIAL_TEACHERS));
-        localStorage.setItem('sch_timetable_matrix_final', JSON.stringify(DEFAULT_TIMETABLE_MATRIX));
-        console.log('✅ تم تصفير الكاش وتثبيت الجدول الأصلي المعتمد للـ 22 معلماً بنجاح.');
+        window.__resetTimetableToCanonical = true; // يُنفذ بعد تعريف DEFAULT_TIMETABLE_MATRIX (انظر أدناه)
     }
 
     let OFFICIAL_TEACHERS = JSON.parse(localStorage.getItem('sch_teachers_final') || 'null') || JSON.parse(JSON.stringify(DEFAULT_OFFICIAL_TEACHERS));
@@ -3046,1041 +3280,1046 @@
     // القيمة "" تعني المعلم متفرغ في تلك الحصة ومتاح لأخذ الانتظار!
         // جدول الحصص الأسبوعي الكامل (35 حصة لكل معلم) مفرغ بدقة تامة من الجدول العام لثانوية أبي أيوب الأنصاري
     const DEFAULT_TIMETABLE_MATRIX = {
-  "1": {
-    "الأحد": [
-      "",
-      "",
-      "",
-      "لغوية 6",
-      "لغوية 5",
-      "لغوية 7",
-      "بحث 10"
-    ],
-    "الاثنين": [
-      "",
-      "",
-      "",
-      "",
-      "لغوية 7",
-      "لغوية 5",
-      "لغوية 7"
-    ],
-    "الثلاثاء": [
-      "",
-      "",
-      "",
-      "بحث 10",
-      "لغوية 6",
-      "لغوية 5",
-      ""
-    ],
-    "الأربعاء": [
-      "",
-      "",
-      "",
-      "لغوية 6",
-      "أدبية 10",
-      "لغوية 5",
-      ""
-    ],
-    "الخميس": [
-      "",
-      "",
-      "",
-      "لغوية 6",
-      "لغوية 7",
-      "أدبية 10",
-      ""
-    ]
-  },
-  "2": {
-    "الأحد": [
-      "",
-      "",
-      "",
-      "",
-      "",
-      "كيمياء 9",
-      ""
-    ],
-    "الاثنين": [
-      "كيمياء 9",
-      "",
-      "",
-      "",
-      "",
-      "",
-      ""
-    ],
-    "الثلاثاء": [
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      ""
-    ],
-    "الأربعاء": [
-      "كيمياء 8",
-      "كيمياء 9",
-      "",
-      "",
-      "",
-      "",
-      ""
-    ],
-    "الخميس": [
-      "كيمياء 8",
-      "كيمياء 8",
-      "",
-      "",
-      "",
-      "",
-      ""
-    ]
-  },
-  "3": {
-    "الأحد": [
-      "قرآن 2",
-      "قانون 10",
-      "",
-      "",
-      "",
-      "",
-      ""
-    ],
-    "الاثنين": [
-      "",
-      "",
-      "",
-      "",
-      "قرآن 2",
-      "قانون 10",
-      ""
-    ],
-    "الثلاثاء": [
-      "",
-      "",
-      "",
-      "",
-      "قرآن 2",
-      "قرآن 2",
-      ""
-    ],
-    "الأربعاء": [
-      "",
-      "",
-      "",
-      "",
-      "",
-      "قانون 10",
-      ""
-    ],
-    "الخميس": [
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      ""
-    ]
-  },
-  "4": {
-    "الأحد": [
-      "",
-      "",
-      "تاريخ 6",
-      "",
-      "",
-      "",
-      ""
-    ],
-    "الاثنين": [
-      "تاريخ 6",
-      "",
-      "نشاط 7",
-      "",
-      "",
-      "",
-      ""
-    ],
-    "الثلاثاء": [
-      "تاريخ 5",
-      "",
-      "",
-      "",
-      "تاريخ 5",
-      "تاريخ 6",
-      ""
-    ],
-    "الأربعاء": [
-      "",
-      "",
-      "",
-      "تاريخ 5",
-      "نشاط 7",
-      "",
-      ""
-    ],
-    "الخميس": [
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      ""
-    ]
-  },
-  "5": {
-    "الأحد": [
-      "",
-      "",
-      "",
-      "E 5",
-      "E 7",
-      "E 6",
-      ""
-    ],
-    "الاثنين": [
-      "E 7",
-      "E 6",
-      "E 5",
-      "",
-      "",
-      "",
-      ""
-    ],
-    "الثلاثاء": [
-      "E 6",
-      "E 5",
-      "E 7",
-      "",
-      "",
-      "",
-      ""
-    ],
-    "الأربعاء": [
-      "",
-      "",
-      "E 5",
-      "E 7",
-      "E 6",
-      "",
-      ""
-    ],
-    "الخميس": [
-      "",
-      "E 7",
-      "E 6",
-      "E 5",
-      "",
-      "",
-      ""
-    ]
-  },
-  "6": {
-    "الأحد": [
-      "",
-      "",
-      "",
-      "أعمال 7",
-      "",
-      "تخطيط 10",
-      "قرار 7"
-    ],
-    "الاثنين": [
-      "",
-      "",
-      "تخطيط 10",
-      "أعمال 7",
-      "إدارة 10",
-      "قرار 7",
-      ""
-    ],
-    "الثلاثاء": [
-      "",
-      "",
-      "",
-      "أعمال 7",
-      "قرار 7",
-      "إدارة 10",
-      ""
-    ],
-    "الأربعاء": [
-      "",
-      "تخطيط 10",
-      "قرار 7",
-      "",
-      "",
-      "",
-      ""
-    ],
-    "الخميس": [
-      "أعمال 7",
-      "إدارة 10",
-      "",
-      "قرار 7",
-      "",
-      "",
-      ""
-    ]
-  },
-  "7": {
-    "الأحد": [
-      "أحياء 3",
-      "أرض 8",
-      "",
-      "",
-      "أرض 9",
-      "أحياء 2",
-      "أحياء 1"
-    ],
-    "الاثنين": [
-      "أرض 8",
-      "أحياء 5",
-      "",
-      "",
-      "أحياء 6",
-      "أحياء 6",
-      "أحياء 5"
-    ],
-    "الثلاثاء": [
-      "أرض 8",
-      "أحياء 2",
-      "",
-      "أرض 9",
-      "أحياء 3",
-      "أحياء 1",
-      ""
-    ],
-    "الأربعاء": [
-      "أحياء 5",
-      "",
-      "",
-      "أحياء 1",
-      "أرض 9",
-      "أحياء 6",
-      ""
-    ],
-    "الخميس": [
-      "أحياء 2",
-      "أحياء 3",
-      "",
-      "",
-      "أحياء 6",
-      "أحياء 5",
-      ""
-    ]
-  },
-  "8": {
-    "الأحد": [
-      "فيزياء 5",
-      "فيزياء 5",
-      "",
-      "",
-      "",
-      "",
-      "فيزياء 6"
-    ],
-    "الاثنين": [
-      "فيزياء 5",
-      "فيزياء 9",
-      "فيزياء 8",
-      "فيزياء 9",
-      "",
-      "",
-      "فيزياء 8"
-    ],
-    "الثلاثاء": [
-      "",
-      "فيزياء 6",
-      "",
-      "",
-      "فيزياء 9",
-      "فيزياء 8",
-      ""
-    ],
-    "الأربعاء": [
-      "فيزياء 9",
-      "فيزياء 6",
-      "فيزياء 8",
-      "",
-      "",
-      "",
-      ""
-    ],
-    "الخميس": [
-      "",
-      "",
-      "فيزياء 9",
-      "فيزياء 8",
-      "فيزياء 5",
-      "فيزياء 6",
-      ""
-    ]
-  },
-  "9": {
-    "الأحد": [
-      "",
-      "",
-      "لغوية 3",
-      "لغوية 1",
-      "لغوية 2",
-      "",
-      "بحث 8"
-    ],
-    "الاثنين": [
-      "",
-      "لغوية 1",
-      "",
-      "لغوية 2",
-      "بحث 9",
-      "",
-      "لغوية 3"
-    ],
-    "الثلاثاء": [
-      "",
-      "لغوية 3",
-      "بحث 8",
-      "",
-      "",
-      "",
-      ""
-    ],
-    "الأربعاء": [
-      "",
-      "لغوية 1",
-      "بحث 9",
-      "لغوية 2",
-      "لغوية 3",
-      "",
-      ""
-    ],
-    "الخميس": [
-      "",
-      "",
-      "لغوية 1",
-      "",
-      "لغوية 2",
-      "",
-      ""
-    ]
-  },
-  "10": {
-    "الأحد": [
-      "إحصاء 10",
-      "رياضيات 3",
-      "رياضيات 1",
-      "رياضيات 2",
-      "",
-      "",
-      ""
-    ],
-    "الاثنين": [
-      "رياضيات 3",
-      "رياضيات 2",
-      "رياضيات 1",
-      "",
-      "",
-      "",
-      "إحصاء 10"
-    ],
-    "الثلاثاء": [
-      "",
-      "رياضيات 1",
-      "رياضيات 2",
-      "رياضيات 3",
-      "",
-      "",
-      ""
-    ],
-    "الأربعاء": [
-      "رياضيات 1",
-      "رياضيات 3",
-      "رياضيات 2",
-      "",
-      "",
-      "",
-      ""
-    ],
-    "الخميس": [
-      "رياضيات 1",
-      "رياضيات 2",
-      "رياضيات 3",
-      "",
-      "",
-      "",
-      ""
-    ]
-  },
-  "11": {
-    "الأحد": [
-      "",
-      "",
-      "",
-      "رياضيات 9",
-      "رياضيات 6",
-      "رياضيات 8",
-      "رياضيات 5"
-    ],
-    "الاثنين": [
-      "",
-      "",
-      "رياضيات 6",
-      "رياضيات 5",
-      "",
-      "رياضيات 8",
-      "رياضيات 9"
-    ],
-    "الثلاثاء": [
-      "",
-      "رياضيات 9",
-      "رياضيات 6",
-      "رياضيات 5",
-      "",
-      "",
-      ""
-    ],
-    "الأربعاء": [
-      "",
-      "رياضيات 5",
-      "رياضيات 6",
-      "رياضيات 9",
-      "رياضيات 8",
-      "",
-      ""
-    ],
-    "الخميس": [
-      "رياضيات 5",
-      "رياضيات 6",
-      "رياضيات 8",
-      "",
-      "",
-      "",
-      ""
-    ]
-  },
-  "12": {
-    "الأحد": [
-      "",
-      "كيمياء 6",
-      "كيمياء 5",
-      "",
-      "كيمياء 3",
-      "كيمياء 5",
-      "كيمياء 2"
-    ],
-    "الاثنين": [
-      "كيمياء 2",
-      "",
-      "",
-      "كيمياء 6",
-      "كيمياء 3",
-      "كيمياء 1",
-      "كيمياء 6"
-    ],
-    "الثلاثاء": [
-      "كيمياء 1",
-      "",
-      "كيمياء 5",
-      "كيمياء 6",
-      "",
-      "",
-      ""
-    ],
-    "الأربعاء": [
-      "",
-      "",
-      "",
-      "كيمياء 3",
-      "كيمياء 5",
-      "كيمياء 2",
-      ""
-    ],
-    "الخميس": [
-      "كيمياء 6",
-      "كيمياء 5",
-      "كيمياء 2",
-      "كيمياء 1",
-      "",
-      "",
-      ""
-    ]
-  },
-  "13": {
-    "الأحد": [
-      "نشاط 6",
-      "",
-      "جغرافيا 10",
-      "",
-      "",
-      "",
-      ""
-    ],
-    "الاثنين": [
-      "",
-      "نشاط 10",
-      "",
-      "",
-      "",
-      "",
-      ""
-    ],
-    "الثلاثاء": [
-      "نشاط 10",
-      "",
-      "",
-      "",
-      "",
-      "فنون 7",
-      ""
-    ],
-    "الأربعاء": [
-      "نشاط 6",
-      "",
-      "",
-      "",
-      "",
-      "فنون 7",
-      ""
-    ],
-    "الخميس": [
-      "جغرافيا 10",
-      "",
-      "",
-      "",
-      "",
-      "",
-      ""
-    ]
-  },
-  "14": {
-    "الأحد": [
-      "",
-      "E 1",
-      "E 2",
-      "E 3",
-      "",
-      "",
-      ""
-    ],
-    "الاثنين": [
-      "",
-      "",
-      "",
-      "",
-      "E 1",
-      "E 3",
-      "E 2"
-    ],
-    "الثلاثاء": [
-      "",
-      "",
-      "E 3",
-      "E 2",
-      "E 1",
-      "",
-      ""
-    ],
-    "الأربعاء": [
-      "E 3",
-      "E 2",
-      "E 1",
-      "",
-      "",
-      "",
-      ""
-    ],
-    "الخميس": [
-      "",
-      "",
-      "",
-      "E 2",
-      "E 1",
-      "E 3",
-      ""
-    ]
-  },
-  "15": {
-    "الأحد": [
-      "قرآن 1",
-      "",
-      "",
-      "",
-      "",
-      "",
-      ""
-    ],
-    "الاثنين": [
-      "قرآن 1",
-      "",
-      "",
-      "نشاط 8",
-      "",
-      "",
-      ""
-    ],
-    "الثلاثاء": [
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      ""
-    ],
-    "الأربعاء": [
-      "",
-      "",
-      "",
-      "",
-      "",
-      "قرآن 1",
-      ""
-    ],
-    "الخميس": [
-      "نشاط 9",
-      "قرآن 1",
-      "",
-      "",
-      "",
-      "",
-      ""
-    ]
-  },
-  "16": {
-    "الأحد": [
-      "رقمية 8",
-      "رقمية 7",
-      "",
-      "",
-      "رقمية 1",
-      "رقمية 3",
-      ""
-    ],
-    "الاثنين": [
-      "",
-      "رقمية 7",
-      "رقمية 2",
-      "",
-      "",
-      "",
-      "رقمية 1"
-    ],
-    "الثلاثاء": [
-      "رقمية 7",
-      "رقمية 8",
-      "",
-      "رقمية 1",
-      "",
-      "",
-      ""
-    ],
-    "الأربعاء": [
-      "رقمية 7",
-      "",
-      "",
-      "",
-      "رقمية 2",
-      "رقمية 9",
-      ""
-    ],
-    "الخميس": [
-      "",
-      "",
-      "",
-      "رقمية 3",
-      "رقمية 9",
-      "رقمية 2",
-      ""
-    ]
-  },
-  "17": {
-    "الأحد": [
-      "توحيد 7",
-      "",
-      "",
-      "",
-      "",
-      "",
-      ""
-    ],
-    "الاثنين": [
-      "",
-      "",
-      "قرآن 3",
-      "قرآن 3",
-      "",
-      "",
-      ""
-    ],
-    "الثلاثاء": [
-      "",
-      "",
-      "",
-      "",
-      "فقه 10",
-      "قرآن 3",
-      ""
-    ],
-    "الأربعاء": [
-      "فقه 10",
-      "",
-      "",
-      "",
-      "",
-      "قرآن 3",
-      ""
-    ],
-    "الخميس": [
-      "",
-      "",
-      "توحيد 7",
-      "",
-      "",
-      "",
-      ""
-    ]
-  },
-  "18": {
-    "الأحد": [
-      "",
-      "",
-      "",
-      "",
-      "",
-      "تفكير 1",
-      "تفكير 3"
-    ],
-    "الاثنين": [
-      "",
-      "تفكير 3",
-      "",
-      "",
-      "",
-      "",
-      ""
-    ],
-    "الثلاثاء": [
-      "تفكير 2",
-      "",
-      "تفكير 1",
-      "",
-      "",
-      "",
-      ""
-    ],
-    "الأربعاء": [
-      "تفكير 2",
-      "",
-      "تفكير 3",
-      "",
-      "",
-      "",
-      ""
-    ],
-    "الخميس": [
-      "",
-      "",
-      "",
-      "",
-      "تفكير 3",
-      "تفكير 1",
-      ""
-    ]
-  },
-  "19": {
-    "الأحد": [
-      "",
-      "",
-      "E 9",
-      "E 10",
-      "E 8",
-      "",
-      ""
-    ],
-    "الاثنين": [
-      "E 10",
-      "E 8",
-      "",
-      "",
-      "",
-      "E 9",
-      ""
-    ],
-    "الثلاثاء": [
-      "E 9",
-      "",
-      "E 10",
-      "",
-      "",
-      "",
-      ""
-    ],
-    "الأربعاء": [
-      "",
-      "E 8",
-      "E 10",
-      "",
-      "",
-      "",
-      ""
-    ],
-    "الخميس": [
-      "",
-      "",
-      "",
-      "",
-      "E 8",
-      "E 9",
-      ""
-    ]
-  },
-  "20": {
-    "الأحد": [
-      "بدنية 9",
-      "بدنية 2",
-      "بدنية 8",
-      "",
-      "",
-      "",
-      ""
-    ],
-    "الاثنين": [
-      "",
-      "",
-      "",
-      "بدنية 1",
-      "",
-      "بدنية 2",
-      ""
-    ],
-    "الثلاثاء": [
-      "بدنية 3",
-      "بدنية 10",
-      "بدنية 9",
-      "بدنية 8",
-      "",
-      "",
-      ""
-    ],
-    "الأربعاء": [
-      "",
-      "",
-      "",
-      "بدنية 10",
-      "بدنية 1",
-      "بدنية 8",
-      ""
-    ],
-    "الخميس": [
-      "بدنية 3",
-      "بدنية 9",
-      "",
-      "بدنية 10",
-      "",
-      "",
-      ""
-    ]
-  },
-  "21": {
-    "الأحد": [
-      "",
-      "إدارية 9",
-      "مالية 7",
-      "إدارية 8",
-      "فعاليات 10",
-      "",
-      "إدارية 9"
-    ],
-    "الاثنين": [
-      "",
-      "",
-      "إدارية 9",
-      "فعاليات 10",
-      "إدارية 8",
-      "",
-      ""
-    ],
-    "الثلاثاء": [
-      "",
-      "مالية 7",
-      "",
-      "",
-      "إدارية 8",
-      "إدارية 9",
-      ""
-    ],
-    "الأربعاء": [
-      "",
-      "مالية 7",
-      "",
-      "إدارية 8",
-      "",
-      "",
-      ""
-    ],
-    "الخميس": [
-      "",
-      "",
-      "فعاليات 10",
-      "إدارية 9",
-      "فعاليات 10",
-      "إدارية 8",
-      ""
-    ]
-  },
-  "22": {
-    "الأحد": [
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      ""
-    ],
-    "الاثنين": [
-      "",
-      "",
-      "",
-      "",
-      "نشاط 5",
-      "",
-      ""
-    ],
-    "الثلاثاء": [
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      ""
-    ],
-    "الأربعاء": [
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      ""
-    ],
-    "الخميس": [
-      "",
-      "",
-      "نشاط 5",
-      "",
-      "",
-      "",
-      ""
-    ]
-  }
+        "1": {
+                "الأحد": [
+                        "",
+                        "",
+                        "",
+                        "لغوية 6",
+                        "لغوية 5",
+                        "لغوية 7",
+                        "بحث 10"
+                ],
+                "الاثنين": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "لغوية 7",
+                        "لغوية 5",
+                        "لغوية 7"
+                ],
+                "الثلاثاء": [
+                        "",
+                        "",
+                        "",
+                        "بحث 10",
+                        "لغوية 6",
+                        "لغوية 5",
+                        ""
+                ],
+                "الأربعاء": [
+                        "",
+                        "",
+                        "",
+                        "لغوية 6",
+                        "أدبية 10",
+                        "لغوية 5",
+                        ""
+                ],
+                "الخميس": [
+                        "",
+                        "",
+                        "",
+                        "لغوية 6",
+                        "لغوية 7",
+                        "أدبية 10",
+                        ""
+                ]
+        },
+        "2": {
+                "الأحد": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "كيمياء 9",
+                        ""
+                ],
+                "الاثنين": [
+                        "كيمياء 9",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                ],
+                "الثلاثاء": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                ],
+                "الأربعاء": [
+                        "كيمياء 8",
+                        "كيمياء 9",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                ],
+                "الخميس": [
+                        "كيمياء 8",
+                        "كيمياء 8",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                ]
+        },
+        "3": {
+                "الأحد": [
+                        "قرآن 2",
+                        "قانون 10",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                ],
+                "الاثنين": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "قرآن 2",
+                        "قانون 10",
+                        ""
+                ],
+                "الثلاثاء": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "قرآن 2",
+                        "قرآن 2",
+                        ""
+                ],
+                "الأربعاء": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "قانون 10",
+                        ""
+                ],
+                "الخميس": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                ]
+        },
+        "4": {
+                "الأحد": [
+                        "",
+                        "",
+                        "تاريخ 6",
+                        "",
+                        "",
+                        "",
+                        ""
+                ],
+                "الاثنين": [
+                        "تاريخ 6",
+                        "",
+                        "نشاط 7",
+                        "",
+                        "",
+                        "",
+                        ""
+                ],
+                "الثلاثاء": [
+                        "تاريخ 5",
+                        "",
+                        "",
+                        "",
+                        "تاريخ 5",
+                        "تاريخ 6",
+                        ""
+                ],
+                "الأربعاء": [
+                        "",
+                        "",
+                        "",
+                        "تاريخ 5",
+                        "نشاط 7",
+                        "",
+                        ""
+                ],
+                "الخميس": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                ]
+        },
+        "5": {
+                "الأحد": [
+                        "",
+                        "",
+                        "",
+                        "E 5",
+                        "E 7",
+                        "E 6",
+                        ""
+                ],
+                "الاثنين": [
+                        "E 7",
+                        "E 6",
+                        "E 5",
+                        "",
+                        "",
+                        "",
+                        ""
+                ],
+                "الثلاثاء": [
+                        "E 6",
+                        "E 5",
+                        "E 7",
+                        "",
+                        "",
+                        "",
+                        ""
+                ],
+                "الأربعاء": [
+                        "",
+                        "",
+                        "E 5",
+                        "E 7",
+                        "E 6",
+                        "",
+                        ""
+                ],
+                "الخميس": [
+                        "",
+                        "E 7",
+                        "E 6",
+                        "E 5",
+                        "",
+                        "",
+                        ""
+                ]
+        },
+        "6": {
+                "الأحد": [
+                        "",
+                        "",
+                        "",
+                        "أعمال 7",
+                        "",
+                        "تخطيط 10",
+                        "قرار 7"
+                ],
+                "الاثنين": [
+                        "",
+                        "",
+                        "تخطيط 10",
+                        "أعمال 7",
+                        "إدارة 10",
+                        "قرار 7",
+                        ""
+                ],
+                "الثلاثاء": [
+                        "",
+                        "",
+                        "",
+                        "أعمال 7",
+                        "قرار 7",
+                        "إدارة 10",
+                        ""
+                ],
+                "الأربعاء": [
+                        "",
+                        "تخطيط 10",
+                        "قرار 7",
+                        "",
+                        "",
+                        "",
+                        ""
+                ],
+                "الخميس": [
+                        "أعمال 7",
+                        "إدارة 10",
+                        "",
+                        "قرار 7",
+                        "",
+                        "",
+                        ""
+                ]
+        },
+        "7": {
+                "الأحد": [
+                        "أحياء 3",
+                        "أرض 8",
+                        "",
+                        "",
+                        "أرض 9",
+                        "أحياء 2",
+                        "أحياء 1"
+                ],
+                "الاثنين": [
+                        "أرض 8",
+                        "أحياء 5",
+                        "",
+                        "",
+                        "أحياء 6",
+                        "أحياء 6",
+                        "أحياء 5"
+                ],
+                "الثلاثاء": [
+                        "أرض 8",
+                        "أحياء 2",
+                        "",
+                        "أرض 9",
+                        "أحياء 3",
+                        "أحياء 1",
+                        ""
+                ],
+                "الأربعاء": [
+                        "أحياء 5",
+                        "",
+                        "",
+                        "أحياء 1",
+                        "أرض 9",
+                        "أحياء 6",
+                        ""
+                ],
+                "الخميس": [
+                        "أحياء 2",
+                        "أحياء 3",
+                        "",
+                        "",
+                        "أحياء 6",
+                        "أحياء 5",
+                        ""
+                ]
+        },
+        "8": {
+                "الأحد": [
+                        "فيزياء 5",
+                        "فيزياء 5",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "فيزياء 6"
+                ],
+                "الاثنين": [
+                        "فيزياء 5",
+                        "فيزياء 9",
+                        "فيزياء 8",
+                        "فيزياء 9",
+                        "",
+                        "",
+                        "فيزياء 8"
+                ],
+                "الثلاثاء": [
+                        "",
+                        "فيزياء 6",
+                        "",
+                        "",
+                        "فيزياء 9",
+                        "فيزياء 8",
+                        ""
+                ],
+                "الأربعاء": [
+                        "فيزياء 9",
+                        "فيزياء 6",
+                        "فيزياء 8",
+                        "",
+                        "",
+                        "",
+                        ""
+                ],
+                "الخميس": [
+                        "",
+                        "",
+                        "فيزياء 9",
+                        "فيزياء 8",
+                        "فيزياء 5",
+                        "فيزياء 6",
+                        ""
+                ]
+        },
+        "9": {
+                "الأحد": [
+                        "",
+                        "",
+                        "لغوية 3",
+                        "لغوية 1",
+                        "لغوية 2",
+                        "",
+                        "بحث 8"
+                ],
+                "الاثنين": [
+                        "",
+                        "لغوية 1",
+                        "",
+                        "لغوية 2",
+                        "بحث 9",
+                        "",
+                        "لغوية 3"
+                ],
+                "الثلاثاء": [
+                        "",
+                        "لغوية 3",
+                        "بحث 8",
+                        "",
+                        "",
+                        "",
+                        ""
+                ],
+                "الأربعاء": [
+                        "",
+                        "لغوية 1",
+                        "بحث 9",
+                        "لغوية 2",
+                        "لغوية 3",
+                        "",
+                        ""
+                ],
+                "الخميس": [
+                        "",
+                        "",
+                        "لغوية 1",
+                        "",
+                        "لغوية 2",
+                        "",
+                        ""
+                ]
+        },
+        "10": {
+                "الأحد": [
+                        "إحصاء 10",
+                        "رياضيات 3",
+                        "رياضيات 1",
+                        "رياضيات 2",
+                        "",
+                        "",
+                        ""
+                ],
+                "الاثنين": [
+                        "رياضيات 3",
+                        "رياضيات 2",
+                        "رياضيات 1",
+                        "",
+                        "",
+                        "",
+                        "إحصاء 10"
+                ],
+                "الثلاثاء": [
+                        "",
+                        "رياضيات 1",
+                        "رياضيات 2",
+                        "رياضيات 3",
+                        "",
+                        "",
+                        ""
+                ],
+                "الأربعاء": [
+                        "رياضيات 1",
+                        "رياضيات 3",
+                        "رياضيات 2",
+                        "",
+                        "",
+                        "",
+                        ""
+                ],
+                "الخميس": [
+                        "رياضيات 1",
+                        "رياضيات 2",
+                        "رياضيات 3",
+                        "",
+                        "",
+                        "",
+                        ""
+                ]
+        },
+        "11": {
+                "الأحد": [
+                        "",
+                        "",
+                        "",
+                        "رياضيات 9",
+                        "رياضيات 6",
+                        "رياضيات 8",
+                        "رياضيات 5"
+                ],
+                "الاثنين": [
+                        "",
+                        "",
+                        "رياضيات 6",
+                        "رياضيات 5",
+                        "",
+                        "رياضيات 8",
+                        "رياضيات 9"
+                ],
+                "الثلاثاء": [
+                        "",
+                        "رياضيات 9",
+                        "رياضيات 6",
+                        "رياضيات 5",
+                        "",
+                        "",
+                        ""
+                ],
+                "الأربعاء": [
+                        "",
+                        "رياضيات 5",
+                        "رياضيات 6",
+                        "رياضيات 9",
+                        "رياضيات 8",
+                        "",
+                        ""
+                ],
+                "الخميس": [
+                        "رياضيات 5",
+                        "رياضيات 6",
+                        "رياضيات 8",
+                        "",
+                        "",
+                        "",
+                        ""
+                ]
+        },
+        "12": {
+                "الأحد": [
+                        "",
+                        "كيمياء 6",
+                        "كيمياء 5",
+                        "",
+                        "كيمياء 3",
+                        "كيمياء 5",
+                        "كيمياء 2"
+                ],
+                "الاثنين": [
+                        "",
+                        "",
+                        "",
+                        "كيمياء 6",
+                        "كيمياء 3",
+                        "كيمياء 1",
+                        "كيمياء 6"
+                ],
+                "الثلاثاء": [
+                        "كيمياء 1",
+                        "",
+                        "كيمياء 5",
+                        "كيمياء 6",
+                        "",
+                        "",
+                        ""
+                ],
+                "الأربعاء": [
+                        "",
+                        "",
+                        "",
+                        "كيمياء 3",
+                        "كيمياء 5",
+                        "كيمياء 2",
+                        ""
+                ],
+                "الخميس": [
+                        "كيمياء 6",
+                        "كيمياء 5",
+                        "كيمياء 2",
+                        "كيمياء 1",
+                        "",
+                        "",
+                        ""
+                ]
+        },
+        "13": {
+                "الأحد": [
+                        "نشاط 6",
+                        "",
+                        "جغرافيا 10",
+                        "",
+                        "",
+                        "",
+                        ""
+                ],
+                "الاثنين": [
+                        "",
+                        "نشاط 10",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                ],
+                "الثلاثاء": [
+                        "نشاط 10",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "فنون 7",
+                        ""
+                ],
+                "الأربعاء": [
+                        "نشاط 6",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "فنون 7",
+                        ""
+                ],
+                "الخميس": [
+                        "جغرافيا 10",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                ]
+        },
+        "14": {
+                "الأحد": [
+                        "",
+                        "E 1",
+                        "E 2",
+                        "E 3",
+                        "",
+                        "",
+                        ""
+                ],
+                "الاثنين": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "E 1",
+                        "E 3",
+                        "E 2"
+                ],
+                "الثلاثاء": [
+                        "",
+                        "",
+                        "E 3",
+                        "E 2",
+                        "E 1",
+                        "",
+                        ""
+                ],
+                "الأربعاء": [
+                        "E 3",
+                        "E 2",
+                        "E 1",
+                        "",
+                        "",
+                        "",
+                        ""
+                ],
+                "الخميس": [
+                        "",
+                        "",
+                        "",
+                        "E 2",
+                        "E 1",
+                        "E 3",
+                        ""
+                ]
+        },
+        "15": {
+                "الأحد": [
+                        "قرآن 1",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                ],
+                "الاثنين": [
+                        "قرآن 1",
+                        "",
+                        "",
+                        "نشاط 8",
+                        "",
+                        "",
+                        ""
+                ],
+                "الثلاثاء": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                ],
+                "الأربعاء": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "قرآن 1",
+                        ""
+                ],
+                "الخميس": [
+                        "نشاط 9",
+                        "قرآن 1",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                ]
+        },
+        "16": {
+                "الأحد": [
+                        "رقمية 8",
+                        "رقمية 7",
+                        "",
+                        "",
+                        "رقمية 1",
+                        "رقمية 3",
+                        "رقمية 3"
+                ],
+                "الاثنين": [
+                        "",
+                        "رقمية 7",
+                        "رقمية 2",
+                        "",
+                        "",
+                        "",
+                        "رقمية 1"
+                ],
+                "الثلاثاء": [
+                        "رقمية 7",
+                        "رقمية 8",
+                        "",
+                        "رقمية 1",
+                        "",
+                        "",
+                        ""
+                ],
+                "الأربعاء": [
+                        "رقمية 7",
+                        "",
+                        "",
+                        "",
+                        "رقمية 2",
+                        "رقمية 9",
+                        ""
+                ],
+                "الخميس": [
+                        "",
+                        "",
+                        "",
+                        "رقمية 3",
+                        "رقمية 9",
+                        "رقمية 2",
+                        ""
+                ]
+        },
+        "17": {
+                "الأحد": [
+                        "توحيد 7",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                ],
+                "الاثنين": [
+                        "",
+                        "",
+                        "قرآن 3",
+                        "قرآن 3",
+                        "",
+                        "",
+                        ""
+                ],
+                "الثلاثاء": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "فقه 10",
+                        "قرآن 3",
+                        ""
+                ],
+                "الأربعاء": [
+                        "فقه 10",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "قرآن 3",
+                        ""
+                ],
+                "الخميس": [
+                        "",
+                        "",
+                        "توحيد 7",
+                        "",
+                        "",
+                        "",
+                        ""
+                ]
+        },
+        "18": {
+                "الأحد": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "تفكير 1",
+                        ""
+                ],
+                "الاثنين": [
+                        "تفكير 2",
+                        "تفكير 3",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                ],
+                "الثلاثاء": [
+                        "تفكير 2",
+                        "",
+                        "تفكير 1",
+                        "",
+                        "",
+                        "",
+                        ""
+                ],
+                "الأربعاء": [
+                        "تفكير 2",
+                        "",
+                        "تفكير 3",
+                        "",
+                        "",
+                        "",
+                        ""
+                ],
+                "الخميس": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "تفكير 3",
+                        "تفكير 1",
+                        ""
+                ]
+        },
+        "19": {
+                "الأحد": [
+                        "",
+                        "",
+                        "E 9",
+                        "E 10",
+                        "E 8",
+                        "",
+                        ""
+                ],
+                "الاثنين": [
+                        "E 10",
+                        "E 8",
+                        "",
+                        "",
+                        "",
+                        "E 9",
+                        ""
+                ],
+                "الثلاثاء": [
+                        "E 9",
+                        "",
+                        "E 10",
+                        "",
+                        "",
+                        "",
+                        ""
+                ],
+                "الأربعاء": [
+                        "",
+                        "E 8",
+                        "E 10",
+                        "",
+                        "",
+                        "",
+                        ""
+                ],
+                "الخميس": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "E 8",
+                        "E 9",
+                        ""
+                ]
+        },
+        "20": {
+                "الأحد": [
+                        "بدنية 9",
+                        "بدنية 2",
+                        "بدنية 8",
+                        "",
+                        "",
+                        "",
+                        ""
+                ],
+                "الاثنين": [
+                        "",
+                        "",
+                        "",
+                        "بدنية 1",
+                        "",
+                        "بدنية 2",
+                        ""
+                ],
+                "الثلاثاء": [
+                        "بدنية 3",
+                        "بدنية 10",
+                        "بدنية 9",
+                        "بدنية 8",
+                        "",
+                        "",
+                        ""
+                ],
+                "الأربعاء": [
+                        "",
+                        "",
+                        "",
+                        "بدنية 10",
+                        "بدنية 1",
+                        "بدنية 8",
+                        ""
+                ],
+                "الخميس": [
+                        "بدنية 3",
+                        "بدنية 9",
+                        "",
+                        "بدنية 10",
+                        "",
+                        "",
+                        ""
+                ]
+        },
+        "21": {
+                "الأحد": [
+                        "",
+                        "إدارية 9",
+                        "مالية 7",
+                        "إدارية 8",
+                        "فعاليات 10",
+                        "",
+                        "إدارية 9"
+                ],
+                "الاثنين": [
+                        "",
+                        "",
+                        "إدارية 9",
+                        "فعاليات 10",
+                        "إدارية 8",
+                        "",
+                        ""
+                ],
+                "الثلاثاء": [
+                        "",
+                        "مالية 7",
+                        "",
+                        "",
+                        "إدارية 8",
+                        "إدارية 9",
+                        ""
+                ],
+                "الأربعاء": [
+                        "",
+                        "مالية 7",
+                        "",
+                        "إدارية 8",
+                        "",
+                        "",
+                        ""
+                ],
+                "الخميس": [
+                        "",
+                        "",
+                        "فعاليات 10",
+                        "إدارية 9",
+                        "فعاليات 10",
+                        "إدارية 8",
+                        ""
+                ]
+        },
+        "22": {
+                "الأحد": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                ],
+                "الاثنين": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "نشاط 5",
+                        "",
+                        ""
+                ],
+                "الثلاثاء": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                ],
+                "الأربعاء": [
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        "",
+                        ""
+                ],
+                "الخميس": [
+                        "",
+                        "",
+                        "نشاط 5",
+                        "",
+                        "",
+                        "",
+                        ""
+                ]
+        }
 };
+    if (window.__resetTimetableToCanonical) {
+        localStorage.setItem('sch_timetable_matrix_final', JSON.stringify(DEFAULT_TIMETABLE_MATRIX));
+        window.__resetTimetableToCanonical = false;
+        console.log('✅ تم تصفير الكاش وتثبيت الجدول الأصلي المعتمد للـ 22 معلماً بنجاح.');
+    }
 
     // ========================================================
     // دالة تهيئة وتنظيف مصفوفة الجدول العام وضمان سلامتها التامة
@@ -4438,22 +4677,36 @@
         }
     ];
 
-    function initAuthSession() {
-        const remembered = localStorage.getItem('sch_remembered_user');
-        const session = sessionStorage.getItem('sch_current_user');
-        const savedUserStr = remembered || session;
-
-        if (savedUserStr) {
-            try {
-                const user = JSON.parse(savedUserStr);
-                if (user && user.role) {
-                    applyUserSession(user);
-                    return;
-                }
-            } catch (e) {}
+    function buildSessionUser(serverUser) {
+        if (!serverUser || !serverUser.role) return null;
+        if (serverUser.role === 'teacher') {
+            const t = (typeof OFFICIAL_TEACHERS !== 'undefined' ? OFFICIAL_TEACHERS : []).find(x => String(x.id) === String(serverUser.id)) || {};
+            return {
+                role: 'teacher', id: serverUser.id, name: serverUser.name, subject: serverUser.subject,
+                load: t.load, phone: t.phone, title: `معلم - ${serverUser.subject || ''}`, icon: '👨‍🏫',
+                allowedTabs: ['teacher'], defaultTab: 'teacher'
+            };
         }
+        const base = ADMIN_ROLES.find(r => r.role === serverUser.role);
+        if (!base) return null;
+        const u = { ...base };
+        delete u.defaultPin;
+        return u;
+    }
 
-        showPinAuthOverlay();
+    function initAuthSession() {
+        // الصلاحيات تُبنى دائماً من رد الخادم الموقّع، لا من بيانات قابلة للتعديل في المتصفح
+        if (!getAuthToken()) { showPinAuthOverlay(); return; }
+        fetch('/api/auth/me')
+            .then(r => r.ok ? r.json() : null)
+            .then(serverUser => {
+                const user = buildSessionUser(serverUser);
+                if (!user) { clearAuthToken(); showPinAuthOverlay(); return; }
+                hidePinAuthOverlay();
+                applyUserSession(user);
+                if (typeof loadWaitingFromServer === 'function') loadWaitingFromServer();
+            })
+            .catch(() => showPinAuthOverlay());
     }
 
     function showPinAuthOverlay() {
@@ -4467,14 +4720,9 @@
             overlay.classList.remove('hidden');
             overlay.classList.add('flex');
             overlay.style.display = 'flex';
+            overlay.style.pointerEvents = 'auto';
         }
 
-        // تعبئة القائمة المنسدلة للمعلمين بالدليل السريع
-        const qSelect = document.getElementById('quickTeacherSelect');
-        if (qSelect && typeof OFFICIAL_TEACHERS !== 'undefined') {
-            qSelect.innerHTML = '<option value="">-- اضغط هنا لاختيار المعلم والدخول فوراً --</option>' +
-                OFFICIAL_TEACHERS.map(t => `<option value="${t.pin || (1000 + t.id)}">👨‍🏫 أ. ${t.name} - ${t.subject} (الرمز: ${t.pin || (1000 + t.id)})</option>`).join('');
-        }
     }
 
     function hidePinAuthOverlay() {
@@ -4534,52 +4782,21 @@
         }
     }
 
+    // أُزيل الدخول بدون رمز: أي استدعاء قديم يمر الآن بالتحقق من الخادم
     function quickDirectLogin(roleOrPin) {
-        let user = null;
-        roleOrPin = String(roleOrPin).trim();
-
-        if (roleOrPin === 'vp' || roleOrPin === '1111' || roleOrPin === '1234') {
-            const base = ADMIN_ROLES.find(r => r.role === 'vp');
-            user = { ...base };
-        } else if (roleOrPin === 'principal' || roleOrPin === '0000') {
-            const base = ADMIN_ROLES.find(r => r.role === 'principal');
-            user = { ...base };
-        } else if (roleOrPin === 'counselor' || roleOrPin === '2222') {
-            const base = ADMIN_ROLES.find(r => r.role === 'counselor');
-            user = { ...base };
-        } else if (typeof OFFICIAL_TEACHERS !== 'undefined') {
-            const tMatch = OFFICIAL_TEACHERS.find(t => String(t.pin || (1000 + t.id)) === roleOrPin || String(t.id) === roleOrPin);
-            if (tMatch) {
-                user = {
-                    role: 'teacher',
-                    id: tMatch.id,
-                    name: tMatch.name,
-                    subject: tMatch.subject,
-                    load: tMatch.load,
-                    phone: tMatch.phone,
-                    title: `معلم - ${tMatch.subject}`,
-                    icon: '👨‍🏫',
-                    allowedTabs: ['teacher'],
-                    defaultTab: 'teacher'
-                };
-            }
+        const pin = convertArabicDigits(String(roleOrPin || '')).replace(/\D/g, '');
+        if (pin.length === 4) {
+            currentEnteredPin = pin;
+            verifyEnteredPin();
+        } else {
+            showPinAuthOverlay();
         }
-
-        if (!user) {
-            const base = ADMIN_ROLES.find(r => r.role === 'vp');
-            user = { ...base };
-        }
-
-        finalizeLogin(user);
     }
 
-    function autoFillAndSubmitPin(pinCode) {
-        quickDirectLogin(pinCode);
-    }
+    function autoFillAndSubmitPin(pinCode) { quickDirectLogin(pinCode); }
+    function autoFillPin(pinCode) { quickDirectLogin(pinCode); }
 
-    function autoFillPin(pinCode) {
-        quickDirectLogin(pinCode);
-    }
+    let pinLoginInFlight = false;
 
     function verifyEnteredPin() {
         const inp = document.getElementById('pinHiddenInput');
@@ -4598,62 +4815,48 @@
             return;
         }
 
-        // 1. الدخول السريع لأدوار الإدارة
-        if (entered === '1111' || entered === '1234') {
-            quickDirectLogin('vp');
-            return;
-        }
-        if (entered === '0000') {
-            quickDirectLogin('principal');
-            return;
-        }
-        if (entered === '2222') {
-            quickDirectLogin('counselor');
-            return;
-        }
-
-        // 2. التحقق من كادر المعلمين
-        if (typeof OFFICIAL_TEACHERS !== 'undefined') {
-            const teacherMatch = OFFICIAL_TEACHERS.find(t => String(t.pin || (1000 + t.id)).trim() === entered);
-            if (teacherMatch) {
-                quickDirectLogin(teacherMatch.id);
-                return;
+        if (pinLoginInFlight) return;
+        pinLoginInFlight = true;
+        const remember = !!(document.getElementById('rememberDeviceCheck') && document.getElementById('rememberDeviceCheck').checked);
+        const showPinError = (msg) => {
+            const err = document.getElementById('pinErrorMsg');
+            if (err) {
+                err.textContent = '⚠️ ' + msg;
+                err.classList.remove('hidden');
             }
-        }
+            for (let i = 0; i < 4; i++) {
+                const dot = document.getElementById(`dot-${i}`);
+                if (dot) dot.className = "pin-dot w-4 h-4 rounded-full border-2 border-rose-500 bg-rose-500 scale-110 transition-all duration-150";
+            }
+            setTimeout(() => {
+                currentEnteredPin = "";
+                if (inp) inp.value = "";
+                updatePinDotsUI();
+            }, 1200);
+        };
 
-        // 3. فشل التحقق من الرمز
-        const err = document.getElementById('pinErrorMsg');
-        if (err) {
-            err.innerHTML = `
-                <div>⚠️ الرمز (${entered}) غير مسجل.</div>
-                <div class="mt-1 text-slate-700 font-normal">الرموز المعتمدة: الوكيل (1111) | المدير (0000) | الموجه (2222)</div>
-                <button type="button" onclick="quickDirectLogin('vp')" style="cursor: pointer !important;" class="mt-2 w-full py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-black shadow transition">
-                    ⚡ اضغط هنا للدخول فوراً كوكيل شؤون الطلاب (أ. مشعل الخريف)
-                </button>
-            `;
-            err.classList.remove('hidden');
-        }
-
-        for (let i = 0; i < 4; i++) {
-            const dot = document.getElementById(`dot-${i}`);
-            if (dot) dot.className = "pin-dot w-4 h-4 rounded-full border-2 border-rose-500 bg-rose-500 scale-110 transition-all duration-150";
-        }
-
-        setTimeout(() => {
-            currentEnteredPin = "";
-            if (inp) inp.value = "";
-            updatePinDotsUI();
-        }, 1200);
+        fetch('/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ pin: entered, remember })
+        })
+            .then(async res => {
+                const data = await res.json().catch(() => ({}));
+                if (!res.ok || !data.token) {
+                    showPinError(data.detail || 'الرمز غير صحيح.');
+                    return;
+                }
+                setAuthToken(data.token, remember);
+                // إعادة تحميل الصفحة لجلب كل البيانات بصلاحيات المستخدم الجديد
+                location.reload();
+            })
+            .catch(() => showPinError('تعذر الاتصال بالخادم. تحقق من الإنترنت وحاول مجدداً.'))
+            .finally(() => { pinLoginInFlight = false; });
     }
 
     function finalizeLogin(user) {
         hidePinAuthOverlay();
 
-        // إزالة عنصر التعتيم تماماً من الصفحة لمنع أي حجب للنقرات إطلاقاً
-        const overlay = document.getElementById('pinAuthOverlay');
-        if (overlay) {
-            overlay.remove();
-        }
 
         try {
             const remember = document.getElementById('rememberDeviceCheck') && document.getElementById('rememberDeviceCheck').checked;
@@ -5627,7 +5830,7 @@
                         </div>
 
                         <div class="flex items-center gap-1.5 shrink-0 self-end sm:self-center">
-                            <a href="/api/backups/${encodeURIComponent(b.filename)}/download" download class="px-3 py-1.5 bg-white hover:bg-slate-200 text-slate-800 border border-slate-200 rounded-xl text-xs font-bold transition flex items-center gap-1 shadow-sm" title="تحميل ملف النسخة إلى جهازك">
+                            <a href="/api/backups/${encodeURIComponent(b.filename)}/download?token=${encodeURIComponent(getAuthToken())}" download class="px-3 py-1.5 bg-white hover:bg-slate-200 text-slate-800 border border-slate-200 rounded-xl text-xs font-bold transition flex items-center gap-1 shadow-sm" title="تحميل ملف النسخة إلى جهازك">
                                 <span>⬇️</span>
                                 <span>تحميل</span>
                             </a>
@@ -5715,9 +5918,10 @@
 
     function logoutCurrentUser() {
         if (!confirm('هل أنت متأكد من تسجيل الخروج وتبديل المستخدم؟')) return;
-        sessionStorage.removeItem('sch_current_user');
-        localStorage.removeItem('sch_remembered_user');
+        clearAuthToken();
         activeAuthUser = null;
+        location.reload();
+        return;
 
         const badge = document.getElementById('currentUserBadge');
         if (badge) {
@@ -5732,11 +5936,6 @@
         // Quick accounts are now open and accessible directly on the screen
     }
 
-    function autoFillPin(pinCode) {
-        currentEnteredPin = pinCode;
-        updatePinDotsUI();
-        setTimeout(verifyEnteredPin, 200);
-    }
 
     
     // ربط مستمعات حقل الرمز السريع ولوحة المفاتيح
@@ -6535,6 +6734,11 @@ async function initApp() {
             });
             if (res.ok) {
                 console.log('✅ تم حفظ وتأمين الجدول بنجاح في ملف الخادم school_timetable_saved.json');
+            } else if (res.status === 423 || res.status === 403) {
+                if (!window.__ttLockWarned && typeof showToast === 'function') {
+                    window.__ttLockWarned = true;
+                    showToast('الجدول المعتمد مقفل على الخادم — أي تعديل يبقى على هذا الجهاز فقط ولا يُعتمد', 'warning');
+                }
             }
         } catch (e) {
             console.warn('Server sync error:', e);
@@ -6626,6 +6830,10 @@ async function initApp() {
     }
 
     function openAssignWaitingModal() {
+        let dl = document.getElementById('officialTeacherNames');
+        if (!dl) { dl = document.createElement('datalist'); dl.id = 'officialTeacherNames'; document.body.appendChild(dl); }
+        dl.innerHTML = '';
+        (OFFICIAL_TEACHERS || []).forEach(t => { const o = document.createElement('option'); o.value = t.name; dl.appendChild(o); });
         document.getElementById('assignWaitingModal').classList.remove('hidden');
         if (typeof onWaitingAssignedTeacherChange === 'function') {
             onWaitingAssignedTeacherChange();
@@ -6650,15 +6858,21 @@ async function initApp() {
             date: new Date().toISOString().split('T')[0]
         };
 
+        // منع الإسناد المزدوج محلياً قبل الإرسال
+        const dupLocal = waitingAssignments.find(w => w.status !== 'cancelled' && w.assignedTeacher === assignedTeacher && w.day === day && w.period === period && isWithinCurrentWeek(w.date));
+        if (dupLocal && !confirm(`المعلم ${assignedTeacher} مكلف مسبقاً بانتظار في ${day} - ${period}. هل تريد الإسناد رغم ذلك؟`)) return;
+        newWaiting.status = 'assigned';
+        if (dupLocal) newWaiting.force = true;
+
         waitingAssignments.unshift(newWaiting);
         saveState();
+        syncWaitingItem(newWaiting);
 
         const sendWaChecked = document.getElementById('modalWaitingSendWhatsApp') && document.getElementById('modalWaitingSendWhatsApp').checked;
         showToast(`تم إسناد حصة الانتظار للمعلم ${assignedTeacher} بنجاح`, 'success');
         closeAssignWaitingModal();
         renderWaitingAssignments();
         findFreeTeachers();
-        scheduleServerSync();
 
         // إظهار نافذة إشعار الواتساب خيارياً فور الاعتماد
         if (sendWaChecked) {
@@ -6874,19 +7088,6 @@ async function initApp() {
         renderStudentsDirectory();
         renderStats();
         showToast('تم اعتماد قرار الوكيل (أ. مشعل الخريف) بنجاح', 'success');
-    }
-
-    function viewStudentArchive(studentId) {
-        if (typeof openUnifiedStudentProfile === 'function') {
-            openUnifiedStudentProfile(studentId);
-        } else {
-            const modal = document.getElementById('studentArchiveModal');
-            if (modal) modal.classList.remove('hidden');
-        }
-    }
-
-    function closeArchiveModal() {
-        document.getElementById('studentArchiveModal').classList.add('hidden');
     }
 
     function openWhatsAppModalForReferral(referralId) {
@@ -7280,6 +7481,58 @@ async function initApp() {
     let currentAttendanceDate = new Date().toISOString().split('T')[0];
     let currentAttendanceFilter = 'all';
     let activeVpSubTab = 'referrals';
+
+    // ========================================================
+    // مزامنة تكليفات الانتظار مع الخادم (مصدر واحد لكل الأجهزة)
+    // ========================================================
+    function todayRiyadhISO() {
+        return new Date(Date.now() + 3 * 3600 * 1000).toISOString().split('T')[0];
+    }
+    function isWithinCurrentWeek(dateStr) {
+        if (!dateStr) return true;
+        const diffDays = (new Date(todayRiyadhISO()) - new Date(String(dateStr).slice(0, 10))) / 86400000;
+        return diffDays >= 0 && diffDays <= 6;
+    }
+    function normalizeTeacherName(n) {
+        return String(n || '').replace(/^\s*أ\.?\s*/, '').replace(/\s+/g, ' ').trim();
+    }
+    async function syncWaitingItem(item) {
+        try {
+            const res = await fetch('/api/waiting', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(item)
+            });
+            if (res.status === 409) {
+                const d = await res.json().catch(() => ({}));
+                if (typeof showToast === 'function') showToast(d.detail || 'تعارض: المعلم مكلف مسبقاً في نفس الحصة', 'warning');
+                return;
+            }
+            if (!res.ok && typeof showToast === 'function') showToast('تعذر حفظ التكليف على الخادم (محفوظ على هذا الجهاز)', 'warning');
+        } catch (e) {
+            console.warn('waiting sync error', e);
+        }
+    }
+    async function loadWaitingFromServer() {
+        try {
+            const res = await fetch('/api/waiting');
+            if (!res.ok) return;
+            const serverList = await res.json();
+            const serverIds = new Set(serverList.map(w => String(w.id)));
+            // ترحيل أي تكليفات قديمة محفوظة في هذا الجهاز فقط إلى الخادم (للحفاظ على سجل العدالة)
+            const localOnly = (waitingAssignments || []).filter(w => w && w.id != null && !serverIds.has(String(w.id)));
+            const canWrite = activeAuthUser && (activeAuthUser.role === 'principal' || activeAuthUser.role === 'vp');
+            if (canWrite) {
+                for (const w of localOnly) await syncWaitingItem(Object.assign({}, w, { force: true }));
+            }
+            waitingAssignments = serverList.concat(canWrite ? [] : localOnly);
+            saveState();
+            if (typeof renderWaitingAssignments === 'function') renderWaitingAssignments();
+            if (typeof findFreeTeachers === 'function') findFreeTeachers();
+        } catch (e) {
+            console.warn('waiting load error', e);
+        }
+    }
 
     // تحميل تكليفات الانتظار المحفوظة إن وجدت
     try {
@@ -7952,7 +8205,7 @@ async function initApp() {
 
                         <div class="flex items-center justify-between text-[10px] text-slate-400 pt-1">
                             <span>المسؤول: <b class="text-slate-700">${event.actor || 'إدارة المدرسة'}</b></span>
-                            <span class="px-2 py-0.5 rounded-md font-bold ${badgeBg}">${event.status || 'مسجل'}</span>
+                            <span class="px-2 py-0.5 rounded-md font-bold ${badgeBg}">${statusLabelAr(event.status)}</span>
                         </div>
                     </div>
                 </div>
@@ -8379,6 +8632,13 @@ async function initApp() {
 
             const candidateTeachers = [];
             const excludedDueToMaxDaily = [];
+            const excludedAlreadyAssigned = [];
+            const periodLabel = `الحصة ${getPeriodName(periodIdx + 1)}`;
+            // التكليفات الفعّالة هذا الأسبوع (الملغاة لا تُحتسب)
+            const weekWaitings = ((typeof waitingAssignments !== 'undefined' && Array.isArray(waitingAssignments)) ? waitingAssignments : [])
+                .filter(w => w && w.status !== 'cancelled' && isWithinCurrentWeek(w.date));
+            // المعلمون الغائبون في هذا اليوم (لا يُرشَّح غائب لحصة انتظار)
+            const absentToday = new Set(weekWaitings.filter(w => w.day === day).map(w => normalizeTeacherName(w.absentTeacher)));
 
             const teachersList = (typeof OFFICIAL_TEACHERS !== 'undefined' && Array.isArray(OFFICIAL_TEACHERS) && OFFICIAL_TEACHERS.length > 0)
                 ? OFFICIAL_TEACHERS
@@ -8393,9 +8653,20 @@ async function initApp() {
                 const isFreeThisPeriod = (!cellVal || String(cellVal).trim() === '' || String(cellVal).trim() === 'فراغ');
                 if (!isFreeThisPeriod) return;
 
+                // استبعاد المعلم الغائب نفسه
+                if (absentToday.has(normalizeTeacherName(t.name))) return;
+
+                // استبعاد من كُلّف مسبقاً بانتظار في نفس اليوم والحصة (منع الإسناد المزدوج)
+                const waitingsToday = weekWaitings.filter(w => w.day === day && normalizeTeacherName(w.assignedTeacher) === normalizeTeacherName(t.name));
+                if (waitingsToday.some(w => w.period === periodLabel)) {
+                    excludedAlreadyAssigned.push({ name: t.name, subject: t.subject });
+                    return;
+                }
+
                 // حصص المعلم في هذا اليوم
                 const todayClasses = (sched[day] || []).filter(c => c && String(c).trim() !== '' && String(c).trim() !== 'فراغ');
-                const todayClassesCount = todayClasses.length;
+                // حصص الانتظار المسندة له اليوم تُحتسب ضمن الحد اليومي (5 حصص)
+                const todayClassesCount = todayClasses.length + waitingsToday.length;
 
                 // النصاب الأسبوعي الفعلي
                 let actualWeeklyLoad = 0;
@@ -8412,11 +8683,13 @@ async function initApp() {
                     : { category: 2, name: 'فئة 2 (نصاب متوسط)', target: 15 };
 
                 // رصيد حصص الانتظار
-                const allWaitings = (typeof waitingAssignments !== 'undefined' && Array.isArray(waitingAssignments)) ? waitingAssignments : [];
-                const teacherWaitings = allWaitings.filter(w => w.assignedTeacher === t.name);
+                const allWaitings = ((typeof waitingAssignments !== 'undefined' && Array.isArray(waitingAssignments)) ? waitingAssignments : [])
+                    .filter(w => w && w.status !== 'cancelled');
+                const teacherWaitings = allWaitings.filter(w => normalizeTeacherName(w.assignedTeacher) === normalizeTeacherName(t.name));
                 const totalAssigned = teacherWaitings.length;
                 const totalExecuted = teacherWaitings.filter(w => w.status === 'executed').length;
-                const remainingToTarget = Math.max(0, quotaInfo.target - totalExecuted);
+                // التكليفات المسندة غير المنفذة بعد تُحتسب أيضاً حتى لا يُرشَّح نفس المعلم مراراً
+                const remainingToTarget = Math.max(0, quotaInfo.target - totalAssigned);
 
                 // معيار الاستبعاد: لا يُكلف معلم لديه 5 حصص أو أكثر في نفس اليوم
                 if (todayClassesCount >= 5) {
@@ -8454,7 +8727,7 @@ async function initApp() {
                 const scoreTargetProgress = (remainingToTarget / (quotaInfo.target || 1)) * 40;
 
                 // معيار التدوير العادل
-                const lastWaitingIndex = allWaitings.findIndex(w => w.assignedTeacher === t.name);
+                const lastWaitingIndex = allWaitings.findIndex(w => normalizeTeacherName(w.assignedTeacher) === normalizeTeacherName(t.name));
                 let scoreRotation = 0;
                 let rotationLabel = '';
                 if (totalAssigned === 0) {
@@ -8613,6 +8886,7 @@ async function initApp() {
         if (item) {
             item.status = newStatus;
             saveState();
+            syncWaitingItem(Object.assign({}, item, { force: true }));
             renderWaitingAssignments();
             findFreeTeachers();
             updateVpDashboardStats();
@@ -9274,5 +9548,713 @@ async function initApp() {
 
 </script>
 
+
+<script>
+// ============================================================
+// طبقة سهولة الوصول العامة: نوافذ حوارية، تسميات، عناصر قابلة للنقر، إعلان الإشعارات
+// ============================================================
+(function () {
+    const FOCUSABLE = 'button:not([disabled]), [href], input:not([disabled]):not([type=hidden]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    const isOpen = m => !m.classList.contains('hidden') && getComputedStyle(m).display !== 'none';
+    let lastFocusBeforeModal = null;
+
+    function labelFor(el) {
+        if (el.getAttribute('aria-label') || (el.labels && el.labels.length) || el.getAttribute('aria-labelledby')) return;
+        let text = el.getAttribute('placeholder') || el.getAttribute('title') || '';
+        if (!text) {
+            const wrap = el.closest('div');
+            const lab = wrap && (wrap.querySelector('label') || (wrap.previousElementSibling && wrap.previousElementSibling.tagName === 'LABEL' ? wrap.previousElementSibling : null));
+            if (lab) text = lab.textContent.trim();
+        }
+        if (text) el.setAttribute('aria-label', text.replace(/\s+/g, ' ').slice(0, 80));
+    }
+
+    function enhance(root) {
+        root.querySelectorAll('input, select, textarea').forEach(labelFor);
+        root.querySelectorAll('[onclick]:not(button):not(a):not(input):not(select):not(label):not(textarea)').forEach(el => {
+            if (el.hasAttribute('role')) return;
+            el.setAttribute('role', 'button');
+            if (!el.hasAttribute('tabindex')) el.tabIndex = 0;
+        });
+        root.querySelectorAll('[id$="Modal"]').forEach(m => {
+            if (m.getAttribute('role')) return;
+            m.setAttribute('role', 'dialog');
+            m.setAttribute('aria-modal', 'true');
+            const h = m.querySelector('h2, h3, h4');
+            if (h) { if (!h.id) h.id = m.id + 'Title'; m.setAttribute('aria-labelledby', h.id); }
+        });
+        // أزرار الرموز فقط (✕ وغيرها) تحتاج اسماً مقروءاً
+        root.querySelectorAll('button').forEach(b => {
+            if (b.getAttribute('aria-label')) return;
+            const t = (b.textContent || '').trim();
+            if (t === '✕' || t === '×' || t === 'X') b.setAttribute('aria-label', 'إغلاق');
+            else if (!t && b.title) b.setAttribute('aria-label', b.title);
+        });
+    }
+
+    // Enter / Space على العناصر التي تعمل بالنقر
+    document.addEventListener('keydown', e => {
+        const el = e.target;
+        if ((e.key === 'Enter' || e.key === ' ') && el && el.getAttribute && el.getAttribute('role') === 'button' && el.tagName !== 'BUTTON') {
+            e.preventDefault();
+            el.click();
+        }
+        // Escape يغلق النافذة الحوارية المفتوحة الأعلى
+        if (e.key === 'Escape') {
+            const pinOverlay = document.getElementById('pinAuthOverlay');
+            if (pinOverlay && pinOverlay.style.display !== 'none' && !pinOverlay.classList.contains('hidden')) return;
+            const open = [...document.querySelectorAll('[role="dialog"]')].filter(isOpen);
+            const top = open[open.length - 1];
+            if (top) { top.classList.add('hidden'); e.preventDefault(); }
+            else if (typeof toggleAppSidebar === 'function') {
+                const sb = document.getElementById('appSidebar');
+                if (sb && sb.classList.contains('translate-x-0')) toggleAppSidebar(false);
+            }
+        }
+        // حبس التنقل داخل النافذة المفتوحة
+        if (e.key === 'Tab') {
+            const open = [...document.querySelectorAll('[role="dialog"]')].filter(isOpen);
+            const top = open[open.length - 1];
+            if (!top) return;
+            const items = [...top.querySelectorAll(FOCUSABLE)].filter(x => x.offsetParent !== null);
+            if (!items.length) return;
+            const first = items[0], last = items[items.length - 1];
+            if (e.shiftKey && document.activeElement === first) { last.focus(); e.preventDefault(); }
+            else if (!e.shiftKey && document.activeElement === last) { first.focus(); e.preventDefault(); }
+            else if (!top.contains(document.activeElement)) { first.focus(); e.preventDefault(); }
+        }
+    });
+
+    // نقل التركيز إلى النافذة عند فتحها وإعادته عند إغلاقها
+    const obs = new MutationObserver(muts => {
+        muts.forEach(m => {
+            const el = m.target;
+            if (m.attributeName !== 'class' || el.getAttribute('role') !== 'dialog') return;
+            const wasHidden = (m.oldValue || '').split(/\s+/).includes('hidden');
+            if (wasHidden && isOpen(el)) {
+                lastFocusBeforeModal = document.activeElement;
+                enhance(el);
+                const target = el.querySelector('input:not([type=hidden]), select, textarea') || el.querySelector(FOCUSABLE);
+                if (target) setTimeout(() => target.focus({ preventScroll: true }), 50);
+            } else if (!wasHidden && !isOpen(el) && lastFocusBeforeModal && document.contains(lastFocusBeforeModal)) {
+                lastFocusBeforeModal.focus({ preventScroll: true });
+                lastFocusBeforeModal = null;
+            }
+        });
+    });
+
+    function init() {
+        enhance(document);
+        const toast = document.getElementById('toastContainer');
+        if (toast) { toast.setAttribute('aria-live', 'polite'); toast.setAttribute('aria-atomic', 'false'); }
+        const header = document.querySelector('header');
+        const tabs = document.getElementById('mainNavTabs');
+        if (tabs) { tabs.setAttribute('role', 'navigation'); tabs.setAttribute('aria-label', 'الأقسام الرئيسية'); }
+        const sidebar = document.getElementById('appSidebar');
+        if (sidebar) sidebar.setAttribute('aria-label', 'القائمة الجانبية');
+        document.querySelectorAll('[role="dialog"]').forEach(d => obs.observe(d, { attributes: true, attributeFilter: ['class'], attributeOldValue: true }));
+        // الأقسام تُرسم لاحقاً ديناميكياً: إعادة التحسين بعد كل تبديل تبويب
+        if (typeof window.switchTab === 'function' && !window.switchTab.__a11y) {
+            const orig = window.switchTab;
+            window.switchTab = function (tabId) {
+                const r = orig.apply(this, arguments);
+                const banner = document.getElementById('roleWelcomeBanner');
+                const home = (window.activeAuthUser && activeAuthUser.defaultTab) || (typeof activeAuthUser !== 'undefined' && activeAuthUser && activeAuthUser.defaultTab);
+                if (banner && home) banner.classList.toggle('banner-off-home', tabId !== home);
+                setTimeout(() => enhance(document), 300);
+                return r;
+            };
+            window.switchTab.__a11y = true;
+        }
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+    window.addEventListener('load', () => setTimeout(() => enhance(document), 1500));
+})();
+</script>
+
+<script>
+// ============================================================
+// الهيكل الجديد: قائمة جانبية هرمية (الأساس ثم التفريع) + شريط علوي + شريط سفلي للجوال
+// ============================================================
+(function () {
+    const ICONS = {
+        home: '<path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
+        students: '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5M16 4.6a3.5 3.5 0 0 1 0 6.8M18 14.8c1.9.7 3.1 2.4 3.5 5.2"/>',
+        calendar: '<rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/>',
+        sprout: '<path d="M12 21v-8M12 13c0-4 3-7 8-7 0 4-3 7-8 7zM12 15c0-3-2.5-5.5-7-5.5 0 3 2.5 5.5 7 5.5z"/>',
+        teacher: '<rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="12" cy="10" r="3"/><path d="M8 17c.7-1.8 2.2-2.8 4-2.8s3.3 1 4 2.8"/>',
+        chart: '<path d="M4 20V10M10 20V4M16 20v-7M21 20H3"/>',
+        settings: '<path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/>',
+        file: '<path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5"/>',
+        swap: '<circle cx="10" cy="8" r="3.5"/><path d="M3.5 20c.8-3.6 3.4-5.5 6.5-5.5 1.3 0 2.5.3 3.5 1M17 14v6M14 17h6"/>',
+        logout: '<path d="M14 4h5a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-5M10 8l-4 4 4 4M6 12h10"/>',
+        menu: '<path d="M4 7h16M4 12h16M4 17h16"/>',
+        close: '<path d="M6 6l12 12M18 6 6 18"/>',
+        chev: '<path d="m15 6-6 6 6 6"/>',
+        bell: '<path d="M6 9a6 6 0 0 1 12 0c0 6 2.5 7.5 2.5 7.5h-17S6 15 6 9zM10 20a2 2 0 0 0 4 0"/>',
+        bellOff: '<path d="M6 9a6 6 0 0 1 9.5-4.9M18 9c0 6 2.5 7.5 2.5 7.5H8M10 20a2 2 0 0 0 4 0M3 3l18 18"/>'
+    };
+    const svg = (n, size = 20, extra = '') => `<svg aria-hidden="true" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" ${extra}>${ICONS[n] || ''}</svg>`;
+    const LOGO = '<svg role="img" aria-label="شعار ثانوية أبي أيوب الأنصاري" width="30" height="30" viewBox="0 0 48 48" fill="none" stroke="#D9B45E" stroke-width="2.8" stroke-linecap="round"><path d="M9 42V21a15 15 0 0 1 30 0v21"/><path d="M16 34c2.8-1.5 5.4-1.5 8 0 2.6-1.5 5.2-1.5 8 0"/></svg>';
+
+    const call = (fnName, ...args) => { if (typeof window[fnName] === 'function') return window[fnName](...args); };
+    const tab = (t, after) => { const f = () => { call('switchTab', t); if (after) setTimeout(after, 160); }; f.__tab = t; return f; };
+    const user = () => (typeof activeAuthUser !== 'undefined' && activeAuthUser) ? activeAuthUser : null;
+    const pendingCount = () => (typeof allReferrals !== 'undefined' ? allReferrals.filter(r => r.status === 'pending').length : 0);
+
+    // ---------- خريطة القائمة لكل دور ----------
+    function navFor(u) {
+        const role = u ? u.role : null;
+        if (role === 'teacher') {
+            return [
+                { id: 'home', label: 'إحالة طالب', icon: 'file', page: 'إحالة طالب', run: tab('teacher', () => call('switchTeacherInnerTab', 'form')) },
+                { id: 'my-refs', label: 'إحالاتي', icon: 'students', page: 'إحالاتي', run: tab('teacher', () => call('switchTeacherInnerTab', 'my-referrals')) },
+                { id: 'my-sched', label: 'جدولي', icon: 'calendar', page: 'جدولي الأسبوعي', run: tab('teacher', () => call('switchTeacherInnerTab', 'my-schedule')) },
+                { id: 'my-wait', label: 'انتظاراتي', icon: 'swap', page: 'تكليفات الانتظار', run: tab('teacher', () => { call('switchTeacherInnerTab', 'my-schedule'); call('scrollToWidget', 'teacherWaitingHistorySection'); }) }
+            ];
+        }
+        if (role === 'counselor') {
+            return [
+                { id: 'home', label: 'الرئيسية', icon: 'home', page: 'غرفة التوجيه', run: tab('counselor') },
+                { id: 'g-students', label: 'شؤون الطلاب', icon: 'students', children: [
+                    { id: 'students-list', label: 'سجل الطلاب', page: 'سجل الطلاب', run: tab('students') }
+                ] }
+            ];
+        }
+        const isPrincipal = role === 'principal';
+        return [
+            { id: 'home', label: 'الرئيسية', icon: 'home', page: 'الرئيسية', run: tab('vice-principal', () => window.scrollTo({ top: 0, behavior: 'smooth' })) },
+            { id: 'g-students', label: 'شؤون الطلاب', icon: 'students', badge: pendingCount, children: [
+                { id: 'students-list', label: 'سجل الطلاب', page: 'سجل الطلاب', run: tab('students') },
+                { id: 'attendance', label: 'الغياب والتأخر', page: 'الغياب والتأخر', run: tab('vice-principal', () => { call('switchVpSubTab', 'attendance'); call('scrollToWidget', 'coreWidget-referrals'); }) },
+                { id: 'referrals', label: 'الإحالات السلوكية', badge: pendingCount, page: 'الإحالات السلوكية', run: tab('vice-principal', () => { call('switchVpSubTab', 'referrals'); call('scrollToWidget', 'coreWidget-referrals'); }) },
+                { id: 'quick-att', label: 'رصد غياب أو تأخر', action: true, run: () => call('openQuickAttendanceModal', 'absence') },
+                { id: 'new-student', label: 'إضافة طالب', action: true, run: tab('students', () => call('openNewStudentModal')) },
+                { id: 'import', label: 'الاستيراد من نور', action: true, run: tab('students', () => call('openImportModal')) }
+            ] },
+            { id: 'g-timetable', label: 'الانتظار والجدول', icon: 'calendar', children: [
+                { id: 'waiting', label: 'إسناد حصة انتظار', page: 'إسناد حصة انتظار', run: tab('timetable', () => { call('scrollToWidget', 'coreWidget-timetable-waitings'); call('findFreeTeachers', 'tt', true); }) },
+                { id: 'waiting-log', label: 'سجل التكليفات', page: 'سجل تكليفات الانتظار', run: tab('timetable', () => call('scrollToWidget', 'waitingAssignmentsTableContainer')) },
+                { id: 'section-sched', label: 'جدول الشعبة', action: true, run: () => openSectionSchedule() },
+                { id: 'master', label: 'الجدول العام', page: 'الجدول العام', run: tab('timetable', () => call('scrollToWidget', 'masterGridSection')) },
+                { id: 'teacher-sched', label: 'جدول معلم', page: 'جدول معلم', run: tab('timetable', () => call('scrollToWidget', 'singleTeacherScheduleSection')) },
+                { id: 'tt-health', label: 'سلامة الجدول', action: true, run: () => openTimetableHealth() }
+            ] },
+            { id: 'g-counselor', label: 'التوجيه الطلابي', icon: 'sprout', children: [
+                { id: 'cases', label: 'الحالات المحالة', page: 'الحالات المحالة للتوجيه', run: tab('counselor') },
+                { id: 'cases-track', label: 'متابعة التحويلات', page: 'متابعة التحويلات', run: tab('vice-principal', () => { call('switchVpSubTab', 'counselor-tracking'); call('scrollToWidget', 'coreWidget-referrals'); }) }
+            ] },
+            { id: 'g-teachers', label: 'المعلمون', icon: 'teacher', children: [
+                { id: 'directory', label: 'دليل المعلمين وهواتفهم', action: true, run: () => call('openTeachersDirectoryModal') },
+                { id: 'broadcast', label: 'التعاميم عبر واتساب', action: true, run: () => call('openBroadcastModal') },
+                { id: 'teacher-view', label: 'واجهة المعلم', page: 'واجهة المعلم', run: tab('teacher') }
+            ] },
+            { id: 'g-reports', label: 'التقارير', icon: 'chart', children: [
+                { id: 'stats', label: 'مؤشرات السلوك والانضباط', page: 'مؤشرات السلوك والانضباط', run: tab('stats') }
+            ] },
+            { id: 'g-admin', label: 'الإدارة', icon: 'settings', children: [
+                { id: 'settings', label: 'بيانات المدرسة', page: 'بيانات المدرسة', run: tab('settings') },
+                { id: 'backups', label: 'النسخ الاحتياطي', page: 'النسخ الاحتياطي', run: tab('settings', () => call('scrollToWidget', 'backupsListContainer')) },
+                { id: 'sys-health', label: 'حالة النظام', action: true, run: () => openTimetableHealth() }
+            ].filter(x => isPrincipal || x.id !== 'never') }
+        ];
+    }
+
+    // التبويب ← عنوان الصفحة والقسم (لتحديث الشريط العلوي عند أي تنقّل)
+    const TAB_PAGES = {
+        'vice-principal': ['', 'الرئيسية'], 'students': ['شؤون الطلاب', 'سجل الطلاب'], 'timetable': ['الانتظار والجدول', 'الانتظار والجدول'],
+        'counselor': ['التوجيه الطلابي', 'غرفة التوجيه'], 'stats': ['التقارير', 'مؤشرات السلوك والانضباط'], 'settings': ['الإدارة', 'بيانات المدرسة'], 'teacher': ['', 'واجهة المعلم']
+    };
+
+    let nav = [], activeId = 'home', openGroup = null, built = false;
+
+    function allowedTab(item, u) {
+        if (!u || !Array.isArray(u.allowedTabs)) return true;
+        const t = item.run && item.run.__tab;
+        return !t || u.allowedTabs.includes(t);
+    }
+
+    function el(tag, attrs = {}, html = '') {
+        const e = document.createElement(tag);
+        Object.entries(attrs).forEach(([k, v]) => { if (k === 'class') e.className = v; else e.setAttribute(k, v); });
+        if (html) e.innerHTML = html;
+        return e;
+    }
+
+    function badgeHtml(fn) {
+        const n = typeof fn === 'function' ? fn() : 0;
+        return n ? `<span class="nav-badge" aria-label="${n} بانتظار الإجراء">${n.toLocaleString('ar-SA')}</span>` : '';
+    }
+
+    function renderNav() {
+        const u = user();
+        const box = document.getElementById('appNavList');
+        if (!box) return;
+        box.innerHTML = '';
+        nav.forEach(item => {
+            if (item.children) {
+                const kids = item.children.filter(c => allowedTab(c, u));
+                if (!kids.length) return;
+                const g = el('button', { type: 'button', class: 'nav-group', 'aria-expanded': String(openGroup === item.id), 'data-id': item.id },
+                    `${svg(item.icon)}<span>${item.label}</span>${badgeHtml(item.badge)}<span class="nav-chev">${svg('chev', 16)}</span>`);
+                g.addEventListener('click', () => { openGroup = openGroup === item.id ? null : item.id; renderNav(); });
+                box.appendChild(g);
+                const wrap = el('div', { class: 'nav-children', role: 'group', 'aria-label': item.label });
+                kids.forEach(c => {
+                    const b = el('button', { type: 'button', class: 'nav-child' + (activeId === c.id ? ' active' : ''), 'data-id': c.id },
+                        `<span>${c.label}</span>${badgeHtml(c.badge)}`);
+                    if (activeId === c.id) b.setAttribute('aria-current', 'page');
+                    b.addEventListener('click', () => go(c, item));
+                    wrap.appendChild(b);
+                });
+                box.appendChild(wrap);
+            } else {
+                if (!allowedTab(item, u)) return;
+                const b = el('button', { type: 'button', class: 'nav-item' + (activeId === item.id ? ' active' : ''), 'data-id': item.id },
+                    `${svg(item.icon)}<span>${item.label}</span>${badgeHtml(item.badge)}`);
+                if (activeId === item.id) b.setAttribute('aria-current', 'page');
+                b.addEventListener('click', () => go(item, null));
+                box.appendChild(b);
+            }
+        });
+        renderTabbar();
+    }
+
+    function setTopbar(section, page) {
+        const crumb = document.getElementById('tbCrumb');
+        const title = document.getElementById('tbTitle');
+        const u = user();
+        if (!crumb || !title) return;
+        if (!page || page === 'الرئيسية') {
+            const h = new Date().getHours();
+            const name = u ? String(u.name || '').replace(/^أ\.\s*/, '') : '';
+            title.textContent = name ? `${h < 12 ? 'صباح الخير' : 'مساء الخير'} أ. ${name}` : 'الرئيسية';
+            crumb.textContent = u ? u.title || '' : '';
+        } else {
+            title.textContent = page;
+            crumb.textContent = section ? `${section} ‹ ${page}` : (u ? u.title || '' : '');
+        }
+        document.title = `${title.textContent} — ثانوية أبي أيوب الأنصاري`;
+    }
+
+    function go(item, group) {
+        closeDrawer();
+        if (!item.action) {
+            activeId = item.id;
+            if (group) openGroup = group.id;
+        }
+        try { item.run(); } catch (e) { console.warn('nav action failed', e); }
+        if (!item.action) setTopbar(group ? group.label : '', item.page || item.label);
+        renderNav();
+    }
+
+    // ---------- شريط الجوال السفلي ----------
+    function renderTabbar() {
+        const bar = document.getElementById('appTabbar');
+        const u = user();
+        if (!bar) return;
+        let items;
+        if (u && u.role === 'teacher') {
+            items = [['home', 'إحالة', 'file'], ['my-refs', 'إحالاتي', 'students'], ['my-sched', 'جدولي', 'calendar']];
+        } else if (u && u.role === 'counselor') {
+            items = [['home', 'الرئيسية', 'home'], ['students-list', 'الطلاب', 'students']];
+        } else {
+            items = [['home', 'الرئيسية', 'home'], ['students-list', 'الطلاب', 'students'], ['waiting', 'الانتظار', 'calendar'], ['cases', 'التوجيه', 'sprout']];
+        }
+        bar.style.gridTemplateColumns = `repeat(${items.length + 1}, minmax(0, 1fr))`;
+        bar.innerHTML = '';
+        const find = id => { for (const it of nav) { if (it.id === id) return [it, null]; for (const c of (it.children || [])) if (c.id === id) return [c, it]; } return [null, null]; };
+        items.forEach(([id, label, icon]) => {
+            const [it, grp] = find(id);
+            if (!it || !allowedTab(it, u)) return;
+            const b = el('button', { type: 'button', class: activeId === id ? 'active' : '' }, `${svg(icon, 24)}<span>${label}</span>`);
+            if (activeId === id) b.setAttribute('aria-current', 'page');
+            b.addEventListener('click', () => go(it, grp));
+            bar.appendChild(b);
+        });
+        const more = el('button', { type: 'button', 'aria-label': 'القائمة الكاملة' }, `${svg('menu', 24)}<span>المزيد</span>`);
+        more.addEventListener('click', openDrawer);
+        bar.appendChild(more);
+    }
+
+    function openDrawer() {
+        document.getElementById('appNav').classList.add('open');
+        document.getElementById('appNavBackdrop').classList.add('open');
+        const first = document.querySelector('#appNav button');
+        if (first) setTimeout(() => first.focus(), 50);
+    }
+    function closeDrawer() {
+        const n = document.getElementById('appNav');
+        if (n) n.classList.remove('open');
+        const b = document.getElementById('appNavBackdrop');
+        if (b) b.classList.remove('open');
+    }
+
+    function renderFoot() {
+        const u = user();
+        const foot = document.getElementById('appNavFoot');
+        if (!foot) return;
+        const initial = u ? String(u.name || '؟').replace(/^أ\.\s*/, '').trim().charAt(0) : '؟';
+        foot.innerHTML = '';
+        foot.appendChild(el('div', { class: 'nav-avatar', 'aria-hidden': 'true' }, initial));
+        const who = el('div', { style: 'flex:1;min-width:0' });
+        const n = el('div', { style: 'font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis' }); n.textContent = u ? u.name : '';
+        const t = el('div', { style: 'font-size:12px;color:var(--ink-muted)' }); t.textContent = u ? u.title : '';
+        who.append(n, t);
+        foot.appendChild(who);
+        const audio = el('button', { type: 'button', class: 'nav-icon-btn', id: 'navAudioBtn', 'aria-label': 'كتم أو تشغيل صوت التنبيه' }, svg('bell'));
+        audio.addEventListener('click', () => { call('toggleAudio'); syncAudio(); });
+        const out = el('button', { type: 'button', class: 'nav-icon-btn', 'aria-label': 'تسجيل الخروج' }, svg('logout'));
+        out.addEventListener('click', () => call('logoutCurrentUser'));
+        foot.append(audio, out);
+        syncAudio();
+    }
+    function syncAudio() {
+        const b = document.getElementById('navAudioBtn');
+        if (!b) return;
+        const on = typeof audioEnabled !== 'undefined' ? !!audioEnabled : true;
+        b.innerHTML = svg(on ? 'bell' : 'bellOff');
+        b.setAttribute('aria-pressed', String(on));
+    }
+
+    function buildShell() {
+        if (built) return;
+        built = true;
+        document.body.classList.add('shell-on');
+
+        const navEl = el('nav', { id: 'appNav', 'aria-label': 'القائمة الرئيسية' });
+        navEl.innerHTML = `
+            <div class="nav-brand">
+                <div class="nav-logo">${LOGO}</div>
+                <div><div class="nav-title">ثانوية أبي أيوب الأنصاري</div><div class="nav-sub">منظومة شؤون الطلاب</div></div>
+                <button type="button" class="nav-icon-btn nav-close" aria-label="إغلاق القائمة">${svg('close')}</button>
+            </div>
+            <div id="appNavList" style="display:flex;flex-direction:column;gap:4px"></div>
+            <div class="nav-foot" id="appNavFoot"></div>`;
+        document.body.appendChild(navEl);
+        navEl.querySelector('.nav-close').addEventListener('click', closeDrawer);
+        const bd = el('div', { id: 'appNavBackdrop', 'aria-hidden': 'true' });
+        bd.addEventListener('click', closeDrawer);
+        document.body.appendChild(bd);
+        const tb = el('nav', { id: 'appTabbar', 'aria-label': 'الأقسام السريعة' });
+        document.body.appendChild(tb);
+
+        const main = document.querySelector('body > main');
+        if (main) {
+            const top = el('div', { id: 'appTopbar' });
+            const today = new Date().toLocaleDateString('ar-SA-u-ca-gregory', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+            top.innerHTML = `
+                <button type="button" class="tb-menu" aria-label="فتح القائمة">${svg('menu')}</button>
+                <div class="tb-main"><div class="tb-crumb" id="tbCrumb"></div><h1 class="tb-title" id="tbTitle">الرئيسية</h1></div>
+                <div class="tb-date">${today}</div>`;
+            top.querySelector('.tb-menu').addEventListener('click', openDrawer);
+            main.prepend(top);
+            const warn = el('div', { id: 'persistWarning', role: 'status' });
+            top.after(warn);
+        }
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+    }
+
+    function refresh() {
+        const u = user();
+        if (!u) return;
+        buildShell();
+        nav = navFor(u);
+        renderNav();
+        renderFoot();
+        const home = (TAB_PAGES[u.defaultTab] || ['', 'الرئيسية']);
+        setTopbar('', u.role === 'teacher' ? 'إحالة طالب' : (u.defaultTab === 'vice-principal' ? 'الرئيسية' : home[1]));
+        loadSystemStatus(u);
+        if (u.role === 'teacher') lockTeacherSelect(u);
+    }
+
+    function lockTeacherSelect(u, tries = 0) {
+        const sel = document.getElementById('teacherSelect');
+        const name = String(u.name || '').replace(/^أ\.\s*/, '');
+        const opt = sel ? [...sel.options].find(o => o.value && (o.value.includes(name) || o.textContent.includes(name))) : null;
+        if (!opt) { if (tries < 30) setTimeout(() => lockTeacherSelect(u, tries + 1), 200); return; }
+        sel.value = opt.value;
+        call('onTeacherSelected', opt.value);
+        sel.disabled = true;
+        sel.title = 'الإحالة تُسجَّل باسمك تلقائياً';
+    }
+
+    // كل تنقّل من داخل الصفحات يحدّث القائمة والشريط العلوي
+    function hookSwitchTab() {
+        if (typeof window.switchTab !== 'function' || window.switchTab.__shell) return;
+        const orig = window.switchTab;
+        window.switchTab = function (tabId) {
+            const r = orig.apply(this, arguments);
+            const found = (() => { for (const it of nav) { if (it.children) { for (const c of it.children) if (c.run && c.run.__tab === tabId && c.id === activeId) return [c, it]; } else if (it.id === activeId && it.run && it.run.__tab === tabId) return [it, null]; } return null; })();
+            if (!found) {
+                const p = TAB_PAGES[tabId] || ['', ''];
+                const u = user();
+                const isHome = u && tabId === u.defaultTab;
+                activeId = isHome ? 'home' : (({ students: 'students-list', timetable: 'waiting', counselor: (u && u.role === 'counselor') ? 'home' : 'cases', stats: 'stats', settings: 'settings', teacher: (u && u.role === 'teacher') ? 'home' : 'teacher-view' })[tabId] || activeId);
+                for (const it of nav) if ((it.children || []).some(c => c.id === activeId)) openGroup = it.id;
+                setTopbar(isHome ? '' : p[0], isHome ? 'الرئيسية' : p[1]);
+                renderNav();
+            }
+            return r;
+        };
+        window.switchTab.__shell = true;
+        window.switchTab.__a11y = window.switchTab.__a11y || false;
+    }
+
+    // ---------- تنبيه الحفظ غير الدائم (للمدير والوكيل) ----------
+    async function loadSystemStatus(u) {
+        if (!u || !['principal', 'vp'].includes(u.role)) return;
+        try {
+            const r = await fetch('/api/system/status');
+            if (!r.ok) return;
+            const st = await r.json();
+            const w = document.getElementById('persistWarning');
+            if (w && !st.persistent) {
+                w.textContent = 'تنبيه: البيانات محفوظة على قرص مؤقت وقد تُمسح عند إعادة تشغيل الخادم. فعّل قاعدة بيانات دائمة (DATABASE_URL) قبل إدخال بيانات حقيقية.';
+                w.style.display = 'block';
+            }
+        } catch (e) {}
+    }
+
+    // ---------- إخفاء الرموز التعبيرية التي تعمل كأيقونات ----------
+    const EMOJI_ONLY = /^[\p{Extended_Pictographic}‍️⃣\s]+$/u;
+    const EMOJI_LEAD = /^(\s*)[\p{Extended_Pictographic}‍️⃣]+\s*/u;
+    function stripEmoji(root) {
+        const base = root && root.nodeType === 1 ? root : document.body;
+        if (!base || (base.closest && base.closest('#toastContainer'))) return;
+        base.querySelectorAll('span, div, b, strong').forEach(n => {
+            if (n.children.length || n.classList.contains('emoji-glyph') || n.closest('#toastContainer, #appNav, .dz-modal')) return;
+            const t = (n.textContent || '').trim();
+            if (t && t.length <= 8 && EMOJI_ONLY.test(t)) n.classList.add('emoji-glyph');
+        });
+        // «📋 سجل الطلاب» ← «سجل الطلاب» في العناوين والأزرار والتسميات
+        base.querySelectorAll('h1, h2, h3, h4, button, label, th, a, option').forEach(n => {
+            if (n.closest('#toastContainer, #appNav, #appTabbar')) return;
+            n.childNodes.forEach(c => {
+                if (c.nodeType === 3 && EMOJI_LEAD.test(c.nodeValue) && c.nodeValue.replace(EMOJI_LEAD, '').trim()) c.nodeValue = c.nodeValue.replace(EMOJI_LEAD, '$1');
+            });
+        });
+    }
+
+    // ---------- مرشحو الانتظار: الثلاثة الأنسب ثم «عرض الكل» ----------
+    function collapseCandidates() {
+        ['vpFreeTeachersResults', 'freeTeachersResults'].forEach(id => {
+            const box = document.getElementById(id);
+            if (!box) return;
+            const cards = box.children.length;
+            let btn = document.getElementById(id + 'Toggle');
+            if (cards <= 3 || box.querySelector('.col-span-full')) { box.classList.remove('cand-collapsed'); if (btn) btn.remove(); return; }
+            if (!btn) {
+                btn = el('button', { type: 'button', class: 'cand-toggle', id: id + 'Toggle' });
+                btn.addEventListener('click', () => { box.classList.toggle('cand-collapsed'); label(); });
+                box.after(btn);
+                box.classList.add('cand-collapsed');
+            }
+            function label() { btn.textContent = box.classList.contains('cand-collapsed') ? `عرض كل المتاحين (${cards})` : 'عرض الثلاثة الأنسب فقط'; btn.setAttribute('aria-expanded', String(!box.classList.contains('cand-collapsed'))); }
+            label();
+        });
+    }
+
+    // ---------- بنية المدرسة: حدود الحصص لكل يوم ----------
+    let STRUCT = { days: [{ name: 'الأحد', periods: 7 }, { name: 'الاثنين', periods: 7 }, { name: 'الثلاثاء', periods: 6 }, { name: 'الأربعاء', periods: 6 }, { name: 'الخميس', periods: 6 }], sections: [], timetable_locked: true };
+    const dayLen = d => (STRUCT.days.find(x => x.name === d) || { periods: 7 }).periods;
+    async function loadStructure() {
+        try { const r = await fetch('/api/school-structure'); if (r.ok) STRUCT = await r.json(); } catch (e) {}
+        wirePeriodLimits();
+        markMasterGrid();
+    }
+    function limitPeriods(dayId, perId) {
+        const d = document.getElementById(dayId), p = document.getElementById(perId);
+        if (!d || !p) return;
+        const apply = () => {
+            const n = dayLen(d.value);
+            [...p.options].forEach((o, i) => { o.disabled = i >= n; o.hidden = i >= n; });
+            if (p.selectedIndex >= n) { p.selectedIndex = n - 1; p.dispatchEvent(new Event('change')); }
+        };
+        if (!d.__limited) { d.addEventListener('change', apply); d.__limited = true; }
+        apply();
+    }
+    function wirePeriodLimits() {
+        limitPeriods('ttDaySelect', 'ttPeriodSelect');
+        limitPeriods('vpTtDaySelect', 'vpTtPeriodSelect');
+        limitPeriods('modalWaitingDay', 'modalWaitingPeriod');
+    }
+    function markMasterGrid() {
+        document.querySelectorAll('#masterGridTableContainer input.master-cell-input').forEach(inp => {
+            const d = inp.getAttribute('data-day'), p = parseInt(inp.getAttribute('data-p'), 10);
+            const td = inp.closest('td');
+            if (!td) return;
+            const off = p >= dayLen(d);
+            td.classList.toggle('cell-off', off && !inp.value.trim());
+            td.classList.toggle('cell-violation', off && !!inp.value.trim());
+            if (off && !inp.value.trim()) { inp.placeholder = '—'; inp.readOnly = true; inp.tabIndex = -1; }
+            if (off && inp.value.trim()) inp.title = `خارج الدوام: يوم ${d} ${dayLen(d)} حصص فقط`;
+            if (STRUCT.timetable_locked) inp.readOnly = true;
+        });
+        document.body.classList.toggle('tt-locked', !!STRUCT.timetable_locked);
+        document.querySelectorAll('[onclick*="saveAllMasterGrid"], [onclick*="importTimetableFileInput"], [onclick*="resetAllTeachersSchedule"], [onclick*="openTimetableEditorModal"]').forEach(b => b.classList.add('tt-edit-only'));
+        const sec = document.getElementById('masterGridSection');
+        if (sec && STRUCT.timetable_locked && !document.getElementById('ttLockNote')) {
+            const note = el('div', { id: 'ttLockNote', role: 'note', style: 'margin:0 0 12px;background:#E3F1EE;color:#095A4E;border-radius:14px;padding:10px 14px;font-size:13px;font-weight:600' });
+            note.textContent = 'الجدول المعتمد مقفل: للعرض فقط. الخانات المخططة خارج دوام ذلك اليوم.';
+            sec.prepend(note);
+            sec.querySelectorAll('h2, h3').forEach(h => { if (h.textContent.includes('تحرير')) h.textContent = 'الجدول العام لجميع المعلمين'; });
+            sec.querySelectorAll('p').forEach(x => { if (x.textContent.includes('عدل أي حصة')) x.textContent = 'عرض جداول المعلمين الـ ٢٢ كما اعتمدتها المدرسة.'; });
+        }
+    }
+
+    // ---------- نافذة: جدول الشعبة ----------
+    function modal(id, title) {
+        let m = document.getElementById(id);
+        if (m) { m.classList.remove('hidden'); return m; }
+        m = el('div', { id, class: 'dz-modal', role: 'dialog', 'aria-modal': 'true', 'aria-labelledby': id + 'T' });
+        m.innerHTML = `<div class="dz-card"><div class="dz-head"><h2 id="${id}T"></h2><button type="button" class="dz-x" aria-label="إغلاق">✕</button></div><div class="dz-body"></div></div>`;
+        m.querySelector('#' + id + 'T').textContent = title;
+        m.querySelector('.dz-x').addEventListener('click', () => m.classList.add('hidden'));
+        m.addEventListener('click', e => { if (e.target === m) m.classList.add('hidden'); });
+        document.body.appendChild(m);
+        return m;
+    }
+
+    async function openSectionSchedule(sectionId) {
+        const m = modal('sectionScheduleModal', 'جدول الشعبة');
+        const body = m.querySelector('.dz-body');
+        if (!STRUCT.sections.length) await loadStructure();
+        const sid = sectionId || (STRUCT.sections[0] || {}).id;
+        body.innerHTML = '';
+        const bar = el('div', { style: 'display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:14px' });
+        const lab = el('label', { for: 'secPick', style: 'font-size:14px;font-weight:600' }); lab.textContent = 'الشعبة';
+        const sel = el('select', { id: 'secPick', class: 'dz-select' });
+        STRUCT.sections.forEach(x => { const o = document.createElement('option'); o.value = x.id; o.textContent = `شعبة ${x.id} — ${x.grade} (${x.track})`; if (String(x.id) === String(sid)) o.selected = true; sel.appendChild(o); });
+        sel.addEventListener('change', () => openSectionSchedule(sel.value));
+        const sum = el('div', { style: 'font-size:13px;color:var(--muted)' });
+        bar.append(lab, sel, sum);
+        body.appendChild(bar);
+        const wrap = el('div', { class: 'dz-table-wrap' }); wrap.textContent = 'جارٍ التحميل…';
+        body.appendChild(wrap);
+        try {
+            const r = await fetch(`/api/timetable/sections/${sid}`);
+            const data = await r.json();
+            const maxP = STRUCT.max_periods || 7;
+            const t = el('table', { class: 'dz-table' });
+            const head = el('tr');
+            head.appendChild(el('th', { scope: 'col' }, 'اليوم'));
+            for (let p = 1; p <= maxP; p++) head.appendChild(el('th', { scope: 'col' }, `الحصة ${p.toLocaleString('ar-SA')}`));
+            const thead = el('thead'); thead.appendChild(head); t.appendChild(thead);
+            const tbody = el('tbody');
+            let empty = 0, multi = 0, cap = 0;
+            STRUCT.days.forEach(d => {
+                const tr = el('tr');
+                const th = el('td'); th.textContent = d.name; tr.appendChild(th);
+                const rows = data.schedule[d.name] || [];
+                for (let p = 1; p <= maxP; p++) {
+                    const td = el('td');
+                    const slot = rows.find(x => x.period === p);
+                    if (!slot) { td.innerHTML = '<span class="dz-off">—</span>'; }
+                    else {
+                        cap++;
+                        const box = el('div', { class: 'dz-cell' });
+                        if (!slot.entries.length) { empty++; box.classList.add('dz-empty'); box.textContent = 'فارغة'; }
+                        else {
+                            if (slot.entries.length > 1) { multi++; box.classList.add('dz-multi'); }
+                            slot.entries.forEach(e => { const b = el('b'); b.textContent = e.cell; const s = el('span'); s.textContent = 'أ. ' + e.teacher; box.append(b, s); });
+                        }
+                        td.appendChild(box);
+                    }
+                    tr.appendChild(td);
+                }
+                tbody.appendChild(tr);
+            });
+            t.appendChild(tbody);
+            wrap.innerHTML = ''; wrap.appendChild(t);
+            sum.textContent = `${(cap - empty).toLocaleString('ar-SA')} حصة من ${cap.toLocaleString('ar-SA')} مسجّلة · ${empty.toLocaleString('ar-SA')} فارغة · ${multi.toLocaleString('ar-SA')} بأكثر من معلم`;
+            const lg = el('div', { class: 'dz-legend' });
+            lg.innerHTML = '<span><i style="background:#FDF1E3"></i>حصة فارغة في الجدول</span><span><i style="background:#FDECEA"></i>أكثر من معلم في نفس الحصة</span><span><i style="background:#F0EEE8"></i>— خارج دوام الشعبة</span>';
+            body.appendChild(lg);
+        } catch (e) { wrap.textContent = 'تعذر تحميل جدول الشعبة.'; }
+    }
+
+    // ---------- نافذة: سلامة الجدول وحالة النظام ----------
+    async function openTimetableHealth() {
+        const m = modal('ttHealthModal', 'سلامة الجدول وحالة النظام');
+        const body = m.querySelector('.dz-body');
+        body.textContent = 'جارٍ الفحص…';
+        try {
+            const [rv, rs] = await Promise.all([fetch('/api/timetable/validate'), fetch('/api/system/status')]);
+            const v = await rv.json(); const st = rs.ok ? await rs.json() : {};
+            body.innerHTML = '';
+            const sys = el('div', { style: 'display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px' });
+            const pill = (txt, ok) => { const p = el('span', { class: 'dz-pill', style: ok ? 'background:#E6F4EC;color:#0B6B3A' : 'background:#FDF1E3;color:#9A4A06' }); p.textContent = txt; return p; };
+            sys.append(pill(`قاعدة البيانات: ${st.database || '—'}`, true), pill(st.persistent ? 'الحفظ دائم' : 'الحفظ مؤقت — يحتاج قاعدة دائمة', !!st.persistent),
+                pill(st.timetable_locked ? 'الجدول مقفل ضد التعديل' : 'الجدول مفتوح للتعديل', !!st.timetable_locked), pill(st.matches_canonical ? 'مطابق للنسخة المعتمدة' : 'يختلف عن النسخة المعتمدة', !!st.matches_canonical));
+            body.appendChild(sys);
+            const s = v.stats || {};
+            const stats = el('div', { class: 'dz-stats' });
+            [['حصص الشعب المطلوبة أسبوعياً', s.section_capacity], ['المسجّلة في الجدول', s.section_slots_covered], ['الفارغة', s.section_slots_empty], ['مخالفات الدوام', (v.errors || []).length]].forEach(([k, val]) => {
+                const c = el('div', { class: 'dz-stat' }); const a = el('div'); a.textContent = k; const b = el('div'); b.textContent = (val ?? 0).toLocaleString('ar-SA'); c.append(a, b); stats.appendChild(c);
+            });
+            body.appendChild(stats);
+            const h1 = el('div', { class: 'dz-sec' }); h1.textContent = 'تغطية الشعب'; body.appendChild(h1);
+            const bars = el('div', { class: 'dz-bars' });
+            (v.coverage || []).forEach(c => {
+                const row = el('div', { class: 'dz-bar' });
+                const n = el('div'); n.textContent = `شعبة ${c.section}`;
+                const tr = el('div', { class: 'track', role: 'img', 'aria-label': `${c.filled} من ${c.capacity}` });
+                const f = el('div', { class: 'fill', style: `width:${c.capacity ? Math.round(100 * c.filled / c.capacity) : 0}%;${c.filled < c.capacity ? '' : 'background:#0B6B3A'}` });
+                tr.appendChild(f);
+                const v2 = el('div', { style: 'font-weight:600' }); v2.textContent = `${c.filled.toLocaleString('ar-SA')} / ${c.capacity.toLocaleString('ar-SA')}`;
+                const b = el('button', { type: 'button', class: 'cand-toggle', style: 'margin:0;height:32px;padding:0 10px;font-size:12px' }); b.textContent = 'عرض';
+                b.addEventListener('click', () => { m.classList.add('hidden'); openSectionSchedule(c.section); });
+                row.append(n, tr, v2);
+                row.appendChild(b);
+                row.style.gridTemplateColumns = '120px 1fr 80px 60px';
+                bars.appendChild(row);
+            });
+            body.appendChild(bars);
+            const list = (title, items, color) => {
+                if (!items.length) return;
+                const h = el('div', { class: 'dz-sec', style: color ? `color:${color}` : '' }); h.textContent = `${title} (${items.length.toLocaleString('ar-SA')})`;
+                const ul = el('ul', { class: 'dz-list' });
+                items.slice(0, 60).forEach(x => { const li = el('li'); li.textContent = x.msg; ul.appendChild(li); });
+                body.append(h, ul);
+            };
+            list('مخالفات لقواعد الدوام', v.errors || [], '#B42318');
+            const w = v.warnings || [];
+            list('شعب ناقصة', w.filter(x => x.type === 'section_gaps' || x.type === 'section_missing'));
+            list('فروقات النصاب', w.filter(x => x.type === 'load_diff'));
+            list('أكثر من معلم في نفس الشعبة والحصة', w.filter(x => x.type === 'section_clash'));
+        } catch (e) { body.textContent = 'تعذر إجراء الفحص.'; }
+    }
+
+    window.openSectionSchedule = openSectionSchedule;
+    window.openTimetableHealth = openTimetableHealth;
+
+    // ---------- التشغيل ----------
+    function boot() {
+        hookSwitchTab();
+        let tries = 0;
+        const wait = setInterval(() => {
+            tries++;
+            if (user()) { clearInterval(wait); refresh(); loadStructure(); }
+            else if (tries > 100) clearInterval(wait);
+        }, 100);
+        const mo = new MutationObserver(muts => {
+            let cand = false, grid = false;
+            muts.forEach(m => {
+                if (m.target.id === 'vpFreeTeachersResults' || m.target.id === 'freeTeachersResults') cand = true;
+                if (m.target.id === 'masterGridTableContainer' || (m.target.closest && m.target.closest('#masterGridTableContainer'))) grid = true;
+                m.addedNodes.forEach(n => { if (n.nodeType === 1) stripEmoji(n.parentElement || n); });
+            });
+            if (cand) collapseCandidates();
+            if (grid) markMasterGrid();
+            if (built && muts.some(m => m.target.id === 'referralsCardsContainer')) renderNav();
+        });
+        mo.observe(document.body, { childList: true, subtree: true });
+        stripEmoji(document);
+        setTimeout(() => { stripEmoji(document); collapseCandidates(); }, 1500);
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+})();
+</script>
 </body>
 </html>

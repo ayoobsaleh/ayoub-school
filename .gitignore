@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+backups/
+.secret_key
+*.tmp
+*.restore_tmp
+school_timetable_canonical.json
+school.db
+school.db-journal
+.cache/
