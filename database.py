@@ -338,10 +338,24 @@ def sync_documents_from_repo(conn):
         if current is None:
             set_document("teachers", repo_teachers, conn)
         else:
-            phones = {str(t.get("id")): t.get("phone", "") for t in current}
-            merged = [dict(t, phone=phones.get(str(t.get("id")), t.get("phone", ""))) for t in repo_teachers]
+            merged = merge_teachers(repo_teachers, current, get_document("teacher_overrides", {}, conn) or {})
             if merged != current:
                 set_document("teachers", merged, conn)
+
+
+TEACHER_EDITABLE = ("name", "subject")
+
+
+def merge_teachers(repo_teachers, current, overrides):
+    """بيانات المستودع + ما عدّلته المدرسة من الإعدادات (الاسم والمادة) + الجوال."""
+    phones = {str(t.get("id")): t.get("phone", "") for t in current}
+    out = []
+    for t in repo_teachers:
+        tid = str(t.get("id"))
+        item = dict(t, phone=phones.get(tid, t.get("phone", "")))
+        item.update({k: v for k, v in (overrides.get(tid) or {}).items() if k in TEACHER_EDITABLE and v})
+        out.append(item)
+    return out
 
 
 def get_timetable():
@@ -350,6 +364,10 @@ def get_timetable():
 
 def get_teachers_list():
     return get_document("teachers", []) or []
+
+
+def get_repo_teachers():
+    return _read_json_file(TEACHERS_SEED_FILE, [])
 
 
 def get_canonical_timetable():
@@ -630,6 +648,34 @@ def add_student(name, national_id, grade, classroom, guardian_phone):
     conn.commit()
     conn.close()
     return student_id
+
+
+def update_student(student_id, name, national_id, grade, classroom, guardian_phone):
+    conn = get_connection()
+    try:
+        if not conn.execute("SELECT id FROM students WHERE id = ?", (student_id,)).fetchone():
+            return False
+        conn.execute("""UPDATE students SET name = ?, national_id = ?, grade = ?, classroom = ?, guardian_phone = ?
+                        WHERE id = ?""", (name, national_id, grade, classroom, guardian_phone, student_id))
+        conn.commit()
+        return True
+    finally:
+        conn.close()
+
+
+def delete_student(student_id):
+    """يحذف الطالب وكل سجلاته (الإحالات والغياب والتوجيه والتواصل)."""
+    conn = get_connection()
+    try:
+        if not conn.execute("SELECT id FROM students WHERE id = ?", (student_id,)).fetchone():
+            return False
+        for table in ("guardian_communications", "counselor_cases", "attendance", "referrals"):
+            conn.execute(f"DELETE FROM {table} WHERE student_id = ?", (student_id,))
+        conn.execute("DELETE FROM students WHERE id = ?", (student_id,))
+        conn.commit()
+        return True
+    finally:
+        conn.close()
 # =========================================================================
 # دوال سجل الحضور والغياب والتأخر اليومي (Attendance & Tardy Module)
 # =========================================================================

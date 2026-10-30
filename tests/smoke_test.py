@@ -150,6 +150,36 @@ def main():
     st, d = call("POST", "/api/waiting", dict(item, status="executed"), token=tokens["vp"])
     check("تحديث الحالة إلى منفذ", st == 200 and d["status"] == "executed")
 
+    print("• غياب المعلمين وقواعد التوزيع")
+    names = [t["name"] for t in tl_p]
+    st, d = call("POST", "/api/teacher-absences", {"date": today, "teachers": names[:2] + ["ليس معلماً"]}, token=tokens["vp"])
+    check("تسجيل الغائبين", st == 200 and d["teachers"] == names[:2], str(d))
+    st, d = call("GET", f"/api/teacher-absences?date={today}", token=tokens["principal"])
+    check("قراءة الغائبين", st == 200 and d["teachers"] == names[:2], str(d))
+    check("المعلم لا يسجّل غياباً", call("POST", "/api/teacher-absences", {"date": today, "teachers": []}, token=tokens["teacher"])[0] == 403)
+    check("رفض تاريخ غير صحيح", call("POST", "/api/teacher-absences", {"date": "x", "teachers": []}, token=tokens["vp"])[0] == 400)
+    st, d = call("POST", "/api/waiting-rules", {"maxDaily": 9, "maxWaitingPerDay": 1, "preferSameSubject": False, "exempt": [names[3], "ليس معلماً"]}, token=tokens["vp"])
+    check("حفظ قواعد التوزيع ضمن الحدود", st == 200 and d["maxDaily"] == 7 and d["exempt"] == [names[3]], str(d))
+    st, d = call("GET", "/api/waiting-rules", token=tokens["teacher"])
+    check("قراءة القواعد", st == 200 and d["maxWaitingPerDay"] == 1 and d["preferSameSubject"] is False, str(d))
+
+    print("• تعديل بيانات المعلمين والطلاب")
+    renamed = [dict(t, name=t["name"] + " المعدل") if t["id"] == tl_p[0]["id"] else t for t in tl_p]
+    st, _ = call("POST", "/api/teachers-list", renamed, token=tokens["vp"])
+    st2, tl2 = call("GET", "/api/teachers-list", token=tokens["principal"])
+    check("تعديل اسم المعلم", st == 200 and tl2[0]["name"] == tl_p[0]["name"] + " المعدل", str(st))
+    check("الرمز لم يتغير بعد تعديل الاسم", tl2[0]["pin"] == tl_p[0]["pin"])
+    call("POST", "/api/teachers-list", tl_p, token=tokens["principal"])
+    st, _ = call("PUT", f"/api/students/{sid}", {"name": "طالب معدل", "grade": "ثاني ثانوي", "classroom": "3",
+                                                  "national_id": "1100000000", "guardian_phone": "0551111111"}, token=tokens["vp"])
+    st2, prof = call("GET", f"/api/students/{sid}/profile", token=tokens["vp"])
+    check("تعديل بيانات الطالب", st == 200 and prof["student"]["classroom"] == "3" and prof["student"]["name"] == "طالب معدل", str(st))
+    check("المعلم لا يعدّل الطلاب", call("PUT", f"/api/students/{sid}", {"name": "x", "grade": "1", "classroom": "1"}, token=tokens["teacher"])[0] == 403)
+    check("المعلم لا يحذف الطلاب", call("DELETE", f"/api/students/{sid}", token=tokens["teacher"])[0] == 403)
+    check("حذف الطالب", call("DELETE", f"/api/students/{sid}", token=tokens["vp"])[0] == 200)
+    check("الطالب المحذوف غير موجود", call("GET", f"/api/students/{sid}/profile", token=tokens["vp"])[0] == 404)
+    check("تعديل طالب غير موجود", call("PUT", f"/api/students/{sid}", {"name": "x", "grade": "1", "classroom": "1"}, token=tokens["vp"])[0] == 404)
+
     print("• النسخ الاحتياطي")
     st, meta = call("POST", "/api/backups", token=tokens["vp"])
     check("إنشاء نسخة", st == 200 and meta.get("filename", "").startswith("backup_"))

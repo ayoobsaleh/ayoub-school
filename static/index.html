@@ -1131,6 +1131,102 @@
             html.dark { color-scheme: light; --bg: #fff; --surface: #fff; --label: #000; --label-2: #222; --label-3: #444; --fill-1: #f4f4f4; --separator: #ccc; }
         }
     </style>
+    <style id="absences-ui">
+        /* ============================================================
+           غياب المعلمين وتوزيع الانتظار، وإدارة بيانات المعلمين والطلاب
+           ============================================================ */
+        .ab-page { display: grid; gap: 16px; max-width: 1000px; }
+        .ab-card { background: var(--surface); border-radius: 20px; box-shadow: var(--shadow-card); padding: 20px; color: var(--label); }
+        .ab-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+        .ab-step { display: flex; align-items: flex-start; gap: 12px; }
+        .ab-num { width: 28px; height: 28px; border-radius: 50%; background: var(--tint-soft); color: var(--tint-text); font-weight: 700; font-size: 14px; display: grid; place-items: center; flex-shrink: 0; margin-top: 1px; }
+        .ab-title { font-size: 17px; font-weight: 700; color: var(--label); line-height: 1.4; }
+        .ab-sub { font-size: 13px; color: var(--label-3); line-height: 1.5; }
+        .ab-date { display: flex; align-items: center; gap: 8px; }
+        .ab-date input { width: auto !important; min-height: 38px !important; }
+        .ab-daytag { font-size: 13px; font-weight: 600; color: var(--tint-text); background: var(--tint-soft); padding: 6px 12px; border-radius: 999px; white-space: nowrap; }
+        .ab-search { width: 100%; margin-bottom: 12px; }
+        .ab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 8px; }
+        .ab-chip { display: flex; align-items: center; gap: 10px; text-align: right; padding: 10px 12px; border-radius: 14px; background: var(--fill-1); border: 1.5px solid transparent; color: var(--label); min-height: 58px; width: 100%; }
+        .ab-chip:hover { background: var(--fill-2); }
+        .ab-chip[aria-pressed="true"] { background: var(--red-soft); border-color: var(--red-line); }
+        .ab-chip .ab-check { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--fill-4); display: grid; place-items: center; flex-shrink: 0; color: #fff; }
+        .ab-chip[aria-pressed="true"] .ab-check { background: var(--red); border-color: var(--red); }
+        .ab-chip .ab-name { display: block; font-size: 14px; font-weight: 600; line-height: 1.35; }
+        .ab-chip .ab-meta { display: block; font-size: 12px; color: var(--label-3); line-height: 1.4; }
+        .ab-bar { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--separator); }
+        .ab-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+        .ab-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 42px; padding: 0 18px; border-radius: 12px; font-size: 14px; font-weight: 600; background: var(--fill-2); color: var(--label); white-space: nowrap; }
+        .ab-btn:hover { background: var(--fill-3); }
+        .ab-btn.primary { background: var(--tint); color: #fff; }
+        .ab-btn.primary:hover { background: var(--tint-strong); }
+        .ab-btn.wa { background: #1FA855; color: #fff; }
+        .ab-btn.wa:hover { background: #178A45; }
+        .ab-btn.sm { height: 34px; padding: 0 12px; font-size: 13px; border-radius: 10px; }
+        .ab-btn.ghost { background: transparent; color: var(--tint-text); }
+        .ab-btn.ghost:hover { background: var(--tint-soft); }
+        .ab-btn.danger { background: transparent; color: var(--red-text); }
+        .ab-btn.danger:hover { background: var(--red-soft); }
+        .ab-empty { padding: 22px; text-align: center; color: var(--label-3); font-size: 14px; background: var(--fill-1); border-radius: 14px; }
+        .ab-group { border-radius: 16px; background: var(--fill-1); padding: 4px 6px 6px; margin-top: 10px; }
+        .ab-group-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; padding: 8px 8px 6px; }
+        .ab-group-name { font-size: 15px; font-weight: 700; color: var(--label); }
+        .ab-row { display: grid; grid-template-columns: 104px 1fr; gap: 12px; align-items: center; background: var(--surface); border-radius: 12px; padding: 10px 12px; margin-top: 4px; }
+        .ab-period { font-size: 14px; font-weight: 700; color: var(--label); }
+        .ab-class { font-size: 12px; color: var(--label-3); }
+        .ab-row select { width: 100%; }
+        .ab-row-main { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; font-size: 14px; }
+        .ab-why { font-size: 12px; color: var(--label-3); margin-top: 4px; line-height: 1.5; }
+        .ab-pill { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: var(--fill-2); color: var(--label-2); white-space: nowrap; }
+        .ab-pill.ok { background: var(--tint-soft); color: var(--tint-text); }
+        .ab-pill.warn { background: var(--orange-soft); color: var(--orange-text); }
+        .ab-pill.bad { background: var(--red-soft); color: var(--red-text); }
+        .ab-summary { display: flex; gap: 6px; flex-wrap: wrap; }
+        .ab-rules { margin-bottom: 12px; border-radius: 14px; background: var(--fill-1); padding: 0 14px; }
+        .ab-rules summary { cursor: pointer; font-size: 14px; font-weight: 600; padding: 11px 0; color: var(--label); list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+        .ab-rules summary::-webkit-details-marker { display: none; }
+        .ab-rules summary svg { transition: transform .2s ease; color: var(--label-3); }
+        .ab-rules[open] summary svg { transform: rotate(-90deg); }
+        .ab-rule { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 0; border-top: 1px solid var(--separator); font-size: 14px; }
+        .ab-rule small { display: block; color: var(--label-3); font-size: 12px; }
+        .ab-rule select { width: auto !important; min-width: 96px; }
+        .ab-switch { appearance: none; -webkit-appearance: none; width: 46px; height: 28px; border-radius: 999px; background: var(--fill-4); position: relative; cursor: pointer; flex-shrink: 0; transition: background .2s ease; }
+        .ab-switch::after { content: ''; position: absolute; top: 2px; right: 2px; width: 24px; height: 24px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0, 0, 0, .25); transition: transform .2s ease; }
+        .ab-switch:checked { background: var(--tint); }
+        .ab-switch:checked::after { transform: translateX(-18px); }
+        .ab-exempt { display: flex; flex-wrap: wrap; gap: 6px; padding: 2px 0 12px; }
+        .ab-exempt button { font-size: 12px; padding: 5px 10px; border-radius: 999px; background: var(--surface); border: 1px solid var(--separator); color: var(--label-2); }
+        .ab-exempt button[aria-pressed="true"] { background: var(--orange-soft); border-color: var(--orange-line); color: var(--orange-text); font-weight: 600; }
+        .ab-send { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .ab-phone { width: 150px !important; direction: ltr; text-align: right; min-height: 34px !important; font-size: 13px !important; }
+        .ab-seg { display: inline-flex; background: var(--fill-2); border-radius: 10px; padding: 2px; }
+        .ab-seg button { height: 32px; padding: 0 18px; border-radius: 8px; font-size: 14px; font-weight: 500; color: var(--label-2); background: transparent; }
+        .ab-seg button[aria-selected="true"] { background: var(--surface); color: var(--label); font-weight: 600; box-shadow: 0 1px 3px rgba(0, 0, 0, .1); }
+        .ab-table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 14px; }
+        .ab-table th { text-align: right; font-size: 12px; font-weight: 600; color: var(--label-3); padding: 8px; border-bottom: 1px solid var(--separator); white-space: nowrap; }
+        .ab-table td { padding: 6px 8px; border-bottom: 1px solid var(--separator); vertical-align: middle; }
+        .ab-table tr:last-child td { border-bottom: 0; }
+        .ab-table input { width: 100%; min-width: 110px; min-height: 36px !important; font-size: 14px !important; }
+        .ab-table input.num { width: 92px; min-width: 92px; direction: ltr; text-align: center; }
+        .ab-table input.ab-dirty { border-color: var(--tint) !important; background-color: var(--tint-soft) !important; }
+        .ab-table .ab-load { text-align: center; color: var(--label-3); }
+        .ab-table .ab-sname { font-weight: 600; }
+        .ab-scroll { overflow-x: auto; }
+        .ab-field { display: block; }
+        .ab-field span { display: block; font-size: 13px; font-weight: 600; color: var(--label-2); margin-bottom: 6px; }
+        .ab-field input { width: 100%; }
+        .ab-form { display: grid; gap: 12px; }
+        .ab-form .ab-two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        @media (max-width: 640px) {
+            .ab-card { padding: 16px; border-radius: 18px; }
+            .ab-row { grid-template-columns: 1fr; gap: 6px; }
+            .ab-grid { grid-template-columns: 1fr 1fr; }
+            .ab-chip { min-height: 54px; padding: 8px 10px; gap: 8px; }
+            .ab-head > .ab-btn, .ab-head > .ab-actions { width: 100%; }
+            .ab-head > .ab-actions .ab-btn { flex: 1; }
+            .ab-form .ab-two { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body class="min-h-screen text-slate-800 flex flex-col">
 
@@ -2821,21 +2917,105 @@
     </div>
 
 
-        <section id="section-settings" class="hidden space-y-6">
-            <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 max-w-2xl mx-auto">
-                <div class="mb-6 p-4 rounded-2xl bg-teal-50 border border-teal-200 flex items-center justify-between">
-                    <div>
-                        <h4 class="font-bold text-xs text-teal-900 flex items-center gap-1.5">
-                            <span>👥</span>
-                            <span>دليل معلمي المدرسة وهواتفهم</span>
-                        </h4>
-                        <p class="text-[11px] text-teal-700 mt-0.5">تعديل أسماء وتخصصات المعلمين وأرقام هواتفهم لإشعارات الواتساب</p>
+        <!-- ======================================================== -->
+        <!-- غياب المعلمين: التسجيل ← التوزيع بضغطة ← إشعار واتساب -->
+        <!-- ======================================================== -->
+        <section id="section-absences" class="hidden">
+            <div class="ab-page">
+                <div class="ab-card">
+                    <div class="ab-head">
+                        <div class="ab-step"><span class="ab-num">1</span><div><div class="ab-title">من غاب؟</div><div class="ab-sub">اضغط على اسم المعلم لتسجيله غائباً، ويُحفظ مباشرة</div></div></div>
+                        <div class="ab-date"><span class="ab-daytag" id="abDayTag"></span><input type="date" id="abDate" aria-label="تاريخ الغياب" onchange="abSetDate(this.value)"></div>
                     </div>
-                    <button onclick="openTeachersDirectoryModal()" type="button" class="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-black shadow transition">
-                        فتح دليل المعلمين
-                    </button>
+                    <input type="search" id="abSearch" class="ab-search" placeholder="ابحث باسم المعلم أو المادة" aria-label="بحث عن معلم" oninput="abRenderTeachers()">
+                    <div id="abTeachers" class="ab-grid" role="group" aria-label="المعلمون"></div>
+                    <div class="ab-bar">
+                        <div class="ab-sub" id="abAbsentSummary" role="status"></div>
+                        <button type="button" class="ab-btn sm danger" id="abClearBtn" onclick="abClearAbsent()">مسح الغياب</button>
+                    </div>
                 </div>
 
+                <div class="ab-card">
+                    <div class="ab-head">
+                        <div class="ab-step"><span class="ab-num">2</span><div><div class="ab-title">توزيع الانتظار</div><div class="ab-sub">يملأ حصص الغائبين بأنسب المنتظرين، وتستطيع تغيير أي حصة قبل الاعتماد</div></div></div>
+                        <button type="button" class="ab-btn primary" id="abFillBtn" onclick="abBuildPlan()">توزيع تلقائي</button>
+                    </div>
+                    <details class="ab-rules" id="abRules">
+                        <summary><span>قواعد التوزيع</span><span id="abRulesChev"></span></summary>
+                        <div class="ab-rule"><div>أقصى حصص للمعلم في اليوم<small>تشمل حصصه وانتظاره؛ من يبلغها لا يُكلَّف</small></div>
+                            <select id="abRuleMaxDaily" aria-label="أقصى حصص للمعلم في اليوم" onchange="abSaveRules()"><option value="3">3 حصص</option><option value="4">4 حصص</option><option value="5">5 حصص</option><option value="6">6 حصص</option><option value="7">7 حصص</option></select></div>
+                        <div class="ab-rule"><div>أقصى انتظار للمعلم في اليوم</div>
+                            <select id="abRuleMaxWait" aria-label="أقصى انتظار للمعلم في اليوم" onchange="abSaveRules()"><option value="1">حصة واحدة</option><option value="2">حصتان</option><option value="3">3 حصص</option><option value="4">4 حصص</option></select></div>
+                        <div class="ab-rule"><label for="abRuleSubject">تقديم معلم نفس المادة<small>إن كان متفرغاً يأتي أولاً</small></label>
+                            <input type="checkbox" class="ab-switch" id="abRuleSubject" onchange="abSaveRules()"></div>
+                        <div class="ab-rule" style="display:block"><div>معفَون من الانتظار<small>اضغط على الاسم لإعفائه أو إعادته</small></div>
+                            <div class="ab-exempt" id="abRuleExempt"></div></div>
+                    </details>
+                    <div id="abPlan"></div>
+                    <div class="ab-bar" id="abPlanBar" style="display:none">
+                        <div class="ab-summary" id="abPlanSummary"></div>
+                        <div class="ab-actions">
+                            <button type="button" class="ab-btn" onclick="abBuildPlan()">إعادة الاقتراح</button>
+                            <button type="button" class="ab-btn primary" id="abApproveBtn" onclick="abApprovePlan()">اعتماد التوزيع</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ab-card" id="abAssignedCard">
+                    <div class="ab-head">
+                        <div class="ab-step"><span class="ab-num">3</span><div><div class="ab-title">المنتظرون والإشعار</div><div class="ab-sub">رسالة واتساب واحدة لكل منتظر بكل حصصه، ويمكنك تغيير المنتظر أو إلغاء الحصة</div></div></div>
+                        <div class="ab-actions">
+                            <button type="button" class="ab-btn" onclick="abCopyGroupSummary()">نسخ ملخص للمجموعة</button>
+                            <button type="button" class="ab-btn wa" id="abSendNextBtn" onclick="abSendNext()">إرسال للتالي</button>
+                        </div>
+                    </div>
+                    <div id="abAssigned"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="section-settings" class="hidden space-y-6">
+            <!-- بيانات المعلمين والطلاب: تعديل كامل -->
+            <div class="ab-card" id="dataManageCard" style="max-width:1000px;margin:0 auto">
+                <div class="ab-head">
+                    <div><div class="ab-title">بيانات المعلمين والطلاب</div><div class="ab-sub">عدّل الأسماء والأرقام والفصول مباشرة ثم احفظ</div></div>
+                    <div class="ab-seg" role="tablist" aria-label="نوع البيانات">
+                        <button type="button" role="tab" id="dmTabTeachers" aria-selected="true" aria-controls="dmTeachers" onclick="dmShow('teachers')">المعلمون</button>
+                        <button type="button" role="tab" id="dmTabStudents" aria-selected="false" aria-controls="dmStudents" onclick="dmShow('students')">الطلاب</button>
+                    </div>
+                </div>
+                <div id="dmTeachers" role="tabpanel" aria-labelledby="dmTabTeachers">
+                    <input type="search" id="dmTeacherSearch" class="ab-search" placeholder="ابحث باسم المعلم أو المادة أو الجوال" aria-label="بحث في المعلمين" oninput="dmRenderTeachers()">
+                    <div class="ab-scroll">
+                        <table class="ab-table">
+                            <thead><tr><th>الاسم</th><th>المادة</th><th>الجوال</th><th class="dm-pin">رمز الدخول</th><th>النصاب</th></tr></thead>
+                            <tbody id="dmTeachersBody"></tbody>
+                        </table>
+                    </div>
+                    <div class="ab-bar">
+                        <div class="ab-sub" id="dmTeachersNote">النصاب من الجدول المعتمد ولا يُعدَّل هنا.</div>
+                        <div class="ab-actions">
+                            <button type="button" class="ab-btn" id="dmTeachersUndo" onclick="dmUndoTeachers()" disabled>تراجع</button>
+                            <button type="button" class="ab-btn primary" id="dmTeachersSave" onclick="dmSaveTeachers()" disabled>حفظ التعديلات</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="dmStudents" role="tabpanel" aria-labelledby="dmTabStudents" style="display:none">
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+                        <input type="search" id="dmStudentSearch" style="flex:1;min-width:200px" placeholder="ابحث بالاسم أو السجل المدني أو الصف أو الفصل" aria-label="بحث في الطلاب" oninput="dmRenderStudents()">
+                        <button type="button" class="ab-btn primary" onclick="dmOpenStudent(null)">إضافة طالب</button>
+                    </div>
+                    <div class="ab-scroll">
+                        <table class="ab-table">
+                            <thead><tr><th>الاسم</th><th>الصف</th><th>الفصل</th><th>السجل المدني</th><th>جوال ولي الأمر</th><th aria-label="تعديل"></th></tr></thead>
+                            <tbody id="dmStudentsBody"></tbody>
+                        </table>
+                    </div>
+                    <div class="ab-bar"><div class="ab-sub" id="dmStudentsCount"></div></div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 max-w-2xl mx-auto">
                 <h3 class="text-lg font-black text-slate-900 mb-2 flex items-center gap-2">
                     <span>⚙️</span>
                     <span>بيانات ثانوية أبي أيوب الأنصاري</span>
@@ -2942,6 +3122,34 @@
 
 
     <!-- ======================================================== -->
+    <!-- ======================================================== -->
+    <!-- النافذة المنبثقة: إضافة طالب أو تعديل بياناته أو حذفه -->
+    <!-- ======================================================== -->
+    <div id="dmStudentModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden no-print" role="dialog" aria-modal="true" aria-labelledby="dmStudentTitle">
+        <div class="bg-white rounded-3xl w-full p-6 shadow-2xl border border-slate-200 max-h-[90vh] overflow-y-auto" style="max-width:520px">
+            <div class="ab-head">
+                <div class="ab-title" id="dmStudentTitle">تعديل بيانات الطالب</div>
+                <button type="button" class="ab-btn sm" onclick="dmCloseStudent()" aria-label="إغلاق">إغلاق</button>
+            </div>
+            <form id="dmStudentForm" class="ab-form" onsubmit="dmSaveStudent(event)">
+                <label class="ab-field"><span>اسم الطالب</span><input type="text" id="dmStName" required maxlength="120" autocomplete="off"></label>
+                <div class="ab-two">
+                    <label class="ab-field"><span>الصف</span><input type="text" id="dmStGrade" required maxlength="60" list="dmGradesList" autocomplete="off"></label>
+                    <label class="ab-field"><span>الفصل</span><input type="text" id="dmStClass" required maxlength="60" autocomplete="off"></label>
+                </div>
+                <div class="ab-two">
+                    <label class="ab-field"><span>السجل المدني</span><input type="text" id="dmStNatId" inputmode="numeric" maxlength="20" dir="ltr" autocomplete="off"></label>
+                    <label class="ab-field"><span>جوال ولي الأمر</span><input type="tel" id="dmStPhone" inputmode="tel" maxlength="20" dir="ltr" placeholder="05xxxxxxxx" autocomplete="off"></label>
+                </div>
+                <datalist id="dmGradesList"></datalist>
+                <div class="ab-bar">
+                    <button type="button" class="ab-btn danger" id="dmStDelete" onclick="dmDeleteStudent()">حذف الطالب</button>
+                    <button type="submit" class="ab-btn primary" id="dmStSave">حفظ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- النافذة المنبثقة: توزيع حصص معلم غائب على المنتظرين -->
     <!-- ======================================================== -->
     <div id="absentPlanModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden no-print">
@@ -5424,7 +5632,7 @@
             title: 'مدير المدرسة',
             icon: '🏫',
             defaultPin: '0000',
-            allowedTabs: ['stats', 'vice-principal', 'timetable', 'counselor', 'students', 'teacher', 'settings'],
+            allowedTabs: ['stats', 'vice-principal', 'absences', 'timetable', 'counselor', 'students', 'teacher', 'settings'],
             defaultTab: 'stats'
         },
         {
@@ -5433,7 +5641,7 @@
             title: 'وكيل شؤون الطلاب',
             icon: '🛡️',
             defaultPin: '1111',
-            allowedTabs: ['vice-principal', 'timetable', 'students', 'counselor', 'stats', 'teacher', 'settings'],
+            allowedTabs: ['vice-principal', 'absences', 'timetable', 'students', 'counselor', 'stats', 'teacher', 'settings'],
             defaultTab: 'vice-principal'
         },
         {
@@ -5764,9 +5972,10 @@
         // 1. معالجة فتح الإعدادات
         if (tabId === 'settings') {
             if (typeof loadBackupsList === 'function') loadBackupsList();
+            if (typeof dmInit === 'function') dmInit();
             const settingsSection = document.getElementById('section-settings');
             if (settingsSection) {
-                const allSections = ['teacher', 'vice-principal', 'timetable', 'counselor', 'students', 'stats', 'settings'];
+                const allSections = ['teacher', 'vice-principal', 'timetable', 'counselor', 'students', 'stats', 'settings', 'absences'];
                 allSections.forEach(s => {
                     const el = document.getElementById(`section-${s}`);
                     if (el) {
@@ -5787,7 +5996,7 @@
             return;
         }
 
-        const allTabs = ['teacher', 'vice-principal', 'timetable', 'counselor', 'students', 'stats', 'settings'];
+        const allTabs = ['teacher', 'vice-principal', 'timetable', 'counselor', 'students', 'stats', 'settings', 'absences'];
         
         // إخفاء وإظهار الأقسام
         allTabs.forEach(t => {
@@ -5827,6 +6036,8 @@
             if (typeof renderCounselorCases === 'function') renderCounselorCases();
         } else if (tabId === 'students') {
             if (typeof renderStudentsDirectory === 'function') renderStudentsDirectory();
+        } else if (tabId === 'absences') {
+            if (typeof abOpen === 'function') abOpen();
         } else if (tabId === 'stats') {
             if (typeof renderStats === 'function') renderStats();
         } else if (tabId === 'teacher') {
@@ -8146,7 +8357,7 @@ async function initApp() {
     function closeNewStudentModal() {
         document.getElementById('newStudentModal').classList.add('hidden');
     }
-    function submitNewStudent(event) {
+    async function submitNewStudent(event) {
         event.preventDefault();
         const name = document.getElementById('newStudentName').value;
         const grade = document.getElementById('newStudentGrade').value;
@@ -8154,8 +8365,16 @@ async function initApp() {
         const natId = document.getElementById('newStudentNatId').value;
         const phone = document.getElementById('newStudentPhone').value;
 
+        let newId;
+        try {
+            const res = await fetch('/api/students', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, grade, classroom, national_id: natId, guardian_phone: phone }) });
+            const d = await res.json().catch(() => ({}));
+            if (!res.ok) { showToast(d.detail || 'تعذر حفظ الطالب على الخادم', 'error'); return; }
+            newId = d.id;
+        } catch (e) { showToast('تعذر الاتصال بالخادم', 'error'); return; }
         allStudents.push({
-            id: Date.now(),
+            id: newId,
             name,
             grade,
             classroom,
@@ -9509,17 +9728,24 @@ async function initApp() {
 
     // ترتيب المرشحين لحصة انتظار واحدة. extra: تكليفات مقترحة لم تُعتمد بعد
     // (تُحتسب كأنها مسندة هذا الأسبوع حتى لا يتكرر المعلم نفسه ويتجاوز حده اليومي).
-    function rankWaitingCandidates(day, periodIdx, extra = []) {
+    // opts.date: تاريخ محدد (يُطابَق به بدل اسم اليوم)، opts.absentSubject: مادة الغائب
+    function rankWaitingCandidates(day, periodIdx, extra = [], opts = {}) {
         const pool = extra.concat((typeof waitingAssignments !== 'undefined' && Array.isArray(waitingAssignments)) ? waitingAssignments : []);
         const candidateTeachers = [];
         const excludedDueToMaxDaily = [];
         const excludedAlreadyAssigned = [];
         const periodLabel = `الحصة ${getPeriodName(periodIdx + 1)}`;
-        // التكليفات الفعّالة هذا الأسبوع (الملغاة لا تُحتسب)
-        const weekWaitings = pool
-            .filter(w => w && w.status !== 'cancelled' && isWithinCurrentWeek(w.date));
+        // تكليفات هذا اليوم الفعّالة (الملغاة لا تُحتسب): بالتاريخ إن حُدد، وإلا باسم اليوم في الأسبوع الحالي
+        const onDay = w => opts.date ? (w.date ? String(w.date).slice(0, 10) === opts.date : w.day === day) : (w.day === day && isWithinCurrentWeek(w.date));
+        const dayWaitings = pool.filter(w => w && w.status !== 'cancelled' && onDay(w));
         // المعلمون الغائبون في هذا اليوم (لا يُرشَّح غائب لحصة انتظار)
-        const absentToday = new Set(weekWaitings.filter(w => w.day === day).map(w => normalizeTeacherName(w.absentTeacher)));
+        const absentToday = new Set(dayWaitings.map(w => normalizeTeacherName(w.absentTeacher)));
+        // قواعد التوزيع التي يضبطها الوكيل
+        const rules = (typeof WAITING_RULES !== 'undefined' && WAITING_RULES) || {};
+        const maxDaily = Number(rules.maxDaily) || 5;
+        const maxWaiting = Number(rules.maxWaitingPerDay) || 99;
+        const exempt = new Set((rules.exempt || []).map(normalizeTeacherName));
+        const subjectKey = s => String(s || '').replace(/\s+/g, '');
 
         const teachersList = (typeof OFFICIAL_TEACHERS !== 'undefined' && Array.isArray(OFFICIAL_TEACHERS) && OFFICIAL_TEACHERS.length > 0)
             ? OFFICIAL_TEACHERS
@@ -9536,9 +9762,11 @@ async function initApp() {
 
             // استبعاد المعلم الغائب نفسه
             if (absentToday.has(normalizeTeacherName(t.name))) return;
+            // المعفَون من الانتظار
+            if (exempt.has(normalizeTeacherName(t.name))) return;
 
             // استبعاد من كُلّف مسبقاً بانتظار في نفس اليوم والحصة (منع الإسناد المزدوج)
-            const waitingsToday = weekWaitings.filter(w => w.day === day && normalizeTeacherName(w.assignedTeacher) === normalizeTeacherName(t.name));
+            const waitingsToday = dayWaitings.filter(w => normalizeTeacherName(w.assignedTeacher) === normalizeTeacherName(t.name));
             if (waitingsToday.some(w => w.period === periodLabel)) {
                 excludedAlreadyAssigned.push({ name: t.name, subject: t.subject });
                 return;
@@ -9572,8 +9800,8 @@ async function initApp() {
             // التكليفات المسندة غير المنفذة بعد تُحتسب أيضاً حتى لا يُرشَّح نفس المعلم مراراً
             const remainingToTarget = Math.max(0, quotaInfo.target - totalAssigned);
 
-            // معيار الاستبعاد: لا يُكلف معلم لديه 5 حصص أو أكثر في نفس اليوم
-            if (todayClassesCount >= 5) {
+            // معيار الاستبعاد: من بلغ الحد اليومي للحصص أو للانتظار (من قواعد التوزيع) لا يُكلَّف
+            if (todayClassesCount >= maxDaily || waitingsToday.length >= maxWaiting) {
                 excludedDueToMaxDaily.push({
                     name: t.name,
                     subject: t.subject,
@@ -9623,12 +9851,15 @@ async function initApp() {
             }
 
             // مجموع نقاط الأولوية الذكية
-            const totalScore = Math.round(scoreTargetProgress + scoreAdjacency + scoreRotation);
+            // معلم من نفس مادة الغائب يُقدَّم إن فعّل الوكيل ذلك
+            const sameSubject = rules.preferSameSubject !== false && !!opts.absentSubject && subjectKey(t.subject) === subjectKey(opts.absentSubject);
+            const totalScore = Math.round(scoreTargetProgress + scoreAdjacency + scoreRotation + (sameSubject ? 20 : 0));
 
             // مبرر الترشيح التوضيحي للوكيل
             let selectionReason = `معلم ${quotaInfo.name} بنصاب (${actualWeeklyLoad}) حصة، وهدفه الفصلي (${quotaInfo.target}) حصة. `;
             if (isAdjacent) selectionReason += `الحصة ملاصقة لجدوله (${adjacencyLabel}). `;
             selectionReason += `نفذ (${totalExecuted}) من (${quotaInfo.target}) وباقٍ له (${remainingToTarget}) حصة لتحقيق العدالة.`;
+            if (sameSubject) selectionReason = 'من نفس مادة المعلم الغائب. ' + selectionReason;
 
             candidateTeachers.push({
                 teacher: t,
@@ -9639,6 +9870,7 @@ async function initApp() {
                 totalExecuted,
                 remainingToTarget,
                 isAdjacent,
+                sameSubject,
                 adjacencyLabel,
                 rotationLabel,
                 selectionReason,
@@ -10614,6 +10846,7 @@ async function initApp() {
         check: '<path d="m5 12 5 5 9-10"/>',
         sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
         moon: '<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>',
+        userOff: '<circle cx="10" cy="8" r="4"/><path d="M3 21c.8-3.6 3.6-6 7-6 1.3 0 2.5.3 3.5.9M16 15l5 5M21 15l-5 5"/>',
         themeAuto: '<circle cx="12" cy="12" r="8.5"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor"/>'
     };
     // رموز تعبيرية كانت تعمل كأيقونات ← أيقونات خطية من نفس المجموعة (وما لا مقابل له يُخفى)
@@ -10654,6 +10887,7 @@ async function initApp() {
         const isPrincipal = role === 'principal';
         return [
             { id: 'home', label: 'الرئيسية', icon: 'home', page: 'الرئيسية', run: tab('vice-principal', () => window.scrollTo({ top: 0, behavior: 'smooth' })) },
+            { id: 'absences', label: 'غياب المعلمين', icon: 'userOff', page: 'غياب المعلمين', run: tab('absences') },
             { id: 'g-students', label: 'شؤون الطلاب', icon: 'students', badge: pendingCount, children: [
                 { id: 'students-list', label: 'سجل الطلاب', page: 'سجل الطلاب', run: tab('students') },
                 { id: 'attendance', label: 'الغياب والتأخر', page: 'الغياب والتأخر', run: tab('vice-principal', () => { call('switchVpSubTab', 'attendance'); call('scrollToWidget', 'coreWidget-referrals'); }) },
@@ -10675,7 +10909,7 @@ async function initApp() {
                 { id: 'cases-track', label: 'متابعة التحويلات', page: 'متابعة التحويلات', run: tab('vice-principal', () => { call('switchVpSubTab', 'counselor-tracking'); call('scrollToWidget', 'coreWidget-referrals'); }) }
             ] },
             { id: 'g-teachers', label: 'المعلمون', icon: 'teacher', children: [
-                { id: 'directory', label: 'دليل المعلمين وهواتفهم', action: true, run: () => call('openTeachersDirectoryModal') },
+                { id: 'directory', label: 'بيانات المعلمين وهواتفهم', page: 'بيانات المعلمين والطلاب', run: tab('settings', () => call('dmShow', 'teachers')) },
                 { id: 'broadcast', label: 'التعاميم عبر واتساب', action: true, run: () => call('openBroadcastModal') },
                 { id: 'teacher-view', label: 'واجهة المعلم', page: 'واجهة المعلم', run: tab('teacher') }
             ] },
@@ -10683,7 +10917,8 @@ async function initApp() {
                 { id: 'stats', label: 'مؤشرات السلوك والانضباط', page: 'مؤشرات السلوك والانضباط', run: tab('stats') }
             ] },
             { id: 'g-admin', label: 'الإدارة', icon: 'settings', children: [
-                { id: 'settings', label: 'بيانات المدرسة', page: 'بيانات المدرسة', run: tab('settings') },
+                { id: 'data', label: 'بيانات المعلمين والطلاب', page: 'بيانات المعلمين والطلاب', run: tab('settings', () => call('dmShow', 'students')) },
+                { id: 'settings', label: 'بيانات المدرسة', page: 'بيانات المدرسة', run: tab('settings', () => call('scrollToWidget', 'settingSchoolName')) },
                 { id: 'backups', label: 'النسخ الاحتياطي', page: 'النسخ الاحتياطي', run: tab('settings', () => call('scrollToWidget', 'backupsListContainer')) },
                 { id: 'sys-health', label: 'حالة النظام', action: true, run: () => openTimetableHealth() }
             ].filter(x => isPrincipal || x.id !== 'never') }
@@ -10693,7 +10928,7 @@ async function initApp() {
     // التبويب ← عنوان الصفحة والقسم (لتحديث الشريط العلوي عند أي تنقّل)
     const TAB_PAGES = {
         'vice-principal': ['', 'الرئيسية'], 'students': ['شؤون الطلاب', 'سجل الطلاب'], 'timetable': ['الانتظار والجدول', 'الانتظار والجدول'],
-        'counselor': ['التوجيه الطلابي', 'غرفة التوجيه'], 'stats': ['التقارير', 'مؤشرات السلوك والانضباط'], 'settings': ['الإدارة', 'بيانات المدرسة'], 'teacher': ['', 'واجهة المعلم']
+        'counselor': ['التوجيه الطلابي', 'غرفة التوجيه'], 'stats': ['التقارير', 'مؤشرات السلوك والانضباط'], 'settings': ['الإدارة', 'بيانات المدرسة'], 'teacher': ['', 'واجهة المعلم'], 'absences': ['', 'غياب المعلمين']
     };
 
     let nav = [], activeId = 'home', openGroup = null, built = false;
@@ -10789,7 +11024,7 @@ async function initApp() {
         } else if (u && u.role === 'counselor') {
             items = [['home', 'الرئيسية', 'home'], ['students-list', 'الطلاب', 'students']];
         } else {
-            items = [['home', 'الرئيسية', 'home'], ['students-list', 'الطلاب', 'students'], ['waiting', 'الانتظار', 'calendar'], ['cases', 'التوجيه', 'sprout']];
+            items = [['home', 'الرئيسية', 'home'], ['absences', 'الغياب', 'userOff'], ['waiting', 'الانتظار', 'calendar'], ['students-list', 'الطلاب', 'students']];
         }
         bar.style.gridTemplateColumns = `repeat(${items.length + 1}, minmax(0, 1fr))`;
         bar.innerHTML = '';
@@ -10953,7 +11188,7 @@ async function initApp() {
                 const p = TAB_PAGES[tabId] || ['', ''];
                 const u = user();
                 const isHome = u && tabId === u.defaultTab;
-                activeId = isHome ? 'home' : (({ students: 'students-list', timetable: 'waiting', counselor: (u && u.role === 'counselor') ? 'home' : 'cases', stats: 'stats', settings: 'settings', teacher: (u && u.role === 'teacher') ? 'home' : 'teacher-view' })[tabId] || activeId);
+                activeId = isHome ? 'home' : (({ students: 'students-list', timetable: 'waiting', counselor: (u && u.role === 'counselor') ? 'home' : 'cases', stats: 'stats', settings: 'settings', absences: 'absences', teacher: (u && u.role === 'teacher') ? 'home' : 'teacher-view' })[tabId] || activeId);
                 for (const it of nav) if ((it.children || []).some(c => c.id === activeId)) openGroup = it.id;
                 setTopbar(isHome ? '' : p[0], isHome ? 'الرئيسية' : p[1]);
                 renderNav();
@@ -11299,6 +11534,13 @@ async function initApp() {
 
     window.openSectionSchedule = openSectionSchedule;
     window.openTimetableHealth = openTimetableHealth;
+    window.shellGo = id => {
+        for (const it of nav) {
+            if (it.id === id) { go(it, null); return true; }
+            for (const c of (it.children || [])) if (c.id === id) { go(c, it); return true; }
+        }
+        return false;
+    };
 
     // ---------- التشغيل ----------
     function boot() {
@@ -11328,6 +11570,707 @@ async function initApp() {
     }
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();
+</script>
+<script>
+    // =========================================================================
+    // غياب المعلمين: التسجيل ← التوزيع بضغطة ← إشعار واتساب
+    // =========================================================================
+    let abDate = todayRiyadhISO();
+    let abAbsent = [];      // أسماء الغائبين في التاريخ المحدد (محفوظة على الخادم)
+    let abPlan = [];        // حصص الغائبين غير المسندة مع المرشحين والاختيار
+    let abPlanBuilt = false;
+    let abEditingId = null; // تكليف معتمد يُغيَّر منتظره الآن
+    let WAITING_RULES = { maxDaily: 5, maxWaitingPerDay: 2, preferSameSubject: true, exempt: [] };
+    const AB_WEEK = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+    const AB_CHECK = '<svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>';
+    const AB_CHEV = '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg>';
+
+    const abKey = n => normalizeTeacherName(n);
+    const abDayName = iso => AB_WEEK[new Date(iso + 'T12:00:00Z').getUTCDay()];
+    const abTeacher = n => (OFFICIAL_TEACHERS || []).find(t => abKey(t.name) === abKey(n));
+    const abBusy = c => { const v = String(c || '').trim(); return !!v && v !== 'فراغ'; };
+    const abDateOf = w => String((w && w.date) || '').slice(0, 10);
+    const abActive = () => (waitingAssignments || []).filter(w => w && w.status !== 'cancelled' && abDateOf(w) === abDate);
+    const abPeriodIdx = label => PERIOD_LABELS.indexOf(label);
+    function abCount(n) { return n === 1 ? 'حصة واحدة' : n === 2 ? 'حصتان' : n <= 10 ? `${n} حصص` : `${n} حصة`; }
+    function abPeriods(t, day) {
+        const s = t && (MASTER_TIMETABLE_MATRIX[t.id] || MASTER_TIMETABLE_MATRIX[String(t.id)]);
+        return ((s && s[day]) || []).map((c, i) => abBusy(c) ? { i, classroom: String(c).trim() } : null).filter(Boolean);
+    }
+    function abLongDate(iso) {
+        try { return new Date(iso + 'T12:00:00Z').toLocaleDateString('ar-SA-u-ca-gregory', { day: 'numeric', month: 'long', timeZone: 'UTC' }); }
+        catch (e) { return iso; }
+    }
+
+    async function loadWaitingRules() {
+        try {
+            const r = await fetch('/api/waiting-rules');
+            if (r.ok) WAITING_RULES = Object.assign({}, WAITING_RULES, await r.json());
+        } catch (e) {}
+    }
+
+    async function abOpen() {
+        const inp = document.getElementById('abDate');
+        if (inp) inp.value = abDate;
+        abRenderAll();
+        await Promise.all([loadWaitingRules(), abLoadAbsent()]);
+        abRenderRules();
+        abRenderAll();
+    }
+
+    async function abSetDate(v) {
+        if (!v) return;
+        abDate = v;
+        abPlan = []; abPlanBuilt = false; abEditingId = null;
+        await abLoadAbsent();
+        abRenderAll();
+    }
+
+    async function abLoadAbsent() {
+        let list = [];
+        try {
+            const r = await fetch('/api/teacher-absences?date=' + encodeURIComponent(abDate));
+            if (r.ok) list = (await r.json()).teachers || [];
+        } catch (e) {}
+        // من أُسندت حصصه لمنتظرين يُعدّ غائباً حتى لو سُجّل من نافذة أخرى
+        abActive().forEach(w => {
+            const t = abTeacher(w.absentTeacher);
+            if (t && !list.some(n => abKey(n) === abKey(t.name))) list.push(t.name);
+        });
+        abAbsent = list;
+    }
+
+    let abSaveTimer = null;
+    function abSaveAbsent() {
+        clearTimeout(abSaveTimer);
+        const date = abDate, teachers = abAbsent.slice();
+        abSaveTimer = setTimeout(async () => {
+            try {
+                const r = await fetch('/api/teacher-absences', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ date, teachers }) });
+                if (!r.ok) showToast('تعذر حفظ الغياب على الخادم', 'warning');
+            } catch (e) { showToast('تعذر حفظ الغياب على الخادم', 'warning'); }
+        }, 350);
+    }
+
+    const abHasAssigned = name => abActive().some(w => abKey(w.absentTeacher) === abKey(name));
+
+    function abToggle(name) {
+        const i = abAbsent.findIndex(n => abKey(n) === abKey(name));
+        if (i >= 0) {
+            if (abHasAssigned(name)) { showToast(`لـ أ. ${name} حصص مسندة لمنتظرين؛ ألغها من القسم 3 أولاً`, 'warning'); return; }
+            abAbsent.splice(i, 1);
+        } else {
+            abAbsent.push(name);
+        }
+        abSaveAbsent();
+        if (abPlanBuilt) abBuildPlan(true); else abRenderAll();
+    }
+
+    function abClearAbsent() {
+        const keep = abAbsent.filter(abHasAssigned);
+        if (keep.length === abAbsent.length) return;
+        abAbsent = keep;
+        abSaveAbsent();
+        abPlan = []; abPlanBuilt = false;
+        abRenderAll();
+        if (keep.length) showToast('بقي من لهم حصص مسندة؛ ألغها من القسم 3 لإزالتهم', 'info');
+    }
+
+    // ---------- 1) قائمة المعلمين ----------
+    function abRenderTeachers() {
+        const box = document.getElementById('abTeachers');
+        if (!box) return;
+        const q = (document.getElementById('abSearch')?.value || '').trim();
+        const day = abDayName(abDate);
+        const workDay = DAYS_OF_WEEK.includes(day);
+        const absent = new Set(abAbsent.map(abKey));
+        const list = (OFFICIAL_TEACHERS || []).filter(t => !q || t.name.includes(q) || String(t.subject || '').includes(q));
+        box.innerHTML = list.map(t => {
+            const on = absent.has(abKey(t.name));
+            const n = workDay ? abPeriods(t, day).length : 0;
+            const meta = [t.subject, workDay ? (n ? abCount(n) + ' اليوم' : 'لا حصص اليوم') : ''].filter(Boolean).join(' · ');
+            return `<button type="button" class="ab-chip" aria-pressed="${on}" data-name="${escPlan(t.name)}">
+                <span class="ab-check">${on ? AB_CHECK : ''}</span>
+                <span><span class="ab-name">${escPlan(t.name)}</span><span class="ab-meta">${escPlan(meta)}</span></span></button>`;
+        }).join('') || '<div class="ab-empty" style="grid-column:1/-1">لا يوجد معلم بهذا الاسم</div>';
+
+        const total = abAbsent.reduce((s, n) => s + (workDay ? abPeriods(abTeacher(n), day).length : 0), 0);
+        const summary = document.getElementById('abAbsentSummary');
+        if (summary) summary.textContent = !workDay ? `${day} ليس يوم دوام.`
+            : abAbsent.length ? `الغائبون ${abAbsent.length} · حصصهم ${total} · مسند منها ${abActive().filter(w => absent.has(abKey(w.absentTeacher))).length}`
+            : 'لم يُسجَّل أي غياب لهذا اليوم.';
+        const clear = document.getElementById('abClearBtn');
+        if (clear) clear.style.visibility = abAbsent.length ? 'visible' : 'hidden';
+        const tag = document.getElementById('abDayTag');
+        if (tag) tag.textContent = abDate === todayRiyadhISO() ? `اليوم · ${day}` : day;
+        const fill = document.getElementById('abFillBtn');
+        if (fill) fill.disabled = !workDay || !abAbsent.length;
+    }
+
+    // ---------- 2) التوزيع ----------
+    // keepLocked: يُبقي ما اختاره الوكيل يدوياً، ويُعيد ترشيح الباقي على أساسه
+    function abBuildPlan(keepLocked = false) {
+        const day = abDayName(abDate);
+        if (!DAYS_OF_WEEK.includes(day)) { showToast(`${day} ليس يوم دوام`, 'warning'); return; }
+        if (!abAbsent.length) { abPlan = []; abPlanBuilt = false; abRenderAll(); return; }
+        const locked = new Map(keepLocked ? abPlan.filter(r => r.locked).map(r => [r.key, r.choice]) : []);
+        const active = abActive();
+        const base = abAbsent.map(n => ({ day, period: '', assignedTeacher: '', absentTeacher: n, status: 'assigned', date: abDate }));
+        const slots = [];
+        abAbsent.forEach(name => {
+            const t = abTeacher(name);
+            abPeriods(t, day).forEach(p => {
+                const periodLabel = `الحصة ${getPeriodName(p.i + 1)}`;
+                if (active.some(w => w.period === periodLabel && abKey(w.absentTeacher) === abKey(name))) return;
+                slots.push({ key: `${name}|${p.i}`, absent: name, subject: t ? t.subject : '', periodIdx: p.i, periodLabel, classroom: p.classroom });
+            });
+        });
+        slots.sort((a, b) => a.periodIdx - b.periodIdx);
+        const asItem = s => ({ day, period: s.periodLabel, assignedTeacher: s.choice, absentTeacher: s.absent, status: 'assigned', date: abDate, key: s.key });
+        // اختيارات الوكيل أولاً، ثم يُرشَّح الباقي حصةً حصة بالعدل
+        slots.forEach(s => { if (locked.has(s.key)) { s.choice = locked.get(s.key); s.locked = true; } });
+        const picks = slots.filter(s => s.locked && s.choice).map(asItem);
+        slots.forEach(s => {
+            const extra = base.concat(picks.filter(p => p.key !== s.key));
+            s.candidates = rankWaitingCandidates(day, s.periodIdx, extra, { date: abDate, absentSubject: s.subject }).candidateTeachers;
+            if (s.locked) {
+                if (s.choice && !s.candidates.some(c => c.teacher.name === s.choice)) { s.choice = ''; s.locked = false; }
+                return;
+            }
+            s.choice = s.candidates[0] ? s.candidates[0].teacher.name : '';
+            if (s.choice) picks.push(asItem(s));
+        });
+        abPlan = slots;
+        abPlanBuilt = true;
+        abRenderAll();
+    }
+
+    function abRenderPlan() {
+        const box = document.getElementById('abPlan');
+        const bar = document.getElementById('abPlanBar');
+        if (!box) return;
+        if (!abPlanBuilt) {
+            const day = abDayName(abDate);
+            const active = abActive();
+            const open = abAbsent.reduce((s, n) => s + abPeriods(abTeacher(n), day).filter(p =>
+                !active.some(w => w.period === `الحصة ${getPeriodName(p.i + 1)}` && abKey(w.absentTeacher) === abKey(n))).length, 0);
+            box.innerHTML = !abAbsent.length ? '<div class="ab-empty">سجّل الغائبين في القسم 1، ثم اضغط «توزيع تلقائي».</div>'
+                : !DAYS_OF_WEEK.includes(day) ? ''
+                : open ? `<div class="ab-empty">${abCount(open)} بلا منتظر. اضغط «توزيع تلقائي».</div>`
+                : '<div class="ab-empty">كل حصص الغائبين مسندة.</div>';
+            bar.style.display = 'none';
+            return;
+        }
+        if (!abPlan.length) {
+            box.innerHTML = '<div class="ab-empty">كل حصص الغائبين مسندة.</div>';
+            bar.style.display = 'none';
+            return;
+        }
+        const groups = abAbsent.map(name => ({ name, rows: abPlan.filter(r => r.absent === name) })).filter(g => g.rows.length);
+        box.innerHTML = groups.map(g => `
+            <div class="ab-group">
+                <div class="ab-group-head"><span class="ab-group-name">بدلاً من أ. ${escPlan(g.name)}</span><span class="ab-pill">${abCount(g.rows.length)}</span></div>
+                ${g.rows.map(r => {
+                    const k = abPlan.indexOf(r);
+                    const head = `<div><div class="ab-period">${escPlan(r.periodLabel)}</div><div class="ab-class">${escPlan(r.classroom)}</div></div>`;
+                    if (!r.candidates.length) return `<div class="ab-row">${head}<div><span class="ab-pill bad">لا يوجد معلم متفرغ في هذه الحصة</span></div></div>`;
+                    const chosen = r.candidates.find(c => c.teacher.name === r.choice);
+                    const opts = r.candidates.map((c, n) => `<option value="${escPlan(c.teacher.name)}" ${c.teacher.name === r.choice ? 'selected' : ''}>${escPlan(c.teacher.name)} · ${escPlan(c.teacher.subject)} · ${c.todayClassesCount ? abCount(c.todayClassesCount) : 'بلا حصص'} اليوم${n === 0 ? ' (الأنسب)' : ''}</option>`).join('');
+                    const why = chosen ? [chosen.sameSubject ? 'من نفس المادة' : '', chosen.adjacencyLabel, chosen.rotationLabel].filter(Boolean).join(' · ') : 'لن تُسند هذه الحصة';
+                    return `<div class="ab-row">${head}<div>
+                        <select data-k="${k}" aria-label="المنتظر في ${escPlan(r.periodLabel)} بدلاً من ${escPlan(r.absent)}">${opts}<option value="" ${r.choice ? '' : 'selected'}>بدون إسناد</option></select>
+                        <div class="ab-why">${escPlan(why)}</div></div></div>`;
+                }).join('')}
+            </div>`).join('');
+        const ready = abPlan.filter(r => r.choice).length;
+        const none = abPlan.filter(r => !r.candidates.length).length;
+        const skipped = abPlan.length - ready - none;
+        document.getElementById('abPlanSummary').innerHTML = [
+            `<span class="ab-pill ok">${abCount(ready)} جاهزة</span>`,
+            skipped ? `<span class="ab-pill">${abCount(skipped)} بدون إسناد</span>` : '',
+            none ? `<span class="ab-pill bad">${abCount(none)} بلا متفرغ</span>` : ''
+        ].join('');
+        const approve = document.getElementById('abApproveBtn');
+        approve.disabled = !ready;
+        approve.textContent = ready ? `اعتماد ${abCount(ready)}` : 'اعتماد التوزيع';
+        bar.style.display = '';
+    }
+
+    function abChoose(k, value) {
+        const r = abPlan[k];
+        if (!r) return;
+        r.choice = value;
+        r.locked = true;
+        abBuildPlan(true);
+    }
+
+    async function abApprovePlan() {
+        const rows = abPlan.filter(r => r.choice);
+        if (!rows.length) return;
+        const day = abDayName(abDate);
+        const base = Date.now();
+        const items = rows.map((r, n) => {
+            const c = r.candidates.find(x => x.teacher.name === r.choice);
+            return { id: base + n, day, period: r.periodLabel, assignedTeacher: r.choice, absentTeacher: r.absent,
+                classroom: r.classroom, notes: '', status: 'assigned', selectionReason: c ? c.selectionReason : '', date: abDate };
+        });
+        items.forEach(it => waitingAssignments.unshift(it));
+        saveState();
+        abPlan = []; abPlanBuilt = false;
+        abRenderAll();
+        if (typeof renderWaitingAssignments === 'function') renderWaitingAssignments();
+        if (typeof findFreeTeachers === 'function') findFreeTeachers();
+        if (typeof updateVpDashboardStats === 'function') updateVpDashboardStats();
+        showToast(`اعتُمدت ${abCount(items.length)}. أرسل الإشعارات للمنتظرين الآن`, 'success');
+        document.getElementById('abAssignedCard')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        for (const it of items) await syncWaitingItem(it);
+    }
+
+    // ---------- 3) المنتظرون: تعديل وإلغاء وإشعار ----------
+    function abSent() { try { return JSON.parse(localStorage.getItem('sch_wa_sent') || '{}') || {}; } catch (e) { return {}; } }
+    function abMarkSent(ids) {
+        const s = abSent();
+        ids.forEach(id => { s[id] = abDate; });
+        // يُكتفى بآخر 30 يوماً
+        const cutoff = new Date(Date.now() - 30 * 86400000).toISOString().slice(0, 10);
+        Object.keys(s).forEach(k => { if (String(s[k]) < cutoff) delete s[k]; });
+        try { localStorage.setItem('sch_wa_sent', JSON.stringify(s)); } catch (e) {}
+    }
+    function abByTeacher() {
+        const map = new Map();
+        abActive().sort((a, b) => abPeriodIdx(a.period) - abPeriodIdx(b.period)).forEach(w => {
+            const k = abKey(w.assignedTeacher);
+            if (!map.has(k)) map.set(k, { name: w.assignedTeacher, items: [] });
+            map.get(k).items.push(w);
+        });
+        return [...map.values()];
+    }
+    const abIsSent = g => { const s = abSent(); return g.items.every(w => s[w.id]); };
+    function abPhone(name) {
+        let p = String((abTeacher(name) || {}).phone || '').replace(/[^0-9]/g, '');
+        if (p.startsWith('05')) p = '966' + p.slice(1);
+        else if (p.startsWith('5') && p.length === 9) p = '966' + p;
+        return p.length >= 11 ? p : '';
+    }
+
+    function abRenderAssigned() {
+        const box = document.getElementById('abAssigned');
+        if (!box) return;
+        const groups = abByTeacher();
+        const next = document.getElementById('abSendNextBtn');
+        const unsent = groups.filter(g => !abIsSent(g));
+        const pending = unsent.filter(g => abPhone(g.name)).length;
+        if (next) {
+            next.disabled = !pending;
+            next.textContent = pending ? `إرسال للتالي (${pending})` : unsent.length ? 'أضف أرقام الجوال' : groups.length ? 'أُرسلت كل الإشعارات' : 'إرسال للتالي';
+        }
+        if (!groups.length) { box.innerHTML = '<div class="ab-empty">لا توجد حصص انتظار معتمدة في هذا اليوم بعد.</div>'; return; }
+        box.innerHTML = groups.map(g => {
+            const phone = abPhone(g.name);
+            const sent = abIsSent(g);
+            const send = phone
+                ? `<span class="ab-pill ${sent ? 'ok' : 'warn'}">${sent ? 'أُرسل الإشعار' : 'لم يُرسل'}</span><button type="button" class="ab-btn sm wa" data-act="send" data-name="${escPlan(g.name)}">${sent ? 'إعادة الإرسال' : 'واتساب'}</button>`
+                : `<input type="tel" class="ab-phone" inputmode="tel" placeholder="05xxxxxxxx" aria-label="جوال أ. ${escPlan(g.name)}" data-phone-for="${escPlan(g.name)}"><button type="button" class="ab-btn sm" data-act="phone" data-name="${escPlan(g.name)}">حفظ الرقم</button>`;
+            return `<div class="ab-group">
+                <div class="ab-group-head"><span class="ab-group-name">أ. ${escPlan(g.name)} <span class="ab-sub">· ${abCount(g.items.length)}</span></span><div class="ab-send">${send}</div></div>
+                ${g.items.map(w => {
+                    const head = `<div><div class="ab-period">${escPlan(w.period)}</div><div class="ab-class">${escPlan(w.classroom || '')}</div></div>`;
+                    if (String(w.id) === String(abEditingId)) {
+                        const idx = abPeriodIdx(w.period);
+                        const t = abTeacher(w.absentTeacher);
+                        const pool = (waitingAssignments || []).filter(x => x !== w);
+                        const saved = waitingAssignments; waitingAssignments = pool;
+                        let cands = [];
+                        try { cands = idx >= 0 ? rankWaitingCandidates(w.day, idx, [], { date: abDate, absentSubject: t ? t.subject : '' }).candidateTeachers : []; }
+                        finally { waitingAssignments = saved; }
+                        const opts = cands.filter(c => abKey(c.teacher.name) !== abKey(w.assignedTeacher))
+                            .map((c, n) => `<option value="${escPlan(c.teacher.name)}">${escPlan(c.teacher.name)} · ${escPlan(c.teacher.subject)} · ${c.todayClassesCount ? abCount(c.todayClassesCount) : 'بلا حصص'} اليوم${n === 0 ? ' (الأنسب)' : ''}</option>`).join('');
+                        return `<div class="ab-row">${head}<div class="ab-row-main">
+                            <select data-reassign="${escPlan(w.id)}" aria-label="منتظر بديل في ${escPlan(w.period)}" style="flex:1;min-width:180px"><option value="">اختر المنتظر البديل</option>${opts}</select>
+                            <button type="button" class="ab-btn sm" data-act="edit-cancel">تراجع</button></div></div>`;
+                    }
+                    return `<div class="ab-row">${head}<div class="ab-row-main"><span>بدلاً من أ. ${escPlan(w.absentTeacher)}</span>
+                        <span class="ab-actions"><button type="button" class="ab-btn sm ghost" data-act="edit" data-id="${escPlan(w.id)}">تغيير</button><button type="button" class="ab-btn sm danger" data-act="cancel" data-id="${escPlan(w.id)}">إلغاء</button></span></div></div>`;
+                }).join('')}
+            </div>`;
+        }).join('');
+    }
+
+    async function abReassign(id, name) {
+        const w = (waitingAssignments || []).find(x => String(x.id) === String(id));
+        if (!w || !name) return;
+        const old = w.assignedTeacher;
+        w.assignedTeacher = name;
+        w.status = 'assigned';
+        w.selectionReason = `تغيير يدوي من أ. ${old}`;
+        const s = abSent(); delete s[w.id];
+        try { localStorage.setItem('sch_wa_sent', JSON.stringify(s)); } catch (e) {}
+        abEditingId = null;
+        saveState();
+        abRenderAll();
+        if (typeof renderWaitingAssignments === 'function') renderWaitingAssignments();
+        showToast(`صار المنتظر في ${w.period} أ. ${name}. أرسل له الإشعار`, 'success');
+        await syncWaitingItem(w);
+    }
+
+    async function abCancel(id) {
+        const w = (waitingAssignments || []).find(x => String(x.id) === String(id));
+        if (!w || !confirm(`إلغاء انتظار أ. ${w.assignedTeacher} في ${w.period}؟`)) return;
+        w.status = 'cancelled';
+        saveState();
+        abRenderAll();
+        if (typeof renderWaitingAssignments === 'function') renderWaitingAssignments();
+        showToast('أُلغيت الحصة، ويمكنك توزيعها من جديد في القسم 2', 'info');
+        await syncWaitingItem(w);
+    }
+
+    function abMessage(g) {
+        const day = abDayName(abDate);
+        const school = document.getElementById('settingSchoolName')?.value || 'ثانوية أبي أيوب الأنصاري';
+        const u = typeof activeAuthUser !== 'undefined' && activeAuthUser ? activeAuthUser : null;
+        const lines = g.items.map(w => `• ${w.period}: ${w.classroom || 'حسب الجدول'} (بدلاً من أ. ${w.absentTeacher})`);
+        return `السلام عليكم ورحمة الله وبركاته
+أ. ${g.name} المحترم،
+نفيدكم بتكليفكم بحصص الانتظار يوم ${day} ${abLongDate(abDate)}:
+${lines.join('\n')}
+شاكرين تعاونكم.
+${u ? `${u.title}: ${u.name}` : 'وكيل شؤون الطلاب'}
+${school}`;
+    }
+
+    function abSend(name) {
+        const g = abByTeacher().find(x => abKey(x.name) === abKey(name));
+        const phone = g && abPhone(g.name);
+        if (!g || !phone) { showToast('أضف رقم جوال المعلم أولاً', 'warning'); return; }
+        window.open(`https://wa.me/${phone}?text=${encodeURIComponent(abMessage(g))}`, '_blank', 'noopener');
+        abMarkSent(g.items.map(w => w.id));
+        abRenderAssigned();
+    }
+
+    function abSendNext() {
+        const g = abByTeacher().find(x => !abIsSent(x) && abPhone(x.name));
+        if (g) abSend(g.name);
+    }
+
+    async function abSavePhone(name) {
+        const input = [...document.querySelectorAll('#abAssigned [data-phone-for]')].find(i => i.dataset.phoneFor === name);
+        const digits = String(input ? input.value : '').replace(/[^0-9]/g, '');
+        if (digits.length < 9) { showToast('اكتب رقم جوال صحيحاً مثل 05xxxxxxxx', 'warning'); input?.focus(); return; }
+        const t = abTeacher(name);
+        if (!t) return;
+        t.phone = digits;
+        try { localStorage.setItem('sch_teachers_final', JSON.stringify(OFFICIAL_TEACHERS)); } catch (e) {}
+        abRenderAssigned();
+        const ok = await dmPostTeachers(OFFICIAL_TEACHERS);
+        if (ok) showToast(`حُفظ رقم أ. ${t.name}`, 'success');
+    }
+
+    function abCopyGroupSummary() {
+        const groups = abByTeacher();
+        if (!groups.length) { showToast('لا توجد تكليفات لنسخها', 'info'); return; }
+        const rows = abActive().sort((a, b) => abPeriodIdx(a.period) - abPeriodIdx(b.period))
+            .map(w => `• ${w.period} · ${w.classroom || '-'}: أ. ${w.assignedTeacher} (بدلاً من أ. ${w.absentTeacher})`);
+        const text = `حصص الانتظار ليوم ${abDayName(abDate)} ${abLongDate(abDate)}\n${rows.join('\n')}`;
+        if (navigator.clipboard) navigator.clipboard.writeText(text).then(() => showToast('نُسخ الملخص، الصقه في مجموعة المعلمين', 'success'), () => showToast('تعذر النسخ', 'warning'));
+        else showToast('المتصفح لا يدعم النسخ', 'warning');
+    }
+
+    // ---------- قواعد التوزيع ----------
+    function abRenderRules() {
+        const r = WAITING_RULES;
+        const set = (id, v) => { const el = document.getElementById(id); if (el) el.value = String(v); };
+        set('abRuleMaxDaily', r.maxDaily);
+        set('abRuleMaxWait', r.maxWaitingPerDay);
+        const sub = document.getElementById('abRuleSubject');
+        if (sub) sub.checked = r.preferSameSubject !== false;
+        const chev = document.getElementById('abRulesChev');
+        if (chev) chev.innerHTML = AB_CHEV;
+        const ex = new Set((r.exempt || []).map(abKey));
+        const box = document.getElementById('abRuleExempt');
+        if (box) box.innerHTML = (OFFICIAL_TEACHERS || []).map(t =>
+            `<button type="button" aria-pressed="${ex.has(abKey(t.name))}" data-exempt="${escPlan(t.name)}">${escPlan(t.name)}</button>`).join('');
+        const isAdmin = typeof activeAuthUser !== 'undefined' && activeAuthUser && ['principal', 'vp'].includes(activeAuthUser.role);
+        document.querySelectorAll('#abRules select, #abRules input, #abRules [data-exempt]').forEach(el => { el.disabled = !isAdmin; });
+    }
+
+    let abRulesTimer = null;
+    function abSaveRules() {
+        WAITING_RULES = Object.assign({}, WAITING_RULES, {
+            maxDaily: parseInt(document.getElementById('abRuleMaxDaily').value, 10) || 5,
+            maxWaitingPerDay: parseInt(document.getElementById('abRuleMaxWait').value, 10) || 2,
+            preferSameSubject: document.getElementById('abRuleSubject').checked,
+            exempt: [...document.querySelectorAll('#abRuleExempt [aria-pressed="true"]')].map(b => b.dataset.exempt)
+        });
+        if (abPlanBuilt) abBuildPlan(true);
+        clearTimeout(abRulesTimer);
+        abRulesTimer = setTimeout(async () => {
+            try {
+                const r = await fetch('/api/waiting-rules', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(WAITING_RULES) });
+                if (r.ok) showToast('حُفظت قواعد التوزيع', 'success'); else showToast('تعذر حفظ القواعد', 'warning');
+            } catch (e) { showToast('تعذر حفظ القواعد', 'warning'); }
+        }, 500);
+    }
+
+    function abRenderAll() {
+        abRenderTeachers();
+        abRenderPlan();
+        abRenderAssigned();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('abTeachers')?.addEventListener('click', e => {
+            const b = e.target.closest('.ab-chip');
+            if (b) abToggle(b.dataset.name);
+        });
+        document.getElementById('abPlan')?.addEventListener('change', e => {
+            const s = e.target.closest('select[data-k]');
+            if (s) abChoose(parseInt(s.dataset.k, 10), s.value);
+        });
+        const assigned = document.getElementById('abAssigned');
+        assigned?.addEventListener('click', e => {
+            const b = e.target.closest('[data-act]');
+            if (!b) return;
+            const act = b.dataset.act;
+            if (act === 'send') abSend(b.dataset.name);
+            else if (act === 'phone') abSavePhone(b.dataset.name);
+            else if (act === 'cancel') abCancel(b.dataset.id);
+            else if (act === 'edit') { abEditingId = b.dataset.id; abRenderAssigned(); assigned.querySelector('select[data-reassign]')?.focus(); }
+            else if (act === 'edit-cancel') { abEditingId = null; abRenderAssigned(); }
+        });
+        assigned?.addEventListener('change', e => {
+            const s = e.target.closest('select[data-reassign]');
+            if (s && s.value) abReassign(s.dataset.reassign, s.value);
+        });
+        document.getElementById('abRuleExempt')?.addEventListener('click', e => {
+            const b = e.target.closest('[data-exempt]');
+            if (!b || b.disabled) return;
+            b.setAttribute('aria-pressed', String(b.getAttribute('aria-pressed') !== 'true'));
+            abSaveRules();
+        });
+        setTimeout(() => { if (getAuthToken()) loadWaitingRules(); }, 1200);
+    });
+
+    // النافذة القديمة «معلم غائب» صارت صفحة كاملة
+    window.openAbsentPlanModal = function () {
+        if (typeof window.shellGo === 'function' && window.shellGo('absences')) return;
+        switchTab('absences');
+    };
+
+    // =========================================================================
+    // الإعدادات: بيانات المعلمين والطلاب
+    // =========================================================================
+    let dmTeacherEdits = {};   // { id: { field: value } }
+    let dmStudentId = null;
+    const dmIsPrincipal = () => typeof activeAuthUser !== 'undefined' && activeAuthUser && activeAuthUser.role === 'principal';
+
+    function dmShow(which) {
+        const t = which !== 'students';
+        document.getElementById('dmTeachers').style.display = t ? '' : 'none';
+        document.getElementById('dmStudents').style.display = t ? 'none' : '';
+        document.getElementById('dmTabTeachers').setAttribute('aria-selected', String(t));
+        document.getElementById('dmTabStudents').setAttribute('aria-selected', String(!t));
+        if (t) dmRenderTeachers(); else dmRenderStudents();
+    }
+
+    function dmInit() {
+        dmTeacherEdits = {};
+        const tab = document.getElementById('dmTabStudents');
+        dmShow(tab && tab.getAttribute('aria-selected') === 'true' ? 'students' : 'teachers');
+    }
+
+    function dmRenderTeachers() {
+        const body = document.getElementById('dmTeachersBody');
+        if (!body) return;
+        const pin = dmIsPrincipal();
+        document.querySelectorAll('#dmTeachers .dm-pin').forEach(th => { th.style.display = pin ? '' : 'none'; });
+        const q = (document.getElementById('dmTeacherSearch')?.value || '').trim();
+        const val = (t, f) => (dmTeacherEdits[t.id] && f in dmTeacherEdits[t.id]) ? dmTeacherEdits[t.id][f] : (t[f] ?? '');
+        const cls = (t, f) => (dmTeacherEdits[t.id] && f in dmTeacherEdits[t.id]) ? ' ab-dirty' : '';
+        const rows = (OFFICIAL_TEACHERS || []).filter(t => !q || [t.name, t.subject, t.phone].some(v => String(v || '').includes(q)));
+        body.innerHTML = rows.map(t => `<tr>
+            <td><input type="text" class="${cls(t, 'name')}" value="${escPlan(val(t, 'name'))}" data-t="${t.id}" data-f="name" aria-label="اسم المعلم" maxlength="120"></td>
+            <td><input type="text" class="${cls(t, 'subject')}" value="${escPlan(val(t, 'subject'))}" data-t="${t.id}" data-f="subject" aria-label="مادة أ. ${escPlan(t.name)}" maxlength="60"></td>
+            <td><input type="tel" class="num${cls(t, 'phone')}" style="width:140px;min-width:140px" value="${escPlan(val(t, 'phone'))}" data-t="${t.id}" data-f="phone" aria-label="جوال أ. ${escPlan(t.name)}" placeholder="05xxxxxxxx" inputmode="tel" maxlength="20"></td>
+            ${pin ? `<td class="ab-load" dir="ltr">${escPlan(t.pin || (1000 + Number(t.id)))}</td>` : ''}
+            <td class="ab-load">${escPlan(t.load ?? '')}</td></tr>`).join('')
+            || `<tr><td colspan="5"><div class="ab-empty">لا يوجد معلم مطابق</div></td></tr>`;
+        dmSyncTeacherButtons();
+    }
+
+    function dmSyncTeacherButtons() {
+        const n = Object.keys(dmTeacherEdits).length;
+        const save = document.getElementById('dmTeachersSave');
+        const undo = document.getElementById('dmTeachersUndo');
+        if (save) { save.disabled = !n; save.textContent = n ? `حفظ التعديلات (${n})` : 'حفظ التعديلات'; }
+        if (undo) undo.disabled = !n;
+        const note = document.getElementById('dmTeachersNote');
+        if (note) note.textContent = 'النصاب ورموز الدخول من الجدول والرموز المعتمدة، ولا تُعدَّل هنا.';
+    }
+
+    function dmUndoTeachers() { dmTeacherEdits = {}; dmRenderTeachers(); }
+
+    async function dmPostTeachers(list) {
+        try {
+            const r = await fetch('/api/teachers-list', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(list) });
+            if (!r.ok) {
+                const d = await r.json().catch(() => ({}));
+                showToast(d.detail || 'تعذر حفظ بيانات المعلمين', 'error');
+                return false;
+            }
+            return true;
+        } catch (e) {
+            showToast('تعذر الاتصال بالخادم', 'error');
+            return false;
+        }
+    }
+
+    async function dmSaveTeachers() {
+        const ids = Object.keys(dmTeacherEdits);
+        if (!ids.length) return;
+        for (const id of ids) {
+            const e = dmTeacherEdits[id];
+            if ('name' in e && !String(e.name).trim()) { showToast('اسم المعلم لا يكون فارغاً', 'warning'); return; }
+        }
+        const renames = [];
+        const merged = (OFFICIAL_TEACHERS || []).map(t => {
+            const e = dmTeacherEdits[t.id];
+            if (!e) return t;
+            const n = Object.assign({}, t, e);
+            n.name = String(n.name).trim(); n.subject = String(n.subject || '').trim(); n.phone = String(n.phone || '').replace(/[^0-9]/g, '');
+            if (n.name !== t.name) renames.push([t.name, n.name]);
+            return n;
+        });
+        const btn = document.getElementById('dmTeachersSave');
+        if (btn) btn.disabled = true;
+        if (!(await dmPostTeachers(merged))) { dmSyncTeacherButtons(); return; }
+        OFFICIAL_TEACHERS = merged;
+        try { localStorage.setItem('sch_teachers_final', JSON.stringify(OFFICIAL_TEACHERS)); } catch (e) {}
+        // الاسم الجديد يسري على غياب اليوم وقواعد الإعفاء
+        renames.forEach(([a, b]) => {
+            abAbsent = abAbsent.map(n => abKey(n) === abKey(a) ? b : n);
+            WAITING_RULES.exempt = (WAITING_RULES.exempt || []).map(n => abKey(n) === abKey(a) ? b : n);
+        });
+        dmTeacherEdits = {};
+        dmRenderTeachers();
+        if (typeof updateAllTeacherViews === 'function') updateAllTeacherViews();
+        showToast(ids.length === 1 ? 'حُفظت بيانات المعلم' : `حُفظت بيانات ${ids.length} معلمين`, 'success');
+    }
+
+    function dmStudentRows() {
+        const q = (document.getElementById('dmStudentSearch')?.value || '').trim().toLowerCase();
+        return (allStudents || []).filter(s => !q || [s.name, s.national_id, s.grade, s.classroom, s.guardian_phone].some(v => String(v || '').toLowerCase().includes(q)));
+    }
+
+    function dmRenderStudents() {
+        const body = document.getElementById('dmStudentsBody');
+        if (!body) return;
+        const rows = dmStudentRows();
+        const shown = rows.slice(0, 200);
+        body.innerHTML = shown.map(s => `<tr>
+            <td class="ab-sname">${escPlan(s.name)}</td><td>${escPlan(s.grade)}</td><td>${escPlan(s.classroom)}</td>
+            <td dir="ltr" style="text-align:right">${escPlan(s.national_id || '—')}</td><td dir="ltr" style="text-align:right">${escPlan(s.guardian_phone || '—')}</td>
+            <td style="text-align:left"><button type="button" class="ab-btn sm ghost" onclick="dmOpenStudent(${Number(s.id)})" aria-label="تعديل ${escPlan(s.name)}">تعديل</button></td></tr>`).join('')
+            || `<tr><td colspan="6"><div class="ab-empty">${(allStudents || []).length ? 'لا يوجد طالب مطابق' : 'لا يوجد طلاب بعد. أضفهم أو استوردهم من نور.'}</div></td></tr>`;
+        const c = document.getElementById('dmStudentsCount');
+        if (c) c.textContent = rows.length > shown.length ? `يظهر ${shown.length} من ${rows.length} طالباً؛ ابحث لتضييق النتائج` : `${rows.length} طالباً`;
+    }
+
+    function dmOpenStudent(id) {
+        const s = id == null ? null : (allStudents || []).find(x => Number(x.id) === Number(id));
+        dmStudentId = s ? s.id : null;
+        document.getElementById('dmStudentTitle').textContent = s ? 'تعديل بيانات الطالب' : 'إضافة طالب';
+        document.getElementById('dmStName').value = s ? s.name : '';
+        document.getElementById('dmStGrade').value = s ? s.grade : '';
+        document.getElementById('dmStClass').value = s ? s.classroom : '';
+        document.getElementById('dmStNatId').value = s ? (s.national_id || '') : '';
+        document.getElementById('dmStPhone').value = s ? (s.guardian_phone || '') : '';
+        document.getElementById('dmStDelete').style.visibility = s ? 'visible' : 'hidden';
+        const grades = [...new Set((allStudents || []).map(x => x.grade).filter(Boolean))];
+        document.getElementById('dmGradesList').innerHTML = grades.map(g => `<option value="${escPlan(g)}"></option>`).join('');
+        document.getElementById('dmStudentModal').classList.remove('hidden');
+        setTimeout(() => document.getElementById('dmStName').focus(), 50);
+    }
+
+    function dmCloseStudent() {
+        document.getElementById('dmStudentModal').classList.add('hidden');
+        dmStudentId = null;
+    }
+
+    function dmAfterStudentsChange() {
+        dmRenderStudents();
+        if (typeof renderStudentsDirectory === 'function') renderStudentsDirectory();
+        if (typeof renderStudentsList === 'function') renderStudentsList();
+        const label = document.getElementById('studentsCountLabel');
+        if (label) label.textContent = `${allStudents.length} طالب مسجل`;
+    }
+
+    async function dmSaveStudent(event) {
+        event.preventDefault();
+        const data = {
+            name: document.getElementById('dmStName').value.trim(),
+            grade: document.getElementById('dmStGrade').value.trim(),
+            classroom: document.getElementById('dmStClass').value.trim(),
+            national_id: document.getElementById('dmStNatId').value.trim(),
+            guardian_phone: document.getElementById('dmStPhone').value.replace(/[^0-9+]/g, '')
+        };
+        const btn = document.getElementById('dmStSave');
+        btn.disabled = true;
+        try {
+            const isNew = dmStudentId == null;
+            const r = await fetch(isNew ? '/api/students' : `/api/students/${dmStudentId}`, {
+                method: isNew ? 'POST' : 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data)
+            });
+            const d = await r.json().catch(() => ({}));
+            if (!r.ok) { showToast(d.detail || 'تعذر حفظ بيانات الطالب', 'error'); return; }
+            if (isNew) allStudents.push(Object.assign({ id: d.id, behaviorScore: 100 }, data));
+            else Object.assign((allStudents || []).find(x => Number(x.id) === Number(dmStudentId)) || {}, data);
+            dmCloseStudent();
+            dmAfterStudentsChange();
+            showToast(isNew ? `أُضيف الطالب ${data.name}` : `حُفظت بيانات ${data.name}`, 'success');
+        } catch (e) {
+            showToast('تعذر الاتصال بالخادم', 'error');
+        } finally {
+            btn.disabled = false;
+        }
+    }
+
+    async function dmDeleteStudent() {
+        const s = (allStudents || []).find(x => Number(x.id) === Number(dmStudentId));
+        if (!s) return;
+        if (!confirm(`حذف الطالب ${s.name} وكل سجلاته (الإحالات والغياب والتوجيه والتواصل)؟\nتُحفظ نسخة احتياطية قبل الحذف.`)) return;
+        try {
+            const r = await fetch(`/api/students/${s.id}`, { method: 'DELETE' });
+            const d = await r.json().catch(() => ({}));
+            if (!r.ok) { showToast(d.detail || 'تعذر حذف الطالب', 'error'); return; }
+            allStudents = allStudents.filter(x => x !== s);
+            allReferrals = (allReferrals || []).filter(x => Number(x.student_id) !== Number(s.id));
+            dmCloseStudent();
+            dmAfterStudentsChange();
+            showToast(`حُذف الطالب ${s.name}`, 'success');
+        } catch (e) {
+            showToast('تعذر الاتصال بالخادم', 'error');
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('dmTeachersBody')?.addEventListener('input', e => {
+            const i = e.target.closest('input[data-t]');
+            if (!i) return;
+            const t = (OFFICIAL_TEACHERS || []).find(x => String(x.id) === i.dataset.t);
+            if (!t) return;
+            const f = i.dataset.f;
+            const orig = String(t[f] ?? '');
+            const edits = dmTeacherEdits[t.id] || {};
+            if (i.value === orig) delete edits[f]; else edits[f] = i.value;
+            if (Object.keys(edits).length) dmTeacherEdits[t.id] = edits; else delete dmTeacherEdits[t.id];
+            i.classList.toggle('ab-dirty', f in edits);
+            dmSyncTeacherButtons();
+        });
+        document.getElementById('dmStudentModal')?.addEventListener('click', e => { if (e.target.id === 'dmStudentModal') dmCloseStudent(); });
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && !document.getElementById('dmStudentModal')?.classList.contains('hidden')) dmCloseStudent();
+        });
+    });
 </script>
 </body>
 </html>

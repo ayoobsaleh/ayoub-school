@@ -497,6 +497,27 @@ def add_new_student(student: StudentCreate, user: dict = Depends(require(*ADMIN_
     return {"id": student_id, "message": "تم إضافة الطالب بنجاح"}
 
 
+@app.put("/api/students/{student_id}")
+def edit_student(student_id: int, student: StudentCreate, user: dict = Depends(require(*ADMIN_ROLES))):
+    if not student.name or not student.grade or not student.classroom:
+        raise HTTPException(status_code=400, detail="الاسم والصف والفصل مطلوبة")
+    if not db.update_student(student_id, student.name, student.national_id, student.grade, student.classroom,
+                             student.guardian_phone):
+        raise HTTPException(status_code=404, detail="الطالب غير موجود")
+    db.log_audit_event(user.get("name", ""), user["role"], "student_update", "student", str(student_id), "")
+    return {"status": "success", "message": "تم حفظ بيانات الطالب"}
+
+
+@app.delete("/api/students/{student_id}")
+def remove_student(student_id: int, user: dict = Depends(require(*ADMIN_ROLES))):
+    if backup_service:
+        backup_service.create_backup(reason="pre_student_delete")
+    if not db.delete_student(student_id):
+        raise HTTPException(status_code=404, detail="الطالب غير موجود")
+    db.log_audit_event(user.get("name", ""), user["role"], "student_delete", "student", str(student_id), "")
+    return {"status": "success", "message": "تم حذف الطالب"}
+
+
 @app.post("/api/students/import-csv")
 async def import_students_csv(file: UploadFile = File(...), user: dict = Depends(require(*ADMIN_ROLES))):
     contents = await file.read(5 * 1024 * 1024 + 1)
@@ -760,13 +781,22 @@ async def save_teachers_to_disk(teachers: List[dict] = Body(...), user: dict = D
         old = existing.get(str(t["id"]), {})
         item = {
             "id": t["id"],
-            "name": clean_name(t.get("name", old.get("name", ""))),
-            "subject": clean_name(t.get("subject", old.get("subject", ""))),
+            "name": clean_name(t.get("name", old.get("name", ""))) or old.get("name", ""),
+            "subject": clean_name(t.get("subject", old.get("subject", ""))) or old.get("subject", ""),
             "load": old.get("load", t.get("load")),             # النصاب من الجدول المعتمد
             "pin": old.get("pin", str(1000 + int(t["id"]))),     # الرموز المعتمدة لا تتغير عبر الواجهة
             "phone": clean_name(t.get("phone", old.get("phone", "")), 20),
         }
         merged.append(item)
+    # الاسم والمادة إن خالفا الملف المعتمد يُحفظان كتعديل للمدرسة حتى لا يُستبدلا عند إعادة التشغيل
+    repo = {str(t.get("id")): t for t in db.get_repo_teachers()}
+    overrides = {}
+    for m in merged:
+        base = repo.get(str(m["id"]), {})
+        diff = {k: m[k] for k in ("name", "subject") if m[k] != base.get(k)}
+        if diff:
+            overrides[str(m["id"])] = diff
+    db.set_document("teacher_overrides", overrides)
     db.set_document("teachers", merged)
     conn = db.get_connection()
     try:
@@ -797,6 +827,70 @@ def upsert_waiting(item: WaitingItem, user: dict = Depends(require(*ADMIN_ROLES)
     saved = db.upsert_waiting_record(data)
     db.log_audit_event(user.get("name", ""), user["role"], "waiting_upsert", "waiting", str(data["id"]), data.get("status") or "")
     return saved
+
+
+# =========================================================================
+# غياب المعلمين اليومي وقواعد توزيع الانتظار
+# =========================================================================
+_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+
+
+class TeacherAbsences(BaseModel):
+    date: str
+    teachers: List[str] = []
+
+
+class WaitingRules(BaseModel):
+    maxDaily: int = 5
+    maxWaitingPerDay: int = 2
+    preferSameSubject: bool = True
+    exempt: List[str] = []
+
+
+WAITING_RULES_DEFAULT = WaitingRules().model_dump()
+
+
+@app.get("/api/teacher-absences")
+def get_teacher_absences(date: str = "", user: dict = Depends(require(*ADMIN_ROLES))):
+    day = date if _DATE_RE.match(date or "") else db.now_riyadh().strftime("%Y-%m-%d")
+    return {"date": day, "teachers": (db.get_document("teacher_absences", {}) or {}).get(day, [])}
+
+
+@app.post("/api/teacher-absences")
+def save_teacher_absences(body: TeacherAbsences, user: dict = Depends(require(*ADMIN_ROLES))):
+    if not _DATE_RE.match(body.date):
+        raise HTTPException(status_code=400, detail="تاريخ غير صحيح")
+    known = {t.get("name") for t in _read_teachers()}
+    names = list(dict.fromkeys(clean_name(n) for n in body.teachers if clean_name(n) in known))
+    data = db.get_document("teacher_absences", {}) or {}
+    if names:
+        data[body.date] = names
+    else:
+        data.pop(body.date, None)
+    # يُكتفى بآخر 400 يوم
+    for old in sorted(data)[:-400]:
+        data.pop(old, None)
+    db.set_document("teacher_absences", data)
+    db.log_audit_event(user.get("name", ""), user["role"], "teacher_absences", "absences", body.date, str(len(names)))
+    return {"date": body.date, "teachers": names}
+
+
+@app.get("/api/waiting-rules")
+def get_waiting_rules(user: dict = Depends(require(*ALL_ROLES))):
+    return {**WAITING_RULES_DEFAULT, **(db.get_document("waiting_rules", {}) or {})}
+
+
+@app.post("/api/waiting-rules")
+def save_waiting_rules(rules: WaitingRules, user: dict = Depends(require(*ADMIN_ROLES))):
+    known = {t.get("name") for t in _read_teachers()}
+    data = {
+        "maxDaily": max(3, min(7, rules.maxDaily)),
+        "maxWaitingPerDay": max(1, min(4, rules.maxWaitingPerDay)),
+        "preferSameSubject": bool(rules.preferSameSubject),
+        "exempt": [n for n in dict.fromkeys(rules.exempt) if n in known],
+    }
+    db.set_document("waiting_rules", data)
+    return data
 
 
 # =========================================================================
