@@ -1,16 +1,12 @@
-# فحص ثم نشر تلقائي على Render مع كل دفع إلى main.
-# النشر لا يحدث إلا إذا نجحت فحوصات الجدول والدخان والحفظ.
-# يتطلب سرّاً في المستودع باسم RENDER_DEPLOY_HOOK (Render ← الخدمة ← Settings ← Deploy Hook).
-name: فحص ونشر
+# فحص تلقائي مع كل دفع إلى main: سلامة الجدول المعتمد، والدخان، والحفظ.
+# النشر يتولاه Render تلقائياً (Auto-Deploy عبر تطبيق Render على GitHub).
+name: فحص
 
 on:
   push:
     branches: [main]
+  pull_request:
   workflow_dispatch:
-
-concurrency:
-  group: deploy-main
-  cancel-in-progress: true
 
 jobs:
   test:
@@ -39,18 +35,3 @@ jobs:
       - name: سجل الخادم عند الفشل
         if: failure()
         run: cat /tmp/server.log
-
-  deploy:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - name: نشر على Render
-        env:
-          HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
-        run: |
-          if [ -z "$HOOK" ]; then
-            echo "::warning::السر RENDER_DEPLOY_HOOK غير مضاف — لم يُنشر شيء."
-            exit 0
-          fi
-          curl -sf -X POST "$HOOK" > /dev/null
-          echo "طُلب النشر من Render."
