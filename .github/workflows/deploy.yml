@@ -1,0 +1,56 @@
+# فحص ثم نشر تلقائي على Render مع كل دفع إلى main.
+# النشر لا يحدث إلا إذا نجحت فحوصات الجدول والدخان والحفظ.
+# يتطلب سرّاً في المستودع باسم RENDER_DEPLOY_HOOK (Render ← الخدمة ← Settings ← Deploy Hook).
+name: فحص ونشر
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-main
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      TIMETABLE_LOCK: "1"
+      DATA_DIR: /tmp/school-ci
+      PYTHONIOENCODING: utf-8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: سلامة الجدول المعتمد
+        run: python tools/verify_timetable.py --strict --rules
+      - name: تشغيل الخادم
+        run: |
+          mkdir -p "$DATA_DIR"
+          uvicorn app:app --port 8765 > /tmp/server.log 2>&1 &
+          for i in $(seq 1 30); do curl -sf http://127.0.0.1:8765/healthz && break; sleep 1; done
+      - name: اختبار الدخان
+        run: python tests/smoke_test.py http://127.0.0.1:8765
+      - name: اختبار الحفظ
+        run: python tests/persistence_test.py http://127.0.0.1:8765
+      - name: سجل الخادم عند الفشل
+        if: failure()
+        run: cat /tmp/server.log
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: نشر على Render
+        env:
+          HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then
+            echo "::warning::السر RENDER_DEPLOY_HOOK غير مضاف — لم يُنشر شيء."
+            exit 0
+          fi
+          curl -sf -X POST "$HOOK" > /dev/null
+          echo "طُلب النشر من Render."

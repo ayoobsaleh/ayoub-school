@@ -68,4 +68,4 @@ python tests/smoke_test.py http://127.0.0.1:8765        # 80 فحصاً: الد�
 python tests/persistence_test.py http://127.0.0.1:8765  # الحفظ والنسخ والاستعادة
 ```
 
-تعمل تلقائياً على GitHub مع كل دفع، على SQLite وPostgreSQL معاً.
+تعمل تلقائياً على GitHub مع كل دفع إلى `main` (`.github/workflows/deploy.yml`)، وإذا نجحت يُنشر الموقع على Render عبر السر `RENDER_DEPLOY_HOOK`.
