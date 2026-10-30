@@ -878,7 +878,7 @@ if os.path.exists(STATIC_DIR):
     app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 
-@app.get("/healthz")
+@app.api_route("/healthz", methods=["GET", "HEAD"])
 def healthz():
     return {"ok": True}
 
@@ -890,7 +890,7 @@ def system_status(user: dict = Depends(require(*ADMIN_ROLES))):
             "timetable_locked": TIMETABLE_LOCKED, "matches_canonical": db.timetable_matches_canonical()}
 
 
-@app.get("/")
+@app.api_route("/", methods=["GET", "HEAD"])
 def serve_index():
     index_file = os.path.join(STATIC_DIR, "index.html")
     if os.path.exists(index_file):
