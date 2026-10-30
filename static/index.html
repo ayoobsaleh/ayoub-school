@@ -459,7 +459,8 @@
         }
 
         /* شاشة الانتظار على الجوال: ترويسة مختصرة والإسناد أولاً */
-        #section-timetable > div:first-child button[onclick="openAssignWaitingModal()"] { order: -1; background: var(--gold-light) !important; color: var(--ink) !important; }
+        #section-timetable > div:first-child button[onclick="openAssignWaitingModal()"],
+        #section-timetable > div:first-child button[onclick="openAbsentPlanModal()"] { order: -1; background: var(--gold-light) !important; color: var(--ink) !important; }
         @media (max-width: 767px) {
             #section-timetable > div:first-child { padding: 16px !important; align-items: stretch !important; gap: 12px !important; }
             #section-timetable > div:first-child h2 { font-size: 18px !important; margin: 0 !important; }
@@ -1456,9 +1457,14 @@
             <div class="pt-3 border-t border-slate-100">
                 <div class="flex items-center justify-between mb-2">
                     <span class="text-xs font-bold text-slate-700">📋 تكليفات الانتظار المسندة لليوم:</span>
-                    <button type="button" onclick="openAssignWaitingModal(null, null)" class="text-xs font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 cursor-pointer">
-                        <span>+ إسناد تكليف جديد</span>
-                    </button>
+                    <div class="flex items-center gap-3">
+                        <button type="button" onclick="openAbsentPlanModal()" class="text-xs font-bold text-amber-600 hover:text-amber-800 flex items-center gap-1 cursor-pointer">
+                            <span>🧑‍🏫 معلم غائب</span>
+                        </button>
+                        <button type="button" onclick="openAssignWaitingModal(null, null)" class="text-xs font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 cursor-pointer">
+                            <span>+ إسناد حصة لمعلم</span>
+                        </button>
+                    </div>
                 </div>
                 <div id="waitingAssignmentsList" class="overflow-x-auto">
                     <!-- يُحقن بواسطة JavaScript -->
@@ -1557,7 +1563,10 @@
                         <span>تعديل وتحرير الجدول</span>
                     </button>
                     <button onclick="openAssignWaitingModal()" class="px-4 py-2.5 bg-white text-slate-900 rounded-xl text-xs font-black shadow hover:bg-amber-50 transition">
-                        ➕ إسناد حصة انتظار الآن
+                        ➕ إسناد حصة انتظار لمعلم
+                    </button>
+                    <button onclick="openAbsentPlanModal()" class="px-4 py-2.5 bg-white text-slate-900 rounded-xl text-xs font-black shadow hover:bg-amber-50 transition">
+                        🧑‍🏫 معلم غائب: اقترح المنتظرين
                     </button>
                     <button onclick="scrollToMasterGrid()" id="btnMasterGrid" class="px-4 py-2.5 bg-amber-500 hover:bg-amber-600 text-slate-900 rounded-xl text-xs font-black shadow transition flex items-center gap-1.5">
                         <span>📊</span>
@@ -2291,6 +2300,50 @@
         </section>
     </main>
 
+
+    <!-- ======================================================== -->
+    <!-- النافذة المنبثقة: توزيع حصص معلم غائب على المنتظرين -->
+    <!-- ======================================================== -->
+    <div id="absentPlanModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden no-print">
+        <div class="bg-white rounded-3xl max-w-2xl w-full p-6 shadow-2xl border border-slate-200 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
+                <h3 class="text-base font-black text-slate-800 flex items-center gap-2">
+                    <span class="text-amber-600 text-xl">🧑‍🏫</span>
+                    <span>توزيع حصص معلم غائب</span>
+                </h3>
+                <button onclick="closeAbsentPlanModal()" class="text-slate-400 hover:text-slate-600 text-xl font-bold" aria-label="إغلاق">✕</button>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-3">
+                <div class="flex-1">
+                    <label for="absentPlanTeacher" class="block text-xs font-bold text-slate-700 mb-1">المعلم الغائب</label>
+                    <select id="absentPlanTeacher" onchange="buildAbsentPlan()" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-semibold outline-none"></select>
+                </div>
+                <div>
+                    <label for="absentPlanDay" class="block text-xs font-bold text-slate-700 mb-1">اليوم</label>
+                    <select id="absentPlanDay" onchange="buildAbsentPlan()" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-semibold outline-none">
+                        <option value="الأحد">الأحد</option>
+                        <option value="الاثنين">الاثنين</option>
+                        <option value="الثلاثاء">الثلاثاء</option>
+                        <option value="الأربعاء">الأربعاء</option>
+                        <option value="الخميس">الخميس</option>
+                    </select>
+                </div>
+            </div>
+
+            <p id="absentPlanSummary" class="mt-4 text-xs font-bold text-slate-600"></p>
+            <div id="absentPlanRows" class="mt-2 space-y-2"></div>
+
+            <div class="pt-4 flex gap-2">
+                <button type="button" id="absentPlanSubmit" onclick="submitAbsentPlan()" class="flex-1 py-3 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-2xl text-xs shadow-md transition">
+                    اعتماد التوزيع
+                </button>
+                <button type="button" onclick="closeAbsentPlanModal()" class="px-4 py-3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-2xl text-xs transition">
+                    إلغاء
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- ======================================================== -->
     <!-- النافذة المنبثقة: إسناد حصة انتظار لمعلم متفرغ (Modal) -->
@@ -6959,6 +7012,167 @@ async function initApp() {
         }
     }
 
+    // ---------- الإسناد اليدوي: الفصل يُعبّأ من جدول المعلم الغائب ----------
+    function fillWaitingClassFromTimetable() {
+        const cls = document.getElementById('modalWaitingClass');
+        if (!cls || (cls.value && !cls.dataset.auto)) return;
+        const name = normalizeTeacherName(document.getElementById('modalWaitingAbsentTeacher').value);
+        const t = (OFFICIAL_TEACHERS || []).find(x => normalizeTeacherName(x.name) === name);
+        const sched = t && (MASTER_TIMETABLE_MATRIX[t.id] || MASTER_TIMETABLE_MATRIX[String(t.id)]);
+        const day = document.getElementById('modalWaitingDay').value;
+        const idx = PERIOD_LABELS.indexOf(document.getElementById('modalWaitingPeriod').value);
+        const cell = (sched && sched[day] && idx >= 0) ? String(sched[day][idx] || '').trim() : '';
+        cls.value = cell;
+        cls.dataset.auto = cell ? '1' : '';
+    }
+    const PERIOD_LABELS = [1, 2, 3, 4, 5, 6, 7].map(n => `الحصة ${getPeriodName(n)}`);
+    document.addEventListener('DOMContentLoaded', () => {
+        ['modalWaitingAbsentTeacher', 'modalWaitingDay', 'modalWaitingPeriod'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.addEventListener('change', fillWaitingClassFromTimetable);
+        });
+        const cls = document.getElementById('modalWaitingClass');
+        if (cls) cls.addEventListener('input', () => { cls.dataset.auto = ''; });
+    });
+
+    // ---------- معلم غائب: كل حصصه في اليوم مع مرشح لكل حصة ----------
+    let absentPlan = [];
+    const escPlan = v => String(v ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+    function riyadhWeekday() {
+        try { return new Intl.DateTimeFormat('ar-SA', { weekday: 'long', timeZone: 'Asia/Riyadh' }).format(new Date()); }
+        catch (e) { return ''; }
+    }
+
+    function openAbsentPlanModal() {
+        const sel = document.getElementById('absentPlanTeacher');
+        const prev = sel.value;
+        sel.innerHTML = (OFFICIAL_TEACHERS || []).map(t => `<option value="${escPlan(t.name)}">${escPlan(t.name)} - ${escPlan(t.subject)}</option>`).join('');
+        if (prev) sel.value = prev;
+        const today = riyadhWeekday();
+        if (DAYS_OF_WEEK.includes(today)) document.getElementById('absentPlanDay').value = today;
+        document.getElementById('absentPlanModal').classList.remove('hidden');
+        buildAbsentPlan();
+    }
+
+    function closeAbsentPlanModal() {
+        document.getElementById('absentPlanModal').classList.add('hidden');
+    }
+
+    // overrides: { رقم الحصة: اسم المعلم أو '' } لاختيارات الوكيل؛ وما بعدها يُعاد ترشيحه على أساسها
+    function buildAbsentPlan(overrides = {}) {
+        const absentName = document.getElementById('absentPlanTeacher').value;
+        const day = document.getElementById('absentPlanDay').value;
+        const t = (OFFICIAL_TEACHERS || []).find(x => x.name === absentName);
+        const sched = t && (MASTER_TIMETABLE_MATRIX[t.id] || MASTER_TIMETABLE_MATRIX[String(t.id)]);
+        const cells = (sched && sched[day]) || [];
+        const date = todayRiyadhISO();
+        // الغائب نفسه لا يُرشَّح، والمقترحات تُحتسب أولاً بأول
+        const extra = [{ day, period: '', assignedTeacher: '', absentTeacher: absentName, status: 'assigned', date }];
+
+        absentPlan = [];
+        cells.forEach((cell, i) => {
+            const classroom = String(cell || '').trim();
+            if (!classroom || classroom === 'فراغ') return;
+            const periodLabel = `الحصة ${getPeriodName(i + 1)}`;
+            const existing = waitingAssignments.find(w => w && w.status !== 'cancelled' && isWithinCurrentWeek(w.date)
+                && w.day === day && w.period === periodLabel && normalizeTeacherName(w.absentTeacher) === normalizeTeacherName(absentName));
+            if (existing) {
+                absentPlan.push({ periodIdx: i, periodLabel, classroom, existing: existing.assignedTeacher, candidates: [], choice: '' });
+                return;
+            }
+            const { candidateTeachers } = rankWaitingCandidates(day, i, extra);
+            let choice = candidateTeachers[0] ? candidateTeachers[0].teacher.name : '';
+            if (Object.prototype.hasOwnProperty.call(overrides, i)) choice = overrides[i];
+            if (choice) extra.unshift({ day, period: periodLabel, assignedTeacher: choice, absentTeacher: absentName, status: 'assigned', date });
+            absentPlan.push({ periodIdx: i, periodLabel, classroom, existing: '', candidates: candidateTeachers, choice });
+        });
+        renderAbsentPlan(absentName, day);
+    }
+
+    function renderAbsentPlan(absentName, day) {
+        const rowsEl = document.getElementById('absentPlanRows');
+        const summary = document.getElementById('absentPlanSummary');
+        const submit = document.getElementById('absentPlanSubmit');
+        const toAssign = absentPlan.filter(r => !r.existing && r.choice);
+        const done = absentPlan.filter(r => r.existing).length;
+        const uncovered = absentPlan.filter(r => !r.existing && !r.choice).length;
+
+        if (!absentPlan.length) {
+            summary.textContent = `لا حصص للمعلم ${absentName} يوم ${day}.`;
+        } else {
+            const parts = [`حصص ${absentName} يوم ${day}: ${absentPlan.length}`, `مقترح ${toAssign.length}`];
+            if (done) parts.push(`مسند مسبقاً ${done}`);
+            if (uncovered) parts.push(`بلا مرشح ${uncovered}`);
+            summary.textContent = parts.join(' · ');
+        }
+        submit.disabled = toAssign.length === 0;
+        submit.style.opacity = submit.disabled ? '0.5' : '';
+        submit.textContent = toAssign.length ? `اعتماد التوزيع (${toAssign.length})` : 'اعتماد التوزيع';
+
+        rowsEl.innerHTML = absentPlan.map((r, k) => {
+            const head = `
+                <div class="flex items-center justify-between gap-2">
+                    <span class="text-xs font-black text-slate-900">${escPlan(r.periodLabel)}</span>
+                    <span class="text-[11px] font-bold text-slate-600 bg-slate-100 px-2 py-0.5 rounded-lg">${escPlan(r.classroom)}</span>
+                </div>`;
+            if (r.existing) {
+                return `<div class="p-3 rounded-2xl border border-emerald-200 bg-emerald-50/60 space-y-1">${head}
+                    <div class="text-[11px] font-bold text-emerald-800">✓ مسندة مسبقاً إلى أ. ${escPlan(r.existing)}</div></div>`;
+            }
+            if (!r.candidates.length) {
+                return `<div class="p-3 rounded-2xl border border-rose-200 bg-rose-50/60 space-y-1">${head}
+                    <div class="text-[11px] font-bold text-rose-700">لا يوجد معلم متفرغ مؤهل في هذه الحصة</div></div>`;
+            }
+            const chosen = r.candidates.find(c => c.teacher.name === r.choice);
+            const options = r.candidates.map((c, n) =>
+                `<option value="${escPlan(c.teacher.name)}" ${c.teacher.name === r.choice ? 'selected' : ''}>${n === 0 ? '⭐ ' : ''}${escPlan(c.teacher.name)} - ${escPlan(c.teacher.subject)} (${c.todayClassesCount} حصص اليوم)</option>`).join('');
+            return `<div class="p-3 rounded-2xl border border-slate-200 bg-white space-y-2">${head}
+                <select aria-label="المنتظر في ${escPlan(r.periodLabel)}" onchange="onAbsentPlanChoice(${k}, this.value)" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-semibold outline-none">
+                    ${options}
+                    <option value="" ${r.choice ? '' : 'selected'}>بدون إسناد</option>
+                </select>
+                ${chosen ? `<div class="text-[10px] text-slate-500 leading-relaxed">${escPlan(chosen.adjacencyLabel)} · ${escPlan(chosen.rotationLabel)}</div>` : ''}
+            </div>`;
+        }).join('');
+    }
+
+    function onAbsentPlanChoice(k, value) {
+        const overrides = {};
+        absentPlan.forEach((r, n) => {
+            if (r.existing) return;
+            // الحصص قبل المعدَّلة تبقى كما هي، والمعدَّلة بقيمتها الجديدة، وما بعدها يُرشَّح من جديد
+            if (n < k) overrides[r.periodIdx] = r.choice;
+            if (n === k) overrides[r.periodIdx] = value;
+        });
+        buildAbsentPlan(overrides);
+    }
+
+    async function submitAbsentPlan() {
+        const absentTeacher = document.getElementById('absentPlanTeacher').value;
+        const day = document.getElementById('absentPlanDay').value;
+        const rows = absentPlan.filter(r => !r.existing && r.choice);
+        if (!rows.length) return;
+        const date = todayRiyadhISO();
+        const base = Date.now();
+        const items = rows.map((r, n) => {
+            const c = r.candidates.find(x => x.teacher.name === r.choice);
+            return {
+                id: base + n, day, period: r.periodLabel, assignedTeacher: r.choice, absentTeacher,
+                classroom: r.classroom, notes: '', status: 'assigned',
+                selectionReason: c ? c.selectionReason : '', date
+            };
+        });
+        items.forEach(it => waitingAssignments.unshift(it));
+        saveState();
+        closeAbsentPlanModal();
+        renderWaitingAssignments();
+        findFreeTeachers();
+        if (typeof updateVpDashboardStats === 'function') updateVpDashboardStats();
+        showToast(`تم إسناد ${items.length} حصة انتظار عن المعلم ${absentTeacher}`, 'success');
+        for (const it of items) await syncWaitingItem(it);
+    }
+
     // [upgraded to modern renderWaitingAssignments]
 
     function renderSpecificTeacherSchedule() {
@@ -8653,6 +8867,150 @@ async function initApp() {
         }
     }
 
+    // ترتيب المرشحين لحصة انتظار واحدة. extra: تكليفات مقترحة لم تُعتمد بعد
+    // (تُحتسب كأنها مسندة هذا الأسبوع حتى لا يتكرر المعلم نفسه ويتجاوز حده اليومي).
+    function rankWaitingCandidates(day, periodIdx, extra = []) {
+        const pool = extra.concat((typeof waitingAssignments !== 'undefined' && Array.isArray(waitingAssignments)) ? waitingAssignments : []);
+        const candidateTeachers = [];
+        const excludedDueToMaxDaily = [];
+        const excludedAlreadyAssigned = [];
+        const periodLabel = `الحصة ${getPeriodName(periodIdx + 1)}`;
+        // التكليفات الفعّالة هذا الأسبوع (الملغاة لا تُحتسب)
+        const weekWaitings = pool
+            .filter(w => w && w.status !== 'cancelled' && isWithinCurrentWeek(w.date));
+        // المعلمون الغائبون في هذا اليوم (لا يُرشَّح غائب لحصة انتظار)
+        const absentToday = new Set(weekWaitings.filter(w => w.day === day).map(w => normalizeTeacherName(w.absentTeacher)));
+
+        const teachersList = (typeof OFFICIAL_TEACHERS !== 'undefined' && Array.isArray(OFFICIAL_TEACHERS) && OFFICIAL_TEACHERS.length > 0)
+            ? OFFICIAL_TEACHERS
+            : (typeof DEFAULT_OFFICIAL_TEACHERS !== 'undefined' ? DEFAULT_OFFICIAL_TEACHERS : []);
+
+        teachersList.forEach(t => {
+            const sched = (MASTER_TIMETABLE_MATRIX && (MASTER_TIMETABLE_MATRIX[t.id] || MASTER_TIMETABLE_MATRIX[String(t.id)])) || null;
+            if (!sched || !sched[day]) return;
+
+            // شرط الفراغ: الحصة خالية تماماً
+            const cellVal = sched[day][periodIdx];
+            const isFreeThisPeriod = (!cellVal || String(cellVal).trim() === '' || String(cellVal).trim() === 'فراغ');
+            if (!isFreeThisPeriod) return;
+
+            // استبعاد المعلم الغائب نفسه
+            if (absentToday.has(normalizeTeacherName(t.name))) return;
+
+            // استبعاد من كُلّف مسبقاً بانتظار في نفس اليوم والحصة (منع الإسناد المزدوج)
+            const waitingsToday = weekWaitings.filter(w => w.day === day && normalizeTeacherName(w.assignedTeacher) === normalizeTeacherName(t.name));
+            if (waitingsToday.some(w => w.period === periodLabel)) {
+                excludedAlreadyAssigned.push({ name: t.name, subject: t.subject });
+                return;
+            }
+
+            // حصص المعلم في هذا اليوم
+            const todayClasses = (sched[day] || []).filter(c => c && String(c).trim() !== '' && String(c).trim() !== 'فراغ');
+            // حصص الانتظار المسندة له اليوم تُحتسب ضمن الحد اليومي (5 حصص)
+            const todayClassesCount = todayClasses.length + waitingsToday.length;
+
+            // النصاب الأسبوعي الفعلي
+            let actualWeeklyLoad = 0;
+            const daysArr = (typeof DAYS_OF_WEEK !== 'undefined') ? DAYS_OF_WEEK : ["الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس"];
+            daysArr.forEach(d => {
+                (sched[d] || []).forEach(c => {
+                    if (c && String(c).trim() !== '' && String(c).trim() !== 'فراغ') actualWeeklyLoad++;
+                });
+            });
+
+            // تصنيف نصاب المعلم
+            const quotaInfo = (typeof getTeacherQuotaCategory === 'function') 
+                ? getTeacherQuotaCategory(actualWeeklyLoad) 
+                : { category: 2, name: 'فئة 2 (نصاب متوسط)', target: 15 };
+
+            // رصيد حصص الانتظار
+            const allWaitings = pool
+                .filter(w => w && w.status !== 'cancelled');
+            const teacherWaitings = allWaitings.filter(w => normalizeTeacherName(w.assignedTeacher) === normalizeTeacherName(t.name));
+            const totalAssigned = teacherWaitings.length;
+            const totalExecuted = teacherWaitings.filter(w => w.status === 'executed').length;
+            // التكليفات المسندة غير المنفذة بعد تُحتسب أيضاً حتى لا يُرشَّح نفس المعلم مراراً
+            const remainingToTarget = Math.max(0, quotaInfo.target - totalAssigned);
+
+            // معيار الاستبعاد: لا يُكلف معلم لديه 5 حصص أو أكثر في نفس اليوم
+            if (todayClassesCount >= 5) {
+                excludedDueToMaxDaily.push({
+                    name: t.name,
+                    subject: t.subject,
+                    todayClassesCount: todayClassesCount,
+                    weeklyLoad: actualWeeklyLoad
+                });
+                return;
+            }
+
+            // معيار الملاصقة (Adjacency)
+            const prevClass = (periodIdx > 0 && sched[day][periodIdx - 1] && String(sched[day][periodIdx - 1]).trim() !== '' && String(sched[day][periodIdx - 1]).trim() !== 'فراغ') ? sched[day][periodIdx - 1] : null;
+            const nextClass = (periodIdx < 6 && sched[day][periodIdx + 1] && String(sched[day][periodIdx + 1]).trim() !== '' && String(sched[day][periodIdx + 1]).trim() !== 'فراغ') ? sched[day][periodIdx + 1] : null;
+            const isAdjacent = (prevClass !== null || nextClass !== null);
+
+            let adjacencyLabel = '';
+            let scoreAdjacency = 0;
+            if (prevClass && nextClass) {
+                scoreAdjacency = 40;
+                adjacencyLabel = `حصة بينية بين حصتين (${prevClass} و ${nextClass})`;
+            } else if (prevClass) {
+                scoreAdjacency = 30;
+                adjacencyLabel = `ملاصقة لحصة سابقة (${prevClass})`;
+            } else if (nextClass) {
+                scoreAdjacency = 30;
+                adjacencyLabel = `ملاصقة لحصة تالية (${nextClass})`;
+            } else {
+                scoreAdjacency = 0;
+                adjacencyLabel = 'حصة منفصلة تماماً عن جدوله';
+            }
+
+            // معيار الاستحقاق والعدالة الفصلي
+            const scoreTargetProgress = (remainingToTarget / (quotaInfo.target || 1)) * 40;
+
+            // معيار التدوير العادل
+            const lastWaitingIndex = allWaitings.findIndex(w => normalizeTeacherName(w.assignedTeacher) === normalizeTeacherName(t.name));
+            let scoreRotation = 0;
+            let rotationLabel = '';
+            if (totalAssigned === 0) {
+                scoreRotation = 25;
+                rotationLabel = 'لم يُكلف بأي حصة سابقة (أولوية دور قصوى)';
+            } else if (lastWaitingIndex === 0) {
+                scoreRotation = -25;
+                rotationLabel = 'هو آخر من كُلّف بحصة انتظار (مؤخر في الطابور)';
+            } else {
+                scoreRotation = Math.min(20, (lastWaitingIndex >= 0 ? lastWaitingIndex : 5) * 4);
+                rotationLabel = `كُلف سابقاً (${totalAssigned}) مرات`;
+            }
+
+            // مجموع نقاط الأولوية الذكية
+            const totalScore = Math.round(scoreTargetProgress + scoreAdjacency + scoreRotation);
+
+            // مبرر الترشيح التوضيحي للوكيل
+            let selectionReason = `معلم ${quotaInfo.name} بنصاب (${actualWeeklyLoad}) حصة، وهدفه الفصلي (${quotaInfo.target}) حصة. `;
+            if (isAdjacent) selectionReason += `الحصة ملاصقة لجدوله (${adjacencyLabel}). `;
+            selectionReason += `نفذ (${totalExecuted}) من (${quotaInfo.target}) وباقٍ له (${remainingToTarget}) حصة لتحقيق العدالة.`;
+
+            candidateTeachers.push({
+                teacher: t,
+                todayClassesCount,
+                actualWeeklyLoad,
+                quotaInfo,
+                totalAssigned,
+                totalExecuted,
+                remainingToTarget,
+                isAdjacent,
+                adjacencyLabel,
+                rotationLabel,
+                selectionReason,
+                totalScore
+            });
+        });
+
+        // ترتيب المرشحين تنازلياً حسب مجموع نقاط الأولوية والعدالة
+        candidateTeachers.sort((a, b) => b.totalScore - a.totalScore);
+        return { candidateTeachers, excludedDueToMaxDaily, excludedAlreadyAssigned };
+    }
+
     function findFreeTeachers(source = null, isManual = false) {
         if (source === true) {
             isManual = true;
@@ -8707,143 +9065,7 @@ async function initApp() {
                 }
             }
 
-            const candidateTeachers = [];
-            const excludedDueToMaxDaily = [];
-            const excludedAlreadyAssigned = [];
-            const periodLabel = `الحصة ${getPeriodName(periodIdx + 1)}`;
-            // التكليفات الفعّالة هذا الأسبوع (الملغاة لا تُحتسب)
-            const weekWaitings = ((typeof waitingAssignments !== 'undefined' && Array.isArray(waitingAssignments)) ? waitingAssignments : [])
-                .filter(w => w && w.status !== 'cancelled' && isWithinCurrentWeek(w.date));
-            // المعلمون الغائبون في هذا اليوم (لا يُرشَّح غائب لحصة انتظار)
-            const absentToday = new Set(weekWaitings.filter(w => w.day === day).map(w => normalizeTeacherName(w.absentTeacher)));
-
-            const teachersList = (typeof OFFICIAL_TEACHERS !== 'undefined' && Array.isArray(OFFICIAL_TEACHERS) && OFFICIAL_TEACHERS.length > 0)
-                ? OFFICIAL_TEACHERS
-                : (typeof DEFAULT_OFFICIAL_TEACHERS !== 'undefined' ? DEFAULT_OFFICIAL_TEACHERS : []);
-
-            teachersList.forEach(t => {
-                const sched = (MASTER_TIMETABLE_MATRIX && (MASTER_TIMETABLE_MATRIX[t.id] || MASTER_TIMETABLE_MATRIX[String(t.id)])) || null;
-                if (!sched || !sched[day]) return;
-
-                // شرط الفراغ: الحصة خالية تماماً
-                const cellVal = sched[day][periodIdx];
-                const isFreeThisPeriod = (!cellVal || String(cellVal).trim() === '' || String(cellVal).trim() === 'فراغ');
-                if (!isFreeThisPeriod) return;
-
-                // استبعاد المعلم الغائب نفسه
-                if (absentToday.has(normalizeTeacherName(t.name))) return;
-
-                // استبعاد من كُلّف مسبقاً بانتظار في نفس اليوم والحصة (منع الإسناد المزدوج)
-                const waitingsToday = weekWaitings.filter(w => w.day === day && normalizeTeacherName(w.assignedTeacher) === normalizeTeacherName(t.name));
-                if (waitingsToday.some(w => w.period === periodLabel)) {
-                    excludedAlreadyAssigned.push({ name: t.name, subject: t.subject });
-                    return;
-                }
-
-                // حصص المعلم في هذا اليوم
-                const todayClasses = (sched[day] || []).filter(c => c && String(c).trim() !== '' && String(c).trim() !== 'فراغ');
-                // حصص الانتظار المسندة له اليوم تُحتسب ضمن الحد اليومي (5 حصص)
-                const todayClassesCount = todayClasses.length + waitingsToday.length;
-
-                // النصاب الأسبوعي الفعلي
-                let actualWeeklyLoad = 0;
-                const daysArr = (typeof DAYS_OF_WEEK !== 'undefined') ? DAYS_OF_WEEK : ["الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس"];
-                daysArr.forEach(d => {
-                    (sched[d] || []).forEach(c => {
-                        if (c && String(c).trim() !== '' && String(c).trim() !== 'فراغ') actualWeeklyLoad++;
-                    });
-                });
-
-                // تصنيف نصاب المعلم
-                const quotaInfo = (typeof getTeacherQuotaCategory === 'function') 
-                    ? getTeacherQuotaCategory(actualWeeklyLoad) 
-                    : { category: 2, name: 'فئة 2 (نصاب متوسط)', target: 15 };
-
-                // رصيد حصص الانتظار
-                const allWaitings = ((typeof waitingAssignments !== 'undefined' && Array.isArray(waitingAssignments)) ? waitingAssignments : [])
-                    .filter(w => w && w.status !== 'cancelled');
-                const teacherWaitings = allWaitings.filter(w => normalizeTeacherName(w.assignedTeacher) === normalizeTeacherName(t.name));
-                const totalAssigned = teacherWaitings.length;
-                const totalExecuted = teacherWaitings.filter(w => w.status === 'executed').length;
-                // التكليفات المسندة غير المنفذة بعد تُحتسب أيضاً حتى لا يُرشَّح نفس المعلم مراراً
-                const remainingToTarget = Math.max(0, quotaInfo.target - totalAssigned);
-
-                // معيار الاستبعاد: لا يُكلف معلم لديه 5 حصص أو أكثر في نفس اليوم
-                if (todayClassesCount >= 5) {
-                    excludedDueToMaxDaily.push({
-                        name: t.name,
-                        subject: t.subject,
-                        todayClassesCount: todayClassesCount,
-                        weeklyLoad: actualWeeklyLoad
-                    });
-                    return;
-                }
-
-                // معيار الملاصقة (Adjacency)
-                const prevClass = (periodIdx > 0 && sched[day][periodIdx - 1] && String(sched[day][periodIdx - 1]).trim() !== '' && String(sched[day][periodIdx - 1]).trim() !== 'فراغ') ? sched[day][periodIdx - 1] : null;
-                const nextClass = (periodIdx < 6 && sched[day][periodIdx + 1] && String(sched[day][periodIdx + 1]).trim() !== '' && String(sched[day][periodIdx + 1]).trim() !== 'فراغ') ? sched[day][periodIdx + 1] : null;
-                const isAdjacent = (prevClass !== null || nextClass !== null);
-
-                let adjacencyLabel = '';
-                let scoreAdjacency = 0;
-                if (prevClass && nextClass) {
-                    scoreAdjacency = 40;
-                    adjacencyLabel = `حصة بينية بين حصتين (${prevClass} و ${nextClass})`;
-                } else if (prevClass) {
-                    scoreAdjacency = 30;
-                    adjacencyLabel = `ملاصقة لحصة سابقة (${prevClass})`;
-                } else if (nextClass) {
-                    scoreAdjacency = 30;
-                    adjacencyLabel = `ملاصقة لحصة تالية (${nextClass})`;
-                } else {
-                    scoreAdjacency = 0;
-                    adjacencyLabel = 'حصة منفصلة تماماً عن جدوله';
-                }
-
-                // معيار الاستحقاق والعدالة الفصلي
-                const scoreTargetProgress = (remainingToTarget / (quotaInfo.target || 1)) * 40;
-
-                // معيار التدوير العادل
-                const lastWaitingIndex = allWaitings.findIndex(w => normalizeTeacherName(w.assignedTeacher) === normalizeTeacherName(t.name));
-                let scoreRotation = 0;
-                let rotationLabel = '';
-                if (totalAssigned === 0) {
-                    scoreRotation = 25;
-                    rotationLabel = 'لم يُكلف بأي حصة سابقة (أولوية دور قصوى)';
-                } else if (lastWaitingIndex === 0) {
-                    scoreRotation = -25;
-                    rotationLabel = 'هو آخر من كُلّف بحصة انتظار (مؤخر في الطابور)';
-                } else {
-                    scoreRotation = Math.min(20, (lastWaitingIndex >= 0 ? lastWaitingIndex : 5) * 4);
-                    rotationLabel = `كُلف سابقاً (${totalAssigned}) مرات`;
-                }
-
-                // مجموع نقاط الأولوية الذكية
-                const totalScore = Math.round(scoreTargetProgress + scoreAdjacency + scoreRotation);
-
-                // مبرر الترشيح التوضيحي للوكيل
-                let selectionReason = `معلم ${quotaInfo.name} بنصاب (${actualWeeklyLoad}) حصة، وهدفه الفصلي (${quotaInfo.target}) حصة. `;
-                if (isAdjacent) selectionReason += `الحصة ملاصقة لجدوله (${adjacencyLabel}). `;
-                selectionReason += `نفذ (${totalExecuted}) من (${quotaInfo.target}) وباقٍ له (${remainingToTarget}) حصة لتحقيق العدالة.`;
-
-                candidateTeachers.push({
-                    teacher: t,
-                    todayClassesCount,
-                    actualWeeklyLoad,
-                    quotaInfo,
-                    totalAssigned,
-                    totalExecuted,
-                    remainingToTarget,
-                    isAdjacent,
-                    adjacencyLabel,
-                    rotationLabel,
-                    selectionReason,
-                    totalScore
-                });
-            });
-
-            // ترتيب المرشحين تنازلياً حسب مجموع نقاط الأولوية والعدالة
-            candidateTeachers.sort((a, b) => b.totalScore - a.totalScore);
+            const { candidateTeachers, excludedDueToMaxDaily } = rankWaitingCandidates(day, periodIdx);
 
             // تحديث شارات العداد
             const badgeText = `يوم ${day} (الحصة ${periodIdx + 1}): متاح ${candidateTeachers.length} معلماً وفق معايير العدالة${excludedDueToMaxDaily.length > 0 ? ` • (استبعاد ${excludedDueToMaxDaily.length} معلماً لوصول نصابهم 5 حصص)` : ''}`;
