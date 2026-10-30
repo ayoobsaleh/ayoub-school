@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/app.css">
-    <meta name="theme-color" content="#0F2E2B">
+    <meta name="theme-color" content="#F5F5F7">
     <!-- Tailwind CSS -->
         <!-- ======================================================== -->
     <!-- شاشة تسجيل الدخول بالرمز السريع بنمط Apple (Apple HIG Login Overlay) -->
@@ -22,9 +22,9 @@
                 <svg role="img" aria-label="شعار ثانوية أبي أيوب الأنصاري" width="34" height="34" viewBox="0 0 48 48" fill="none" stroke="#D9B45E" stroke-width="2.8" stroke-linecap="round"><path d="M9 42V21a15 15 0 0 1 30 0v21"/><path d="M16 34c2.8-1.5 5.4-1.5 8 0 2.6-1.5 5.2-1.5 8 0"/></svg>
             </div>
             <h2 class="text-lg sm:text-xl font-black text-slate-900 mb-0.5 tracking-tight">ثانوية أبي أيوب الأنصاري</h2>
-            <p class="text-[11px] text-slate-500 mb-4 font-semibold">بوابة الدخول الموحدة ونظام شؤون الطلاب</p>
+            <p class="text-[11px] text-slate-500 mb-4 font-semibold">نظام شؤون الطلاب</p>
 
-            <div class="w-full text-center text-[12px] font-bold text-slate-600 mb-3">أدخل رمزك السري المكون من 4 أرقام</div>
+            <div class="w-full text-center text-[12px] font-bold text-slate-600 mb-3">أدخل رمز الدخول</div>
 
             <!-- صندوق إدخال الرمز السري -->
             <div class="w-full bg-slate-50/70 border border-slate-200 rounded-2xl p-3.5 mb-2">
@@ -66,15 +66,14 @@
 
                 <!-- زر تسجيل الدخول المباشر -->
                 <button type="button" id="pinSubmitBtn" onclick="verifyEnteredPin()" style="cursor: pointer !important; pointer-events: auto !important;" class="w-full mt-3 py-3 bg-slate-900 hover:bg-black active:scale-95 text-white font-black text-xs rounded-xl shadow transition flex items-center justify-center gap-2 cursor-pointer">
-                    <span>🚀</span>
-                    <span>تسجيل الدخول بالرمز</span>
+                    <span>دخول</span>
                 </button>
 
                 <!-- تذكر هذا الجهاز -->
                 <div class="mt-2.5 pt-2 border-t border-slate-200/60 flex items-center justify-center gap-2">
                     <input type="checkbox" id="rememberDeviceCheck" checked class="w-3.5 h-3.5 text-slate-900 rounded focus:ring-slate-900 cursor-pointer" />
                     <label for="rememberDeviceCheck" class="text-[11px] font-bold text-slate-600 cursor-pointer select-none">
-                        تذكر تسجيل الدخول على هذا الجهاز
+                        تذكّر هذا الجهاز
                     </label>
                 </div>
             </div>
@@ -265,7 +264,7 @@
             --apple-bg: #F4F2ED; --apple-text-primary: #172322;
             --nav-w: 288px;
         }
-        html, body { background: var(--ground) !important; color: var(--text); font-family: "IBM Plex Sans Arabic", system-ui, sans-serif !important; }
+        html, body { background: var(--ground) !important; color: var(--text); font-family: var(--font) !important; }
         body { font-feature-settings: "tnum" 1; }
         .text-slate-400 { color: #5F6B67 !important; }
 
@@ -296,7 +295,7 @@
         #appNav .nav-title { font-size: 15px; font-weight: 700; line-height: 1.3; }
         #appNav .nav-sub { font-size: 12px; color: var(--ink-muted); }
         #appNav .nav-item, #appNav .nav-group { width: 100%; min-height: 44px; border: 0; border-radius: 12px; background: transparent; color: var(--ink-text);
-                  display: flex; align-items: center; gap: 12px; padding: 0 12px; font: 500 14px "IBM Plex Sans Arabic", sans-serif; text-align: right; cursor: pointer; }
+                  display: flex; align-items: center; gap: 12px; padding: 0 12px; font: 500 14px var(--font); text-align: right; cursor: pointer; }
         #appNav .nav-item:hover, #appNav .nav-group:hover { background: var(--ink-2); }
         #appNav .nav-group[aria-expanded="true"] { background: var(--ink-2); font-weight: 600; color: #fff; }
         #appNav .nav-item.active { background: var(--primary); color: #fff; font-weight: 600; }
@@ -305,7 +304,7 @@
         #appNav .nav-children { margin: 2px 22px 6px 0; padding-right: 10px; border-right: 1px solid var(--ink-line); display: none; flex-direction: column; gap: 2px; }
         #appNav .nav-group[aria-expanded="true"] + .nav-children { display: flex; }
         #appNav .nav-child { min-height: 40px; border: 0; border-radius: 10px; background: transparent; color: #CFDCD8; text-align: right;
-                  display: flex; align-items: center; padding: 0 12px; font: 400 14px "IBM Plex Sans Arabic", sans-serif; cursor: pointer; }
+                  display: flex; align-items: center; padding: 0 12px; font: 400 14px var(--font); cursor: pointer; }
         #appNav .nav-child:hover { background: var(--ink-2); color: #fff; }
         #appNav .nav-child.active { background: var(--primary); color: #fff; font-weight: 600; }
         #appNav .nav-badge { margin-right: auto; background: var(--gold); color: var(--ink); font-size: 12px; font-weight: 700; border-radius: 999px; padding: 0 8px; line-height: 20px; }
@@ -340,7 +339,7 @@
             #appTabbar { display: grid; position: fixed; bottom: 0; right: 0; left: 0; z-index: 55; height: 76px; background: var(--surface);
                          border-top: 1px solid var(--line); padding: 6px 4px calc(8px + env(safe-area-inset-bottom)); box-sizing: border-box; }
             #appTabbar button { border: 0; background: transparent; color: var(--muted); display: flex; flex-direction: column; align-items: center; justify-content: center;
-                         gap: 3px; font: 500 12px "IBM Plex Sans Arabic", sans-serif; cursor: pointer; min-height: 56px; }
+                         gap: 3px; font: 500 12px var(--font); cursor: pointer; min-height: 56px; }
             #appTabbar button.active { color: var(--primary); font-weight: 700; }
         }
         @media print { #appNav, #appTopbar, #appTabbar, #appNavBackdrop, #persistWarning { display: none !important; } body.shell-on { padding: 0 !important; } }
@@ -357,7 +356,7 @@
         /* مرشحو الانتظار: الثلاثة الأنسب أولاً */
         .cand-collapsed > *:nth-child(n+4) { display: none !important; }
         .cand-toggle { margin-top: 12px; height: 40px; padding: 0 16px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); color: var(--primary);
-                       font: 600 14px "IBM Plex Sans Arabic", sans-serif; cursor: pointer; }
+                       font: 600 14px var(--font); cursor: pointer; }
 
         /* خانات خارج الدوام في الجدول العام */
         td.cell-off { background: repeating-linear-gradient(135deg, #F0EEE8, #F0EEE8 6px, #E8E4DB 6px, #E8E4DB 12px) !important; }
@@ -371,7 +370,7 @@
         .dz-head { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
         .dz-head h2 { margin: 0; font-size: 20px; font-weight: 700; flex: 1; }
         .dz-x { width: 44px; height: 44px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; font-size: 18px; color: var(--text); }
-        .dz-select { height: 44px; border-radius: 12px; border: 1px solid #D5CFC2; padding: 0 12px; font: 500 14px "IBM Plex Sans Arabic", sans-serif; background: #fff; color: var(--text); }
+        .dz-select { height: 44px; border-radius: 12px; border: 1px solid #D5CFC2; padding: 0 12px; font: 500 14px var(--font); background: #fff; color: var(--text); }
         .dz-table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 16px; }
         .dz-table { width: 100%; border-collapse: collapse; min-width: 760px; font-size: 13px; }
         .dz-table th { background: #FAF9F6; color: var(--muted); font-weight: 600; padding: 10px; border-bottom: 1px solid var(--line); text-align: center; }
@@ -399,7 +398,7 @@
         @media (max-width: 640px) { .dz-bar { grid-template-columns: 1fr; } .dz-card { padding: 16px; } }
 
         /* الخط الموحّد بدل الخط البرمجي: كان يباعد الحروف العربية («1 مرات») */
-        .font-mono:not(#pinHiddenInput) { font-family: "IBM Plex Sans Arabic", system-ui, sans-serif !important; letter-spacing: normal !important; font-variant-numeric: tabular-nums; }
+        .font-mono:not(#pinHiddenInput) { font-family: var(--font) !important; letter-spacing: normal !important; font-variant-numeric: tabular-nums; }
 
         /* بطاقات المؤشرات */
         .kpi-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
@@ -434,10 +433,10 @@
         /* أزرار الطباعة والتصدير */
         .rpt-bar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
         .rpt-btn { height: 38px; padding: 0 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); color: var(--text);
-                   font: 600 13px "IBM Plex Sans Arabic", sans-serif; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; white-space: nowrap; }
+                   font: 600 13px var(--font); display: inline-flex; align-items: center; gap: 6px; cursor: pointer; white-space: nowrap; }
         .rpt-btn:hover { background: #FAF9F6; border-color: #D5CFC2; }
         .rpt-btn svg { color: var(--primary); flex-shrink: 0; }
-        .rpt-select { height: 38px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); padding: 0 10px; font: 500 13px "IBM Plex Sans Arabic", sans-serif; color: var(--text); }
+        .rpt-select { height: 38px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); padding: 0 10px; font: 500 13px var(--font); color: var(--text); }
 
         /* النوافذ القديمة: كانت تحت الشريط السفلي (50 < 55)، وتصبح لوحة سفلية على الجوال */
         .lg-modal { z-index: 70 !important; }
@@ -470,6 +469,577 @@
             #section-timetable > div:first-child > div:last-child > button { flex-shrink: 0; }
             #btnMasterGrid { display: none !important; }
         }
+    </style>
+    <style id="apple-ui">
+        /* ============================================================
+           نظام التصميم: مستوحى من Apple (خط النظام، مواد شفافة، لون واحد للهوية)
+           ============================================================ */
+        :root {
+            --font: -apple-system, BlinkMacSystemFont, "SF Arabic", "SF Pro Text", "IBM Plex Sans Arabic", system-ui, sans-serif;
+            --bg: #F5F5F7; --surface: #FFFFFF;
+            --label: #1D1D1F; --label-2: #424245; --label-3: #6E6E73; --label-4: #A1A1A6;
+            --fill-1: #F5F5F7; --fill-2: #EDEDF0; --fill-3: #E3E3E8;
+            --separator: rgba(60, 60, 67, .12); --separator-2: rgba(60, 60, 67, .2);
+            --tint: #0B7A68; --tint-strong: #07604F; --tint-text: #0A6B5B; --tint-soft: #EBF5F2; --tint-soft-2: #D6ECE6;
+            --tint-line: rgba(11, 122, 104, .22); --tint-on-dark: #7ED6C4; --tint-ring: rgba(11, 122, 104, .18);
+            --orange: #FF9500; --orange-text: #A65400; --orange-soft: #FFF5E8; --orange-soft-2: #FFE6C4; --orange-line: rgba(255, 149, 0, .35);
+            --red: #E0352B; --red-text: #C4161C; --red-soft: #FFF1F0; --red-soft-2: #FFDAD7; --red-line: rgba(224, 53, 43, .25);
+            --shadow-card: 0 1px 2px rgba(0, 0, 0, .03), 0 4px 16px rgba(0, 0, 0, .04);
+            --shadow-raised: 0 10px 30px rgba(0, 0, 0, .08), 0 2px 6px rgba(0, 0, 0, .04);
+            --shadow-sheet: 0 30px 80px rgba(0, 0, 0, .18), 0 8px 24px rgba(0, 0, 0, .08);
+            --material: rgba(250, 250, 252, .78);
+            /* متغيرات الطبقات السابقة تتبع النظام الجديد */
+            --primary: var(--tint); --primary-soft: var(--tint-soft); --ground: var(--bg); --line: var(--separator);
+            --text: var(--label); --muted: var(--label-3); --apple-bg: var(--bg); --apple-text-primary: var(--label);
+        }
+
+        html, body { background: var(--bg) !important; color: var(--label); font-family: var(--font) !important; }
+        body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+        /* العربية لا تحتمل تباعد الحروف */
+        body *:not(#pinHiddenInput) { letter-spacing: 0 !important; }
+        .font-black, .font-extrabold { font-weight: 700 !important; }
+        .font-bold { font-weight: 600 !important; }
+        .text-xs { font-size: 13px !important; line-height: 1.55 !important; }
+        .text-sm { line-height: 1.6 !important; }
+        .text-slate-400 { color: var(--label-3) !important; }
+        ::selection { background: var(--tint-soft-2); }
+        :focus-visible { outline: 3px solid var(--tint-ring) !important; outline-offset: 2px !important; }
+
+        /* التدرجات تتحول إلى لون مصمت هادئ */
+        [class*="bg-gradient-to-"] { background-image: none !important; }
+
+        /* الظلال: خفيفة كالورق */
+        .shadow-xs, .shadow-sm, .shadow, .shadow-md, .shadow-inner { box-shadow: 0 1px 2px rgba(0, 0, 0, .04) !important; }
+        .shadow-lg, .shadow-xl { box-shadow: var(--shadow-raised) !important; }
+        .shadow-2xl { box-shadow: var(--shadow-sheet) !important; }
+        [class*="ring-"]:not(:focus-visible) { --tw-ring-shadow: 0 0 #0000 !important; }
+
+        /* البطاقات: بيضاء بلا إطار ظاهر */
+        :is(.bg-white, .bg-white\/90, .bg-white\/95):is(.rounded-3xl, .rounded-\[28px\], .rounded-\[32px\], .rounded-\[24px\]),
+        .kpi, .dz-card {
+            border-color: rgba(0, 0, 0, .04) !important; box-shadow: var(--shadow-card) !important;
+        }
+        .backdrop-blur-xl.bg-white\/90 { background: var(--surface) !important; }
+
+        /* الحقول: تعبئة رمادية ناعمة، وتركيز بحلقة لون الهوية */
+        :where(main, .lg-modal, .dz-modal, #pinAuthOverlay) :is(input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not(.master-cell-input), select, textarea) {
+            background-color: var(--fill-1) !important; border: 1px solid var(--separator) !important; border-radius: 12px !important;
+            color: var(--label) !important; font-size: 14px !important; transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease;
+        }
+        :where(main, .lg-modal, .dz-modal) :is(input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not(.master-cell-input), select) { min-height: 42px; }
+        :where(main, .lg-modal, .dz-modal, #pinAuthOverlay) :is(input, select, textarea):focus {
+            background-color: var(--surface) !important; border-color: var(--tint) !important; box-shadow: 0 0 0 4px var(--tint-ring) !important; outline: none !important;
+        }
+        input[type="checkbox"], input[type="radio"] { accent-color: var(--tint); }
+        select { cursor: pointer; }
+
+        /* الأزرار: حركة ضغط خفيفة */
+        button { transition: background-color .15s ease, color .15s ease, box-shadow .15s ease, transform .12s ease, opacity .15s ease; }
+        button:active:not(:disabled) { transform: scale(.97); }
+        button:disabled { opacity: .45; cursor: default; }
+        /* الأزرار الأساسية المصمتة (كانت سوداء أو كهرمانية أو نيلية) ← لون الهوية */
+        :is(button, a).bg-slate-800, :is(button, a).bg-slate-900, :is(button, a).bg-slate-950, :is(button, a).bg-black, :is(button, a).bg-gray-900,
+        :is(button, a):is(.bg-amber-400, .bg-amber-500, .bg-amber-600, .bg-amber-700, .bg-orange-500, .bg-orange-600),
+        :is(button, a):is(.bg-indigo-500, .bg-indigo-600, .bg-indigo-700, .bg-blue-600, .bg-blue-700, .bg-violet-600, .bg-purple-600),
+        :is(button, a):is(.bg-teal-500, .bg-teal-600, .bg-teal-700, .bg-emerald-500, .bg-emerald-600, .bg-emerald-700, .bg-green-600) {
+            background-color: var(--tint) !important; color: #fff !important; border-color: transparent !important;
+        }
+        :is(button, a):is(.bg-slate-800, .bg-slate-900, .bg-black, .bg-amber-500, .bg-amber-600, .bg-indigo-600, .bg-teal-600, .bg-emerald-600):hover {
+            background-color: var(--tint-strong) !important;
+        }
+        :is(button, a):is(.bg-rose-500, .bg-rose-600, .bg-rose-700, .bg-red-500, .bg-red-600, .bg-red-700) { background-color: var(--red) !important; color: #fff !important; border-color: transparent !important; }
+        :is(button, a):is(.bg-rose-500, .bg-rose-600, .bg-red-600):hover { background-color: var(--red-text) !important; }
+        :is(button, a):is(.bg-slate-100, .bg-slate-200, .bg-gray-100) { background-color: var(--fill-2) !important; color: var(--label) !important; }
+        :is(button, a):is(.bg-slate-100, .bg-slate-200, .bg-gray-100):hover { background-color: var(--fill-3) !important; }
+
+        /* لافتات الأقسام: يكفي العنوان الكبير أعلى الصفحة، فتصبح شريط أدوات */
+        body.shell-on [id^="section-"] > div:first-child[class*="bg-gradient"] {
+            background: transparent !important; padding: 0 !important; border-radius: 0 !important; box-shadow: none !important;
+            color: var(--label) !important; align-items: stretch !important; justify-content: flex-start !important;
+        }
+        body.shell-on [id^="section-"] > div:first-child[class*="bg-gradient"] :is(h2, h2 + p) { display: none !important; }
+        body.shell-on [id^="section-"] > div:first-child[class*="bg-gradient"] > div:empty { display: none; }
+        body.shell-on #section-counselor > div:first-child[class*="bg-gradient"] { display: none !important; }
+        body.shell-on [id^="section-"] > div:first-child[class*="bg-gradient"] button {
+            background: var(--surface) !important; color: var(--label) !important; border: 1px solid var(--separator) !important;
+            border-radius: 999px !important; box-shadow: 0 1px 2px rgba(0, 0, 0, .04) !important; font-weight: 500 !important; height: 38px; padding: 0 16px !important;
+        }
+        body.shell-on [id^="section-"] > div:first-child[class*="bg-gradient"] button:hover { background: var(--fill-1) !important; }
+        #section-timetable > div:first-child button[onclick="openAssignWaitingModal()"],
+        #section-timetable > div:first-child button[onclick="openAbsentPlanModal()"] {
+            background: var(--tint) !important; color: #fff !important; border-color: transparent !important; font-weight: 600 !important;
+        }
+        @media (max-width: 767px) { #section-timetable > div:first-child { padding: 0 !important; } }
+
+        /* القائمة الجانبية: مادة فاتحة شفافة كتطبيقات iPadOS */
+        #appNav { background: #F0F0F3 !important; color: var(--label) !important; border-left: 1px solid var(--separator); padding: 22px 12px 12px !important; }
+        #appNav .nav-brand { padding: 2px 10px 22px; }
+        #appNav .nav-logo { background: var(--tint-strong) !important; border-radius: 12px; box-shadow: 0 2px 6px rgba(7, 96, 79, .25); }
+        #appNav .nav-title { font-size: 15px; font-weight: 700; color: var(--label); }
+        #appNav .nav-sub { color: var(--label-3) !important; }
+        #appNav .nav-item, #appNav .nav-group { color: var(--label) !important; font: 500 15px var(--font) !important; border-radius: 10px; min-height: 42px; }
+        #appNav :is(.nav-item, .nav-group) svg { color: var(--tint); }
+        #appNav .nav-item:hover, #appNav .nav-group:hover, #appNav .nav-child:hover { background: rgba(0, 0, 0, .05) !important; color: var(--label) !important; }
+        #appNav .nav-group[aria-expanded="true"] { background: transparent !important; color: var(--label) !important; font-weight: 600 !important; }
+        #appNav .nav-item.active, #appNav .nav-child.active { background: var(--tint) !important; color: #fff !important; font-weight: 600 !important; }
+        #appNav .nav-item.active svg { color: #fff; }
+        #appNav .nav-chev { color: var(--label-4) !important; }
+        #appNav .nav-children { border-right-color: var(--separator) !important; }
+        #appNav .nav-child { color: var(--label-2) !important; font: 400 14px var(--font) !important; min-height: 38px; }
+        #appNav .nav-badge { background: var(--red) !important; color: #fff !important; font-weight: 600; }
+        #appNav .nav-children .nav-badge { background: transparent !important; color: var(--label-3) !important; }
+        #appNav .nav-child.active .nav-badge { color: #fff !important; }
+        #appNav .nav-foot { border-top-color: var(--separator) !important; }
+        #appNav .nav-avatar { background: var(--tint-soft) !important; color: var(--tint) !important; }
+        #appNav .nav-icon-btn { color: var(--label-3) !important; }
+        #appNav .nav-icon-btn:hover { background: rgba(0, 0, 0, .05) !important; color: var(--label) !important; }
+        #appNav .nav-foot :is(div, span) { color: inherit; }
+
+        /* العنوان الكبير */
+        #appTopbar { margin-bottom: 22px; }
+        #appTopbar .tb-crumb { color: var(--label-3); font-size: 13px; }
+        #appTopbar .tb-title { font-size: 32px; font-weight: 700; color: var(--label); line-height: 1.25; }
+        #appTopbar .tb-date { background: var(--surface); border-color: var(--separator); color: var(--label-3); box-shadow: 0 1px 2px rgba(0, 0, 0, .03); }
+        #appTopbar .tb-menu { background: var(--surface); border-color: var(--separator); }
+        #persistWarning { background: var(--orange-soft); color: var(--orange-text); border-color: var(--orange-line); }
+
+        /* الشريط السفلي على الجوال: مادة شفافة */
+        @media (max-width: 1023px) {
+            #appNav { background: rgba(248, 248, 250, .92) !important; box-shadow: -20px 0 50px rgba(0, 0, 0, .12); }
+            #appNavBackdrop.open { background: rgba(0, 0, 0, .25) !important; }
+            #appTopbar .tb-title { font-size: 28px; }
+            #appTabbar { background: var(--material) !important; -webkit-backdrop-filter: saturate(180%) blur(24px); backdrop-filter: saturate(180%) blur(24px);
+                         border-top: 1px solid var(--separator) !important; }
+            #appTabbar button { color: var(--label-3) !important; font: 500 11px var(--font) !important; }
+            #appTabbar button.active { color: var(--tint) !important; font-weight: 600 !important; }
+        }
+
+        /* النوافذ: خلفية معتمة خفيفة وورقة بيضاء */
+        .lg-modal, .dz-modal { background: rgba(0, 0, 0, .28) !important; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+        .lg-modal > div, .dz-card { border-radius: 24px !important; border: 0 !important; box-shadow: var(--shadow-sheet) !important; }
+        .lg-modal h3, .dz-head h2 { font-weight: 700 !important; }
+        @media (max-width: 640px) { .lg-modal > div, .dz-card { border-radius: 22px 22px 0 0 !important; } }
+
+        /* بطاقات المؤشرات: الرقم هو البطل */
+        .kpi { border: 0 !important; border-radius: 20px; padding: 20px; }
+        .kpi::before { display: none; }
+        .kpi-label { color: var(--label-3); font-size: 14px; }
+        .kpi-value { font-size: 36px; font-weight: 700; color: var(--label); }
+        .kpi.tone-primary .kpi-value { color: var(--tint); }
+        .kpi.tone-gold .kpi-value { color: var(--orange-text); }
+        .kpi.tone-alert { background: var(--surface) !important; }
+        .kpi.tone-alert .kpi-value { color: var(--red); }
+        .rank-n { background: var(--tint-soft); color: var(--tint); }
+        .rank-track, .dz-bar .track { background: var(--fill-2); }
+        .rpt-btn, .rpt-select, .cand-toggle { border-radius: 999px; border-color: var(--separator); font-family: var(--font) !important; }
+        .rpt-btn:hover { background: var(--fill-1); }
+        .dz-select { font-family: var(--font) !important; border-radius: 12px; }
+        .dz-table th, .dz-stat { background: var(--fill-1); }
+
+        /* الجداول: رؤوس هادئة وفواصل رفيعة */
+        main table thead { background: var(--fill-1) !important; color: var(--label-3) !important; }
+        main table thead th { font-weight: 600 !important; color: var(--label-3) !important; border-color: var(--separator) !important; }
+        main table thead.bg-slate-900, main table thead.bg-slate-800 { background: var(--fill-1) !important; }
+        main table tr.bg-slate-800 { background: var(--fill-2) !important; }
+        main table td, main table th { border-color: var(--separator) !important; }
+
+        /* الإشعارات: شريط زجاجي أسفل المحتوى بنقطة لون بدل الرموز */
+        #toastContainer > * { border-radius: 16px !important; box-shadow: var(--shadow-raised) !important; font: 500 14px var(--font) !important;
+                              color: var(--label) !important; border-color: var(--separator) !important; background: rgba(255, 255, 255, .92) !important; align-items: center !important; }
+        #toastContainer > * > button { color: var(--label-4) !important; min-height: 0; }
+        .toast-dot { width: 10px; height: 10px; border-radius: 999px; flex-shrink: 0; background: var(--label-4); }
+        .toast-dot.toast-success { background: var(--tint); }
+        .toast-dot.toast-error, .toast-dot.toast-urgent { background: var(--red); }
+        .toast-dot.toast-warning { background: var(--orange); }
+        @media (min-width: 1024px) {
+            #toastContainer { top: auto !important; bottom: 24px; left: calc((100vw - var(--nav-w)) / 2) !important; right: auto !important;
+                              transform: translateX(-50%); width: min(440px, 90vw) !important; flex-direction: column-reverse; }
+        }
+        #vpFreeTeachersResults > * { margin: 0 !important; }
+        #freeTeachersCountBadge, #vpFreeTeachersCountBadge { background: var(--fill-1) !important; color: var(--label-3) !important; border: 0 !important; border-radius: 999px !important; font-weight: 500 !important; }
+        #coreWidget-timetable-waitings h3 { font-size: 19px !important; font-weight: 700 !important; }
+
+        /* سجل الطلاب: العنوان الكبير يكفي، والجدول بلا التفاف */
+        body.shell-on #section-students > div:first-child > div:first-child > div:first-child:has(> h2) { display: none; }
+        #section-students table :is(td, th) { white-space: nowrap; }
+        #section-students table td .rounded-full, #section-students table td [class*="rounded-"] { white-space: nowrap; }
+
+        /* شاشة الدخول */
+        /* الحقل يبقى لاستقبال لوحة المفاتيح، والنقاط وحدها هي ما يُرى */
+        #pinHiddenInput { position: absolute !important; inset: 0; opacity: 0 !important; height: 100% !important; }
+        #pinAuthOverlay .relative.max-w-\[220px\] { height: 0; margin: 0 auto !important; }
+        #pinDotsContainer { gap: 18px !important; margin: 6px 0 18px !important; }
+        #pinAuthOverlay h2 { font-size: 22px !important; font-weight: 700 !important; }
+        #pinAuthOverlay { background: rgba(245, 245, 247, .96) !important; -webkit-backdrop-filter: saturate(180%) blur(30px); backdrop-filter: saturate(180%) blur(30px); }
+        #pinAuthOverlay > div { background: rgba(255, 255, 255, .9) !important; border: 1px solid rgba(255, 255, 255, .7) !important; box-shadow: var(--shadow-sheet) !important; border-radius: 28px !important; }
+        #pinAuthOverlay > div > div:first-child { background: var(--tint-strong) !important; border: 0 !important; border-radius: 16px !important; box-shadow: 0 6px 16px rgba(7, 96, 79, .3) !important; }
+        #pinAuthOverlay button[onclick^="handlePinKey"] { height: 52px !important; border-radius: 999px !important; border: 0 !important; background: var(--fill-2) !important;
+            color: var(--label) !important; font-size: 22px !important; font-weight: 500 !important; box-shadow: none !important; }
+        #pinAuthOverlay button[onclick^="handlePinKey"]:hover { background: var(--fill-3) !important; }
+        #pinAuthOverlay button[onclick="handlePinKey('C')"], #pinAuthOverlay button[onclick="handlePinKey('DEL')"] { background: transparent !important; font-size: 15px !important; color: var(--tint) !important; }
+        #pinAuthOverlay > div > div.w-full.bg-slate-50\/70 { background: transparent !important; border: 0 !important; padding: 0 !important; }
+        #pinSubmitBtn { background: var(--tint) !important; border-radius: 14px !important; font-size: 15px !important; height: 48px; }
+        #pinAuthOverlay .pin-dot { width: 13px !important; height: 13px !important; border: 1.5px solid var(--label-4) !important; background: transparent !important; }
+        #pinAuthOverlay .pin-dot.bg-emerald-600 { background: var(--label) !important; border-color: var(--label) !important; }
+        #pinAuthOverlay .pin-dot.bg-rose-500 { background: var(--red) !important; border-color: var(--red) !important; }
+
+        /* عناوين البطاقات وبلاطات الأرقام */
+        .widget-title { margin: 0; font-size: 19px; font-weight: 700; color: var(--label); line-height: 1.35; }
+        .stat-tile { background: var(--fill-1); border-radius: 16px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+        .stat-label { font-size: 13px; font-weight: 500; color: var(--label-3); }
+        .stat-value { font-size: 34px; font-weight: 700; line-height: 1.1; font-variant-numeric: tabular-nums; }
+        .stat-unit { font-size: 13px; color: var(--label-3); }
+        [id^="coreWidget-"] { border-radius: 22px !important; }
+        /* شبكات البطاقات تتبع عرض المحتوى لا عرض الشاشة (بجانب القائمة الثابتة) */
+        #referralsCardsContainer, #freeTeachersResults { grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)) !important; }
+        #vpFreeTeachersResults { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: 12px; }
+
+        /* بطاقة المرشح للانتظار */
+        .cand-card { background: var(--surface); border: 1px solid var(--separator); border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+        .cand-card.is-top { border: 1.5px solid var(--tint); box-shadow: 0 0 0 4px var(--tint-ring); }
+        .cand-head { display: flex; align-items: center; gap: 12px; }
+        .cand-rank { width: 32px; height: 32px; border-radius: 999px; background: var(--fill-2); color: var(--label-2); font-weight: 600; font-size: 14px;
+                     display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .cand-card.is-top .cand-rank { background: var(--tint); color: #fff; }
+        .cand-who { min-width: 0; }
+        .cand-name { font-size: 16px; font-weight: 600; color: var(--label); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .cand-best { font-size: 12px; font-weight: 600; color: var(--tint); background: var(--tint-soft); border-radius: 999px; padding: 1px 9px; }
+        .cand-sub { font-size: 13px; color: var(--label-3); }
+        .cand-meta { display: flex; flex-wrap: wrap; gap: 6px; }
+        .cand-meta span { font-size: 12px; color: var(--label-2); background: var(--fill-1); border-radius: 999px; padding: 3px 10px; }
+        .cand-meta span.is-adjacent { color: var(--tint-text); background: var(--tint-soft); }
+        .cand-why summary { font-size: 13px; color: var(--tint); cursor: pointer; list-style: none; }
+        .cand-why summary::-webkit-details-marker { display: none; }
+        .cand-why p { margin: 6px 0 0; font-size: 13px; line-height: 1.7; color: var(--label-3); }
+        .cand-assign { height: 40px; border-radius: 12px; border: 0; background: var(--tint); color: #fff; font: 600 15px var(--font); cursor: pointer; }
+        .cand-assign:hover { background: var(--tint-strong); }
+        .cand-card:not(.is-top) .cand-assign { background: var(--tint-soft); color: var(--tint-text); }
+        .cand-card:not(.is-top) .cand-assign:hover { background: var(--tint-soft-2); }
+
+        /* التبديل الداخلي في واجهة المعلم: عنصر تحكم مقسّم */
+        body.shell-on #section-teacher > div:first-child .bg-black\/20 { background: var(--fill-2) !important; border: 0 !important; padding: 3px !important; border-radius: 12px !important; }
+        body.shell-on #section-teacher > div:first-child .bg-black\/20 button { background: transparent !important; border: 0 !important; box-shadow: none !important; border-radius: 9px !important; height: 34px; color: var(--label) !important; }
+        body.shell-on #section-teacher > div:first-child .bg-black\/20 button.bg-white { background: var(--surface) !important; box-shadow: 0 1px 3px rgba(0, 0, 0, .1) !important; font-weight: 600 !important; }
+        body.shell-on #section-teacher > div:first-child > div:first-child { display: none !important; }
+        #section-teacher #referralForm .text-rose-900 { color: var(--tint) !important; }
+        #section-teacher #referralForm h3 { font-size: 17px; font-weight: 700; color: var(--label); }
+
+        /* التذييل */
+        body > footer { background: transparent !important; border: 0 !important; color: var(--label-4) !important; }
+
+        /* ألوان Tailwind المتفرقة ← لوحة واحدة (مولّدة من الأصناف المستخدمة) */
+        .bg-amber-100,
+        .bg-amber-100\/60,
+        .bg-amber-50,
+        .bg-amber-50\/30,
+        .bg-amber-50\/50,
+        .bg-amber-50\/70,
+        .bg-amber-50\/80,
+        .bg-orange-50,
+        .from-amber-50,
+        .hover\:bg-amber-100\/90:hover,
+        .hover\:bg-amber-50:hover,
+        .hover\:bg-amber-50\/40:hover,
+        .hover\:bg-amber-50\/50:hover,
+        .hover\:bg-amber-50\/60:hover { background-color: var(--orange-soft) !important; }
+        .bg-amber-400,
+        .bg-amber-500,
+        .bg-amber-600,
+        .from-amber-600,
+        .hover\:bg-amber-400:hover,
+        .hover\:bg-amber-600:hover,
+        .hover\:bg-amber-700:hover { background-color: var(--orange) !important; }
+        .bg-blue-100,
+        .bg-blue-50,
+        .bg-emerald-100,
+        .bg-emerald-100\/60,
+        .bg-emerald-50,
+        .bg-emerald-50\/30,
+        .bg-emerald-50\/40,
+        .bg-emerald-50\/60,
+        .bg-emerald-50\/70,
+        .bg-emerald-50\/80,
+        .bg-indigo-100,
+        .bg-indigo-50,
+        .bg-indigo-50\/30,
+        .bg-indigo-50\/40,
+        .bg-indigo-50\/50,
+        .bg-indigo-50\/60,
+        .bg-indigo-50\/70,
+        .bg-sky-50\/70,
+        .bg-teal-100,
+        .bg-teal-100\/60,
+        .bg-teal-50,
+        .bg-teal-50\/30,
+        .bg-teal-50\/50,
+        .bg-teal-50\/70,
+        .bg-teal-50\/80,
+        .from-emerald-50,
+        .from-indigo-50,
+        .hover\:bg-emerald-100:hover,
+        .hover\:bg-emerald-50:hover,
+        .hover\:bg-emerald-50\/50:hover,
+        .hover\:bg-emerald-50\/60:hover,
+        .hover\:bg-indigo-100:hover,
+        .hover\:bg-indigo-50:hover,
+        .hover\:bg-indigo-50\/50:hover,
+        .hover\:bg-indigo-50\/60:hover,
+        .hover\:bg-teal-100:hover,
+        .hover\:bg-teal-100\/90:hover,
+        .hover\:bg-teal-50:hover,
+        .hover\:bg-teal-50\/50:hover,
+        .hover\:bg-teal-50\/60:hover { background-color: var(--tint-soft) !important; }
+        .bg-blue-500,
+        .bg-blue-600,
+        .bg-emerald-400,
+        .bg-emerald-500,
+        .bg-emerald-600,
+        .bg-indigo-400,
+        .bg-indigo-500,
+        .bg-indigo-600,
+        .bg-teal-400,
+        .bg-teal-500,
+        .bg-teal-600,
+        .from-emerald-500,
+        .from-emerald-600,
+        .from-indigo-500,
+        .from-teal-500,
+        .hover\:bg-blue-700:hover,
+        .hover\:bg-emerald-500:hover,
+        .hover\:bg-emerald-700:hover,
+        .hover\:bg-indigo-500:hover,
+        .hover\:bg-indigo-700:hover,
+        .hover\:bg-teal-500:hover,
+        .hover\:bg-teal-700:hover,
+        .hover\:from-emerald-700:hover { background-color: var(--tint) !important; }
+        .bg-red-50\/50,
+        .bg-rose-100,
+        .bg-rose-50,
+        .bg-rose-50\/60,
+        .bg-rose-50\/70,
+        .bg-rose-50\/80,
+        .hover\:bg-rose-100:hover,
+        .hover\:bg-rose-100\/90:hover,
+        .hover\:bg-rose-50:hover,
+        .hover\:bg-rose-50\/50:hover,
+        .hover\:bg-rose-50\/60:hover { background-color: var(--red-soft) !important; }
+        .bg-rose-200 { background-color: var(--red-soft-2) !important; }
+        .bg-rose-500,
+        .bg-rose-600,
+        .from-rose-500,
+        .from-rose-600,
+        .from-rose-700,
+        .hover\:bg-rose-500:hover,
+        .hover\:from-rose-700:hover { background-color: var(--red) !important; }
+        .bg-slate-100,
+        .bg-slate-100\/70,
+        .bg-slate-100\/80,
+        .bg-slate-100\/90,
+        .hover\:bg-slate-100:hover,
+        .hover\:bg-slate-100\/80:hover { background-color: var(--fill-2) !important; }
+        .bg-slate-200,
+        .bg-slate-200\/60,
+        .bg-slate-200\/70,
+        .bg-slate-200\/80,
+        .hover\:bg-slate-200:hover { background-color: var(--fill-3) !important; }
+        .bg-slate-400 { background-color: #8E8E93 !important; }
+        .bg-slate-50,
+        .bg-slate-50\/50,
+        .bg-slate-50\/60,
+        .bg-slate-50\/70,
+        .bg-slate-50\/80,
+        .from-slate-50,
+        .hover\:bg-slate-50:hover,
+        .hover\:bg-slate-50\/80:hover { background-color: var(--fill-1) !important; }
+        .bg-slate-800,
+        .bg-slate-900,
+        .bg-slate-950,
+        .from-slate-900,
+        .hover\:bg-slate-900:hover { background-color: var(--label) !important; }
+        .border-amber-100\/60,
+        .border-amber-200,
+        .border-amber-200\/60,
+        .border-amber-200\/70,
+        .border-amber-200\/80,
+        .border-amber-300,
+        .border-orange-200,
+        .border-orange-200\/90,
+        .hover\:border-amber-200:hover,
+        .hover\:border-amber-300:hover { border-color: var(--orange-line) !important; }
+        .border-amber-400\/30,
+        .border-amber-400\/40,
+        .focus\:border-amber-500:focus,
+        .hover\:border-amber-500:hover { border-color: var(--orange) !important; }
+        .border-blue-200,
+        .border-emerald-200,
+        .border-emerald-200\/60,
+        .border-emerald-200\/80,
+        .border-emerald-300,
+        .border-indigo-100,
+        .border-indigo-200,
+        .border-indigo-200\/50,
+        .border-indigo-200\/60,
+        .border-indigo-200\/70,
+        .border-indigo-200\/80,
+        .border-indigo-300,
+        .border-sky-200\/70,
+        .border-teal-200,
+        .border-teal-200\/60,
+        .border-teal-200\/80,
+        .border-teal-300,
+        .hover\:border-emerald-200:hover,
+        .hover\:border-indigo-200:hover,
+        .hover\:border-teal-200:hover { border-color: var(--tint-line) !important; }
+        .border-emerald-400\/30,
+        .border-emerald-400\/40,
+        .border-emerald-500,
+        .border-emerald-500\/30,
+        .border-emerald-600,
+        .border-indigo-400\/30,
+        .border-indigo-400\/40,
+        .border-indigo-500\/30,
+        .border-teal-400\/30,
+        .border-teal-400\/40,
+        .border-teal-500\/30,
+        .border-teal-500\/40,
+        .focus\:border-emerald-500:focus,
+        .focus\:border-indigo-400:focus,
+        .focus\:border-indigo-600:focus,
+        .focus\:border-teal-500:focus { border-color: var(--tint) !important; }
+        .border-rose-200,
+        .border-rose-200\/70,
+        .border-rose-200\/80,
+        .border-rose-300,
+        .hover\:border-rose-200:hover { border-color: var(--red-line) !important; }
+        .border-rose-400\/40,
+        .border-rose-500,
+        .border-rose-500\/30,
+        .hover\:border-rose-500:hover { border-color: var(--red) !important; }
+        .border-slate-100,
+        .border-slate-200,
+        .border-slate-200\/50,
+        .border-slate-200\/60,
+        .border-slate-200\/70,
+        .border-slate-200\/80,
+        .border-slate-200\/90,
+        .divide-slate-100 > :not([hidden]) ~ :not([hidden]),
+        .divide-slate-200 > :not([hidden]) ~ :not([hidden]) { border-color: var(--separator) !important; }
+        .border-slate-300,
+        .border-slate-300\/60,
+        .border-slate-700,
+        .border-slate-700\/50,
+        .border-slate-800,
+        .focus\:border-slate-900:focus,
+        .hover\:border-slate-300:hover { border-color: var(--separator-2) !important; }
+        .from-emerald-950,
+        .from-teal-800,
+        .from-teal-950 { background-color: var(--tint-strong) !important; }
+        .from-rose-950 { background-color: var(--red-text) !important; }
+        .placeholder-emerald-400::placeholder,
+        .text-slate-300 { color: var(--label-4) !important; }
+        .ring-emerald-400\/20,
+        .ring-indigo-500\/20,
+        .focus\:ring-emerald-500:focus,
+        .focus\:ring-indigo-500:focus,
+        .focus\:ring-indigo-500\/20:focus,
+        .focus\:ring-teal-500:focus { --tw-ring-color: var(--tint) !important; }
+        .ring-orange-400,
+        .focus\:ring-amber-500:focus { --tw-ring-color: var(--orange) !important; }
+        .ring-rose-200 { --tw-ring-color: var(--red-line) !important; }
+        .ring-rose-500\/20,
+        .focus\:ring-rose-500:focus { --tw-ring-color: var(--red) !important; }
+        .text-amber-100,
+        .text-emerald-100\/80,
+        .text-emerald-200,
+        .text-indigo-100\/80,
+        .text-rose-100,
+        .text-rose-100\/80,
+        .text-teal-100,
+        .text-teal-100\/80 { color: rgba(255,255,255,.92) !important; }
+        .text-amber-300 { color: #FFD08A !important; }
+        .text-amber-500,
+        .text-amber-600,
+        .text-amber-700,
+        .text-amber-800,
+        .text-amber-900,
+        .text-amber-950,
+        .text-orange-700,
+        .text-orange-900,
+        .group:hover .group-hover\:text-amber-600,
+        .group:hover .group-hover\:text-amber-900,
+        .group:hover .group-hover\:text-amber-950,
+        .hover\:text-amber-800:hover,
+        .hover\:text-amber-900:hover { color: var(--orange-text) !important; }
+        .text-blue-700,
+        .text-blue-800,
+        .text-emerald-400,
+        .text-emerald-500,
+        .text-emerald-600,
+        .text-emerald-700,
+        .text-emerald-800,
+        .text-emerald-900,
+        .text-emerald-950,
+        .text-indigo-500,
+        .text-indigo-600,
+        .text-indigo-700,
+        .text-indigo-800,
+        .text-indigo-900,
+        .text-indigo-950,
+        .text-sky-500,
+        .text-sky-600,
+        .text-sky-700,
+        .text-sky-800,
+        .text-teal-600,
+        .text-teal-700,
+        .text-teal-800,
+        .text-teal-900,
+        .text-teal-950,
+        .group:hover .group-hover\:text-emerald-600,
+        .group:hover .group-hover\:text-emerald-900,
+        .group:hover .group-hover\:text-emerald-950,
+        .group:hover .group-hover\:text-indigo-600,
+        .group:hover .group-hover\:text-indigo-900,
+        .group:hover .group-hover\:text-indigo-950,
+        .group:hover .group-hover\:text-teal-600,
+        .group:hover .group-hover\:text-teal-900,
+        .group:hover .group-hover\:text-teal-950,
+        .hover\:text-indigo-700:hover,
+        .hover\:text-indigo-800:hover,
+        .hover\:text-indigo-900:hover,
+        .hover\:text-teal-800:hover,
+        .hover\:text-teal-900:hover { color: var(--tint-text) !important; }
+        .text-emerald-300,
+        .text-indigo-300,
+        .text-teal-300 { color: var(--tint-on-dark) !important; }
+        .text-rose-300 { color: #FFB3B8 !important; }
+        .text-rose-400,
+        .text-rose-500,
+        .text-rose-600,
+        .text-rose-700,
+        .text-rose-800,
+        .text-rose-900,
+        .text-rose-950,
+        .group:hover .group-hover\:text-rose-600,
+        .group:hover .group-hover\:text-rose-900,
+        .hover\:text-rose-600:hover,
+        .hover\:text-rose-700:hover,
+        .hover\:text-rose-800:hover { color: var(--red-text) !important; }
+        .text-slate-400,
+        .text-slate-500 { color: var(--label-3) !important; }
+        .text-slate-600,
+        .text-slate-700,
+        .group:hover .group-hover\:text-slate-600,
+        .hover\:text-slate-600:hover,
+        .hover\:text-slate-700:hover { color: var(--label-2) !important; }
+        .text-slate-800,
+        .text-slate-900,
+        .text-slate-950,
+        .group:hover .group-hover\:text-slate-950,
+        .hover\:text-slate-800:hover,
+        .hover\:text-slate-900:hover { color: var(--label) !important; }
+        .focus\:ring-slate-900:focus { --tw-ring-color: var(--separator-2) !important; }
+        .hover\:bg-slate-300:hover,
+        .hover\:bg-slate-300\/80:hover { background-color: #D1D1D6 !important; }
     </style>
 </head>
 <body class="min-h-screen text-slate-800 flex flex-col">
@@ -1099,7 +1669,7 @@
                     </div>
 
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1.5">اسم المعلم المحيل (طاقم المدرسة المعتمد) *</label>
+                        <label class="block text-xs font-bold text-slate-700 mb-1.5">المعلم</label>
                         <select id="teacherSelect" required onchange="onTeacherSelected(this.value)" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-3.5 py-3 text-xs font-semibold focus:ring-2 focus:ring-rose-500 focus:bg-white outline-none">
                             <option value="">-- اختر اسمك من قائمة المعلمين (22 معلماً) --</option>
                         </select>
@@ -1249,11 +1819,7 @@
         <div id="coreWidget-vitals" class="bg-white/90 backdrop-blur-xl rounded-[28px] p-5 sm:p-6 border border-slate-200/70 shadow-sm space-y-4">
             <div class="flex items-center justify-between">
                 <div class="flex items-center gap-2.5">
-                    <span class="text-xl">🌟</span>
-                    <div>
-                        <h3 class="font-black text-sm text-slate-900">1. نبض المدرسة والمؤشرات الحيوية لليوم</h3>
-                        <p class="text-[11px] text-slate-400 font-semibold">مؤشرات الأداء اللحظية لثانوية أبي أيوب الأنصاري</p>
-                    </div>
+                    <h3 class="widget-title">اليوم في المدرسة</h3>
                 </div>
                 <button type="button" onclick="switchTab('stats')" class="text-xs font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 cursor-pointer">
                     <span>التقارير الكاملة</span>
@@ -1264,58 +1830,54 @@
             <!-- المؤشرات الأربعة الأساسية بنمط آبل بينتو كاردز -->
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 <!-- إحالات جديدة تنتظر القرار -->
-                <div class="bg-rose-50/70 rounded-2xl p-4 border border-rose-200/70 flex flex-col justify-between hover:shadow-xs transition">
-                    <span class="text-xs font-bold text-rose-800">🚨 إحالات جديدة</span>
-                    <div class="flex items-baseline gap-2 my-1">
-                        <span id="statPendingCount" class="text-3xl font-black font-mono text-rose-700">0</span>
-                        <span class="text-[10px] text-rose-600 font-bold">بانتظار القرار</span>
+                <div class="stat-tile">
+                    <span class="stat-label">إحالات جديدة</span>
+                    <div class="flex items-baseline gap-2">
+                        <span id="statPendingCount" class="stat-value text-rose-600">0</span>
+                        <span class="stat-unit">بانتظار القرار</span>
                     </div>
-                    <span class="text-[10px] text-rose-500 font-medium">تتطلب توجيه الوكيل الآن</span>
                 </div>
 
                 <!-- غياب اليوم -->
-                <div class="bg-amber-50/70 rounded-2xl p-4 border border-amber-200/70 flex flex-col justify-between hover:shadow-xs transition">
-                    <span class="text-xs font-bold text-amber-800">❌ غياب اليوم</span>
-                    <div class="flex items-baseline gap-2 my-1">
-                        <span id="statTodayAbsences" class="text-3xl font-black font-mono text-amber-700">0</span>
-                        <span class="text-[10px] text-amber-600 font-bold">طالب غائب</span>
+                <div class="stat-tile">
+                    <span class="stat-label">غياب اليوم</span>
+                    <div class="flex items-baseline gap-2">
+                        <span id="statTodayAbsences" class="stat-value text-slate-900">0</span>
+                        <span class="stat-unit">طالب غائب</span>
                     </div>
-                    <span class="text-[10px] text-amber-500 font-medium">تحديث مباشر</span>
                 </div>
 
                 <!-- تأخر اليوم -->
-                <div class="bg-sky-50/70 rounded-2xl p-4 border border-sky-200/70 flex flex-col justify-between hover:shadow-xs transition">
-                    <span class="text-xs font-bold text-sky-800">⏰ تأخر اليوم</span>
-                    <div class="flex items-baseline gap-2 my-1">
-                        <span id="statTodayTardies" class="text-3xl font-black font-mono text-sky-700">0</span>
-                        <span class="text-[10px] text-sky-600 font-bold">طالب متأخر</span>
+                <div class="stat-tile">
+                    <span class="stat-label">تأخر اليوم</span>
+                    <div class="flex items-baseline gap-2">
+                        <span id="statTodayTardies" class="stat-value text-slate-900">0</span>
+                        <span class="stat-unit">طالب متأخر</span>
                     </div>
-                    <span class="text-[10px] text-sky-500 font-medium">الاصطفاف والحصة الأولى</span>
                 </div>
 
                 <!-- حصص الانتظار المطلوبة -->
-                <div class="bg-indigo-50/70 rounded-2xl p-4 border border-indigo-200/70 flex flex-col justify-between hover:shadow-xs transition">
-                    <span class="text-xs font-bold text-indigo-800">⏳ انتظار اليوم</span>
-                    <div class="flex items-baseline gap-2 my-1">
-                        <span id="statTodayWaitingsCount" class="text-3xl font-black font-mono text-indigo-700">0</span>
-                        <span class="text-[10px] text-indigo-600 font-bold">حصة مطلوبة</span>
+                <div class="stat-tile">
+                    <span class="stat-label">انتظار اليوم</span>
+                    <div class="flex items-baseline gap-2">
+                        <span id="statTodayWaitingsCount" class="stat-value text-teal-700">0</span>
+                        <span class="stat-unit">حصة مطلوبة</span>
                     </div>
-                    <span class="text-[10px] text-indigo-500 font-medium">وفق فئات النصاب المعتمدة</span>
                 </div>
             </div>
 
             <!-- مؤشرات سياقية إضافية مدمجة للحفاظ على كافة الـ IDs -->
             <div class="pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 text-[11px] text-slate-500 font-bold">
                 <div class="flex items-center gap-4 flex-wrap">
-                    <span>👥 إجمالي الطلاب: <strong id="statTotalStudentsCount" class="text-slate-800 font-mono">13</strong></span>
-                    <span>🟡 قيد الإجراء: <strong id="statInProgressCount" class="text-amber-700 font-mono">0</strong></span>
-                    <span>🟢 تم الحل: <strong id="statResolvedCount" class="text-emerald-700 font-mono">0</strong></span>
-                    <span>⚠️ تكرار مخالفات: <strong id="repeatOffendersCountBadge" class="text-rose-700 font-mono">0</strong></span>
-                    <span>🌱 محال للموجه: <strong id="statCounselorPending" class="text-teal-700 font-mono">0</strong></span>
+                    <span>إجمالي الطلاب: <strong id="statTotalStudentsCount" class="text-slate-800 font-mono">13</strong></span>
+                    <span>قيد الإجراء: <strong id="statInProgressCount" class="text-amber-700 font-mono">0</strong></span>
+                    <span>تم الحل: <strong id="statResolvedCount" class="text-emerald-700 font-mono">0</strong></span>
+                    <span>تكرار مخالفات: <strong id="repeatOffendersCountBadge" class="text-rose-700 font-mono">0</strong></span>
+                    <span>محال للموجه: <strong id="statCounselorPending" class="text-teal-700 font-mono">0</strong></span>
                     <span class="hidden">إجمالي: <span id="statTotalCount">0</span> متأخر موجه: <span id="statCounselorOverdue">0</span> مكرر سلوك: <span id="statRepeatAttendance">0</span></span>
                 </div>
                 <button type="button" onclick="toggleDetailedAttendanceLogs()" class="text-xs font-bold text-slate-600 hover:text-slate-900 flex items-center gap-1 cursor-pointer">
-                    <span>عرض سجلات الحضور التفصيلية</span>
+                    <span>سجل الحضور</span>
                     <span id="detailedAttendanceChevron">▼</span>
                 </button>
             </div>
@@ -1356,11 +1918,7 @@
         <div id="coreWidget-referrals" class="bg-white/90 backdrop-blur-xl rounded-[28px] p-5 sm:p-6 border border-slate-200/70 shadow-sm space-y-4">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div class="flex items-center gap-2.5">
-                    <span class="text-xl">📋</span>
-                    <div>
-                        <h3 class="font-black text-sm text-slate-900">2. الإحالات السلوكية الواردة العاجلة (مطلوب قرارك)</h3>
-                        <p class="text-[11px] text-slate-400 font-semibold">الإحالات المحالة من المعلمين بانتظار توجيه أو قرار الوكيل</p>
-                    </div>
+                    <h3 class="widget-title">إحالات بانتظار قرارك</h3>
                 </div>
 
                 <!-- فلاتر التصفية والبحث السريع بنمط Apple Segmented Control -->
@@ -1382,7 +1940,7 @@
 
             <!-- شريط البحث السريع عن إحالة -->
             <div class="relative w-full">
-                <input type="text" id="vpSearchInput" oninput="renderReferralCards()" placeholder="🔍 ابحث في الإحالات باسم الطالب، المعلم، أو المخالفة..." class="w-full bg-slate-50 border border-slate-200 rounded-2xl py-2.5 px-4 text-xs font-bold text-slate-800 outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 transition" />
+                <input type="text" id="vpSearchInput" oninput="renderReferralCards()" placeholder="ابحث باسم الطالب أو المعلم أو المخالفة" class="w-full bg-slate-50 border border-slate-200 rounded-2xl py-2.5 px-4 text-xs font-bold text-slate-800 outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 transition" />
             </div>
 
             <!-- حاوية بطاقات الإحالات المباشرة -->
@@ -1397,15 +1955,11 @@
         <div id="coreWidget-waitings" class="bg-white/90 backdrop-blur-xl rounded-[28px] p-5 sm:p-6 border border-slate-200/70 shadow-sm space-y-4">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div class="flex items-center gap-2.5">
-                    <span class="text-xl">🎯</span>
-                    <div>
-                        <h3 class="font-black text-sm text-slate-900">3. محرك الانتظار الذكي (فحص المعلمين المتاحين الآن)</h3>
-                        <p class="text-[11px] text-slate-400 font-semibold">ترشيح المعلمين المتاحين للانتظار وفق العدالة وتوزيع الحصص وفئات النصاب</p>
-                    </div>
+                    <h3 class="widget-title">حصص الانتظار</h3>
                 </div>
 
                 <button type="button" onclick="switchTab('timetable')" class="text-xs font-bold text-amber-600 hover:text-amber-800 flex items-center gap-1 cursor-pointer">
-                    <span>فتح الجدول العام للمدرسة كاملاً (22 معلماً)</span>
+                    <span>الجدول العام</span>
                     <span>⇦</span>
                 </button>
             </div>
@@ -1440,13 +1994,13 @@
 
                 <button type="button" onclick="findFreeTeachers('vp', true)" class="px-5 py-2.5 bg-slate-900 hover:bg-black active:scale-95 text-white font-bold text-xs rounded-xl shadow-xs transition flex items-center justify-center gap-2 cursor-pointer">
                     <span>⚡</span>
-                    <span>فحص المعلمين المتاحين الآن</span>
+                    <span>عرض المتاحين</span>
                 </button>
             </div>
 
             <!-- نتائج المعلمين المتاحين للانتظار في شاشة الوكيل -->
             <div class="flex items-center justify-between pt-1">
-                <span class="text-xs font-bold text-slate-700">المرشحون المتاحون للانتظار:</span>
+                <span class="text-xs font-bold text-slate-700">المرشحون</span>
                 <span id="vpFreeTeachersCountBadge" class="text-[11px] font-bold text-amber-700 bg-amber-50 px-2.5 py-0.5 rounded-lg border border-amber-200">فحص فوري</span>
             </div>
             <div id="vpFreeTeachersResults" class="space-y-2">
@@ -1456,7 +2010,7 @@
             <!-- كشف تكليفات الانتظار المسجلة اليوم -->
             <div class="pt-3 border-t border-slate-100">
                 <div class="flex items-center justify-between mb-2">
-                    <span class="text-xs font-bold text-slate-700">📋 تكليفات الانتظار المسندة لليوم:</span>
+                    <span class="text-xs font-bold text-slate-700">تكليفات اليوم</span>
                     <div class="flex items-center gap-3">
                         <button type="button" onclick="openAbsentPlanModal()" class="text-xs font-bold text-amber-600 hover:text-amber-800 flex items-center gap-1 cursor-pointer">
                             <span>🧑‍🏫 معلم غائب</span>
@@ -1478,11 +2032,7 @@
         <div id="coreWidget-student-search" class="bg-white/90 backdrop-blur-xl rounded-[28px] p-5 sm:p-6 border border-slate-200/70 shadow-sm space-y-4">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div class="flex items-center gap-2.5">
-                    <span class="text-xl">🔍</span>
-                    <div>
-                        <h3 class="font-black text-sm text-slate-900">4. البحث السريع عن طالب ورصد الحضور المباشر</h3>
-                        <p class="text-[11px] text-slate-400 font-semibold">استعلام فوري عن أي طالب مع إمكانية رصد الغياب أو التأخر أو فتح ملفه الموحد</p>
-                    </div>
+                    <h3 class="widget-title">البحث عن طالب</h3>
                 </div>
 
                 <button type="button" onclick="switchTab('students')" class="text-xs font-bold text-teal-600 hover:text-teal-800 flex items-center gap-1 cursor-pointer">
@@ -1494,7 +2044,7 @@
             <!-- شريط البحث الذكي عن الطالب -->
             <div class="relative w-full">
                 <div class="relative">
-                    <input type="text" id="vpQuickStudentSearch" oninput="onVpQuickStudentSearch(this.value)" placeholder="اكتب اسم الطالب أو رقم الهوية الوطنية للاستعلام الفوري..." class="w-full bg-slate-50 border border-slate-300 rounded-2xl py-3 px-4 text-xs font-bold text-slate-900 outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 transition shadow-inner" />
+                    <input type="text" id="vpQuickStudentSearch" oninput="onVpQuickStudentSearch(this.value)" placeholder="اسم الطالب أو رقم الهوية" class="w-full bg-slate-50 border border-slate-300 rounded-2xl py-3 px-4 text-xs font-bold text-slate-900 outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-400 transition shadow-inner" />
                     <span class="absolute left-3.5 top-3.5 text-slate-400 text-sm">🔎</span>
                 </div>
                 <!-- قائمة النتائج المنسدلة للبحث -->
@@ -1552,25 +2102,25 @@
                 <div class="flex flex-wrap items-center gap-2">
                     <button onclick="openTeachersDirectoryModal()" class="px-4 py-2.5 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-black shadow flex items-center gap-1.5 transition border border-teal-400/30">
                         <span>👥</span>
-                        <span>بيانات وهواتف المعلمين</span>
+                        <span>دليل المعلمين</span>
                     </button>
                     <button onclick="openBroadcastModal()" class="px-4 py-2.5 bg-amber-600 hover:bg-amber-700 text-white rounded-xl text-xs font-black shadow flex items-center gap-1.5 transition border border-amber-400/30">
                         <span>📢</span>
-                        <span>رسالة جماعية للمعلمين</span>
+                        <span>رسالة للمعلمين</span>
                     </button>
                     <button onclick="openTimetableEditorModal()" class="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-black shadow flex items-center gap-1.5 transition border border-indigo-400/30">
                         <span>✏️</span>
-                        <span>تعديل وتحرير الجدول</span>
+                        <span>تحرير الجدول</span>
                     </button>
                     <button onclick="openAssignWaitingModal()" class="px-4 py-2.5 bg-white text-slate-900 rounded-xl text-xs font-black shadow hover:bg-amber-50 transition">
-                        ➕ إسناد حصة انتظار لمعلم
+                        إسناد حصة
                     </button>
                     <button onclick="openAbsentPlanModal()" class="px-4 py-2.5 bg-white text-slate-900 rounded-xl text-xs font-black shadow hover:bg-amber-50 transition">
-                        🧑‍🏫 معلم غائب: اقترح المنتظرين
+                        معلم غائب
                     </button>
                     <button onclick="scrollToMasterGrid()" id="btnMasterGrid" class="px-4 py-2.5 bg-amber-500 hover:bg-amber-600 text-slate-900 rounded-xl text-xs font-black shadow transition flex items-center gap-1.5">
                         <span>📊</span>
-                        <span>الجدول العام التفاعلي (بالأسفل)</span>
+                        <span>الجدول العام</span>
                     </button>
                 </div>
             </div>
@@ -1580,7 +2130,7 @@
                 <div class="border-b border-slate-100 pb-3 flex items-center justify-between">
                     <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
                         <span>🔍</span>
-                        <span>كاشف المعلمين المتفرغين (المتاحين لأخذ الانتظار)</span>
+                        <span>المعلمون المتاحون</span>
                     </h3>
                     <span class="text-xs text-amber-700 font-bold bg-amber-50 px-2.5 py-1 rounded-lg border border-amber-200" id="freeTeachersCountBadge">اختر اليوم والحصة</span>
                 </div>
@@ -1613,7 +2163,7 @@
                     <div class="flex items-end">
                         <button type="button" onclick="findFreeTeachers('tt', true)" class="w-full py-3 bg-slate-800 hover:bg-slate-900 active:scale-95 text-white font-bold rounded-2xl text-xs transition flex items-center justify-center gap-2 shadow-sm">
                             <span>🔍</span>
-                            <span>فحص المعلمين المتاحين</span>
+                            <span>عرض المتاحين</span>
                         </button>
                     </div>
                 </div>
@@ -2308,8 +2858,7 @@
         <div class="bg-white rounded-3xl max-w-2xl w-full p-6 shadow-2xl border border-slate-200 max-h-[90vh] overflow-y-auto">
             <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
                 <h3 class="text-base font-black text-slate-800 flex items-center gap-2">
-                    <span class="text-amber-600 text-xl">🧑‍🏫</span>
-                    <span>توزيع حصص معلم غائب</span>
+                    <span>معلم غائب</span>
                 </h3>
                 <button onclick="closeAbsentPlanModal()" class="text-slate-400 hover:text-slate-600 text-xl font-bold" aria-label="إغلاق">✕</button>
             </div>
@@ -2352,8 +2901,7 @@
         <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200">
             <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
                 <h3 class="text-base font-black text-slate-800 flex items-center gap-2">
-                    <span class="text-amber-600 text-xl">📝</span>
-                    <span>تكليف معلم بحصة انتظار (احتياط)</span>
+                    <span>إسناد حصة انتظار</span>
                 </h3>
                 <button onclick="closeAssignWaitingModal()" class="text-slate-400 hover:text-slate-600 text-xl font-bold">✕</button>
             </div>
@@ -2385,31 +2933,31 @@
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">المعلم المكلف بالانتظار (المتفرغ) *</label>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">المعلم المنتظر</label>
                     <select id="modalWaitingAssignedTeacher" onchange="onWaitingAssignedTeacherChange()" required class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs font-semibold outline-none"></select>
                 </div>
 
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">المعلم الغائب / المستأذن *</label>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">المعلم الغائب</label>
                         <input type="text" id="modalWaitingAbsentTeacher" list="officialTeacherNames" autocomplete="off" required placeholder="اسم المعلم الغائب" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs outline-none">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-slate-700 mb-1">الصف والفصل *</label>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">الفصل</label>
                         <input type="text" id="modalWaitingClass" required placeholder="مثال: 1 ثانوي / 1" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs outline-none">
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 mb-1">ملاحظات أو توجيه المعلم للانتظار</label>
-                    <input type="text" id="modalWaitingNotes" placeholder="مثال: متابعة انضباط، مراجعة، حل أنشطة..." class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs outline-none">
+                    <label class="block text-xs font-bold text-slate-700 mb-1">ملاحظات</label>
+                    <input type="text" id="modalWaitingNotes" placeholder="اختياري" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs outline-none">
                 </div>
 
                 <!-- خيار إرسال إشعار الواتساب التلقائي -->
                 <div class="p-3 bg-emerald-50/80 border border-emerald-200 rounded-2xl flex items-center justify-between">
                     <label class="flex items-center gap-2 cursor-pointer select-none">
                         <input type="checkbox" id="modalWaitingSendWhatsApp" checked class="w-4 h-4 text-emerald-600 rounded focus:ring-emerald-500 cursor-pointer">
-                        <span class="text-xs font-bold text-emerald-950">إرسال إشعار فوري عبر الواتساب للمعلم المكلف فور الاعتماد</span>
+                        <span class="text-xs font-bold text-emerald-950">إشعار المعلم عبر واتساب</span>
                     </label>
                     <span id="modalWaitingPhoneBadge" class="text-[11px] font-mono font-bold text-emerald-800 bg-white px-2.5 py-1 rounded-lg border border-emerald-200">
                         📱 جوال المعلم
@@ -2418,7 +2966,7 @@
 
                 <div class="pt-3 flex gap-2">
                     <button type="submit" class="flex-1 py-3 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-2xl text-xs shadow-md transition">
-                        اعتماد وإصدار التكليف
+                        إسناد
                     </button>
                     <button type="button" onclick="closeAssignWaitingModal()" class="px-4 py-3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-2xl text-xs transition">
                         إلغاء
@@ -3367,10 +3915,12 @@
         toast.className = `pointer-events-auto flex items-start gap-2.5 bg-white/95 backdrop-blur-xl border rounded-2xl px-4 py-3 shadow-lg text-xs font-bold ${st.cls}`;
         toast.style.cssText = 'opacity:0;transform:translateY(-8px);transition:opacity .2s ease,transform .2s ease;';
         const icon = document.createElement('span');
-        icon.textContent = st.icon;
+        icon.className = `toast-dot toast-${type in styles ? type : 'info'}`;
+        icon.setAttribute('aria-hidden', 'true');
         const text = document.createElement('span');
         text.className = 'flex-1 leading-relaxed';
-        text.textContent = String(message == null ? '' : message);   // نص فقط: لا يمكن حقن HTML عبر الإشعار
+        // نص فقط: لا يمكن حقن HTML عبر الإشعار. والرموز التعبيرية تُحذف لصالح النقطة الملوّنة
+        text.textContent = String(message == null ? '' : message).replace(/[\p{Extended_Pictographic}‍️]/gu, '').replace(/\s{2,}/g, ' ').trim();
         const close = document.createElement('button');
         close.type = 'button';
         close.textContent = '✕';
@@ -5330,7 +5880,7 @@
                         <span>➕</span><span>إسناد حصة انتظار ذكية</span>
                     </button>
                     <button onclick="openBroadcastModal()" class="px-3.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 transition font-bold text-white border border-white/10 flex items-center gap-1.5">
-                        <span>📢</span><span>رسالة جماعية للمعلمين</span>
+                        <span>📢</span><span>رسالة للمعلمين</span>
                     </button>
                     <button onclick="openTeachersDirectoryModal()" class="px-3.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 transition font-bold text-white border border-white/10 flex items-center gap-1.5">
                         <span>👥</span><span>دليل هواتف المعلمين</span>
@@ -9068,11 +9618,11 @@ async function initApp() {
             const { candidateTeachers, excludedDueToMaxDaily } = rankWaitingCandidates(day, periodIdx);
 
             // تحديث شارات العداد
-            const badgeText = `يوم ${day} (الحصة ${periodIdx + 1}): متاح ${candidateTeachers.length} معلماً وفق معايير العدالة${excludedDueToMaxDaily.length > 0 ? ` • (استبعاد ${excludedDueToMaxDaily.length} معلماً لوصول نصابهم 5 حصص)` : ''}`;
+            const badgeText = `${day} · الحصة ${periodIdx + 1} · متاح ${candidateTeachers.length}${excludedDueToMaxDaily.length > 0 ? ` · استُبعد ${excludedDueToMaxDaily.length} لاكتمال حصصهم` : ''}`;
             const ttBadge = document.getElementById('freeTeachersCountBadge');
             const vpBadge = document.getElementById('vpFreeTeachersCountBadge');
             if (ttBadge) ttBadge.textContent = badgeText;
-            if (vpBadge) vpBadge.textContent = `متاح: ${candidateTeachers.length} معلماً`;
+            if (vpBadge) vpBadge.textContent = `متاح ${candidateTeachers.length}`;
 
             const ttContainer = document.getElementById('freeTeachersResults');
             const vpContainer = document.getElementById('vpFreeTeachersResults');
@@ -9080,8 +9630,7 @@ async function initApp() {
             if (candidateTeachers.length === 0) {
                 const emptyHtml = `
                     <div class="col-span-full text-center py-8 bg-slate-50 rounded-2xl border border-slate-200">
-                        <div class="text-2xl mb-1">⚠️</div>
-                        <div class="text-xs text-rose-600 font-bold">لا يوجد معلمون متفرغون مؤهلون في هذه الحصة، أو أن جميع المتفرغين لديهم 5 حصص تدريسية اليوم.</div>
+                        <div class="text-xs text-slate-500 font-bold">لا يوجد معلم متاح في هذه الحصة.</div>
                     </div>
                 `;
                 if (ttContainer) ttContainer.innerHTML = emptyHtml;
@@ -9098,64 +9647,23 @@ async function initApp() {
                 const t = c.teacher;
                 const isTopCandidate = (index === 0);
 
+                const adjacency = (c.adjacencyLabel || '').replace(/\s*\(.*\)\s*$/, '');
                 return `
-                    <div class="p-4 rounded-2xl border transition relative flex flex-col justify-between gap-3 shadow-sm ${
-                        isTopCandidate 
-                        ? 'bg-gradient-to-br from-emerald-50 via-teal-50 to-white border-2 border-emerald-500 shadow-md ring-2 ring-emerald-400/20' 
-                        : 'bg-white border-slate-200 hover:border-slate-300'
-                    }">
-                        ${isTopCandidate ? `
-                            <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-600 text-white rounded-full text-[10px] font-black w-fit shadow-sm">
-                                <span>⭐</span>
-                                <span>المرشح الأنسب (الأعلى استحقاقاً وفق خوارزمية العدالة والملاصقة)</span>
-                            </div>
-                        ` : ''}
-
-                        <div>
-                            <div class="flex items-center justify-between">
-                                <h4 class="font-black text-xs sm:text-sm text-slate-900 flex items-center gap-1.5">
-                                    <span class="w-5 h-5 rounded-full ${isTopCandidate ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-700'} text-[10px] font-black flex items-center justify-center">${index + 1}</span>
-                                    <span>أ. ${t.name}</span>
-                                </h4>
-                                <span class="text-[10px] px-2 py-0.5 rounded-full font-black ${
-                                    c.isAdjacent ? 'bg-emerald-100 text-emerald-800 border border-emerald-200' : 'bg-slate-100 text-slate-600'
-                                }">
-                                    ${c.adjacencyLabel}
-                                </span>
-                            </div>
-                            <div class="text-[11px] text-slate-500 font-semibold mt-0.5">${t.subject}</div>
-
-                            <div class="mt-3 grid grid-cols-2 gap-2 text-[10px] bg-slate-50/80 p-2.5 rounded-xl border border-slate-100">
-                                <div>
-                                    <span class="text-slate-400 block">نصاب اليوم:</span>
-                                    <strong class="text-slate-800">${c.todayClassesCount} حصص</strong>
-                                </div>
-                                <div>
-                                    <span class="text-slate-400 block">النصاب الأسبوعي:</span>
-                                    <strong class="text-indigo-700">${c.actualWeeklyLoad} حصة</strong>
-                                </div>
-                                <div>
-                                    <span class="text-slate-400 block">الهدف الفصلي:</span>
-                                    <strong class="text-amber-700">${c.quotaInfo.target} حصة</strong>
-                                </div>
-                                <div>
-                                    <span class="text-slate-400 block">نفّذ سابقاً:</span>
-                                    <strong class="text-teal-700">${c.totalExecuted} انتظار</strong>
-                                </div>
-                            </div>
-
-                            <div class="mt-2 text-[10px] text-slate-600 bg-amber-50/50 p-2 rounded-lg border border-amber-100/60 leading-relaxed">
-                                <strong class="text-amber-900">💡 سبب الترشيح:</strong> ${c.selectionReason}
+                    <div class="cand-card${isTopCandidate ? ' is-top' : ''}">
+                        <div class="cand-head">
+                            <span class="cand-rank">${index + 1}</span>
+                            <div class="cand-who">
+                                <div class="cand-name">أ. ${t.name}${isTopCandidate ? '<span class="cand-best">الأنسب</span>' : ''}</div>
+                                <div class="cand-sub">${t.subject}</div>
                             </div>
                         </div>
-
-                        <div class="pt-2 border-t border-slate-100 flex items-center justify-between gap-2">
-                            <span class="text-[10px] text-slate-400 font-bold">نقاط الأولوية: <span class="text-indigo-600 font-black">${c.totalScore}</span></span>
-                            <button type="button" onclick="quickAssignWaiting('${t.name}', '${day}', ${periodIdx + 1})" class="px-3.5 py-1.5 bg-slate-900 hover:bg-black active:scale-95 text-white font-bold text-xs rounded-xl shadow-xs transition flex items-center gap-1.5 cursor-pointer">
-                                <span>+</span>
-                                <span>إسناد الانتظار</span>
-                            </button>
+                        <div class="cand-meta">
+                            <span>${c.todayClassesCount} حصص اليوم</span>
+                            <span>نفّذ ${c.totalExecuted} من ${c.quotaInfo.target}</span>
+                            <span class="${c.isAdjacent ? 'is-adjacent' : ''}">${adjacency}</span>
                         </div>
+                        <details class="cand-why"><summary>لماذا هذا المعلم؟</summary><p>${c.selectionReason}</p></details>
+                        <button type="button" onclick="quickAssignWaiting('${t.name}', '${day}', ${periodIdx + 1})" class="cand-assign">إسناد</button>
                     </div>
                 `;
             });
@@ -9164,7 +9672,7 @@ async function initApp() {
             if (vpContainer) vpContainer.innerHTML = htmlCards.join('');
 
             if (isManual && typeof showToast === 'function') {
-                showToast(`تم فحص المعلمين المتاحين ليوم ${day} (الحصة ${periodNum}): متاح ${candidateTeachers.length} معلماً ✅`, 'success');
+                showToast(`${day} · الحصة ${periodNum}: متاح ${candidateTeachers.length}`, 'success');
             }
         } catch (err) {
             console.error('Error in findFreeTeachers:', err);
@@ -10319,6 +10827,7 @@ async function initApp() {
     // ---------- إخفاء الرموز التعبيرية التي تعمل كأيقونات ----------
     const EMOJI_ONLY = /^[\p{Extended_Pictographic}‍️⃣\s]+$/u;
     const EMOJI_LEAD = /^(\s*)[\p{Extended_Pictographic}‍️⃣]+\s*/u;
+    const EMOJI_TRAIL = /\s*[\p{Extended_Pictographic}‍️⃣]+\s*$/u;
     function stripEmoji(root) {
         const base = root && root.nodeType === 1 ? root : document.body;
         if (!base || (base.closest && base.closest('#toastContainer'))) return;
@@ -10327,11 +10836,15 @@ async function initApp() {
             const t = (n.textContent || '').trim();
             if (t && t.length <= 8 && EMOJI_ONLY.test(t)) n.classList.add('emoji-glyph');
         });
-        // «📋 سجل الطلاب» ← «سجل الطلاب» في العناوين والأزرار والتسميات
-        base.querySelectorAll('h1, h2, h3, h4, button, label, th, a, option').forEach(n => {
-            if (n.closest('#toastContainer, #appNav, #appTabbar')) return;
+        // «📋 سجل الطلاب» ← «سجل الطلاب» في العناوين والأزرار والتسميات والنصوص القصيرة
+        base.querySelectorAll('h1, h2, h3, h4, h5, button, label, th, td, a, option, span, div, p, strong, b').forEach(n => {
+            if (n.closest('#toastContainer, #appNav, #appTabbar, textarea')) return;
             n.childNodes.forEach(c => {
-                if (c.nodeType === 3 && EMOJI_LEAD.test(c.nodeValue) && c.nodeValue.replace(EMOJI_LEAD, '').trim()) c.nodeValue = c.nodeValue.replace(EMOJI_LEAD, '$1');
+                if (c.nodeType !== 3) return;
+                let v = c.nodeValue;
+                if (EMOJI_LEAD.test(v) && v.replace(EMOJI_LEAD, '').trim()) v = v.replace(EMOJI_LEAD, '$1');
+                if (EMOJI_TRAIL.test(v) && v.replace(EMOJI_TRAIL, '').trim()) v = v.replace(EMOJI_TRAIL, '');
+                if (v !== c.nodeValue) c.nodeValue = v;
             });
         });
     }
